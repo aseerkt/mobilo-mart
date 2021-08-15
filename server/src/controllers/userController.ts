@@ -73,6 +73,8 @@ export const me: RequestHandler = expressAsyncHandler(async function (
   res
 ) {
   const { userId } = res.locals;
-  const user = await prisma.user.findUnique({ where: { id: userId } });
-  res.json(user);
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+  res.json({ user: { ...user, password: undefined } });
 });
