@@ -1,7 +1,13 @@
 import useSWR from 'swr';
 
 function useUser() {
-  return useSWR('/api/users');
+  const { data, error, revalidate } = useSWR('/api/users');
+  return {
+    user: data,
+    loading: !data && !error,
+    error,
+    revalidate,
+  };
 }
 
 export default useUser;
