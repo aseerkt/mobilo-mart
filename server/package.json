@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node dist/server.js",
-    "dev": "concurrently -c \"yellow.bold, blue.bold\" -n TSC,SERVER \"yarn tsc -w\" \"nodemon dist/server.js\" "
+    "dev": "concurrently -c yellow.bold,blue.bold -n TSC,SERVER \"yarn tsc -w\" \"nodemon dist/server.js\" "
   },
   "dependencies": {
     "@prisma/client": "^2.28.0",
