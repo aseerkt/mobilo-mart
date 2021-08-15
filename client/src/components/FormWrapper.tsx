@@ -1,4 +1,4 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Link, Text } from '@chakra-ui/react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 
@@ -10,8 +10,9 @@ type FormWrapperProps = {
 const FormWrapper: React.FC<FormWrapperProps> = ({ title, children }) => {
   return (
     <>
-      <NextLink href='/'>
+      <Link as={NextLink} href='/'>
         <Text
+          cursor='pointer'
           textAlign='center'
           color='teal'
           textTransform='uppercase'
@@ -21,7 +22,7 @@ const FormWrapper: React.FC<FormWrapperProps> = ({ title, children }) => {
         >
           Mobilo Mart
         </Text>
-      </NextLink>
+      </Link>
       <Box
         maxW='md'
         marginX='auto'
