@@ -13,13 +13,30 @@ import {
 import NextLink from 'next/link';
 import InputField from '../shared/InputField';
 import { Form, Formik } from 'formik';
+import axios from 'axios';
+import useUser from '../hooks/useUser';
+import { useRouter } from 'next/router';
 
 function Login() {
+  const router = useRouter();
+  const { revalidate } = useUser();
+
   return (
     <FormWrapper title='Login'>
       <Formik
         initialValues={{ email: '', password: '' }}
-        onSubmit={async function (values) {}}
+        onSubmit={async function (values) {
+          try {
+            const res = await axios('/users/login', {
+              method: 'POST',
+              data: values,
+            });
+            const user = res.data?.user;
+            if (user && (await revalidate())) router.push('/');
+          } catch (err) {
+            console.error(err);
+          }
+        }}
       >
         {({ isSubmitting }) => (
           <Form>
