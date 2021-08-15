@@ -12,7 +12,7 @@ function Carousel() {
     {
       src: '/slideshow/pexels-negative-space-48605.jpg',
       alt: 'Samsung Galaxy',
-      objectPosition: 'left top',
+      objectPosition: 'left center',
       text: '',
     },
     {
@@ -57,7 +57,7 @@ function Carousel() {
       }}
     >
       <Flex w='full' overflow='hidden' pos='relative'>
-        <Flex h='700' w='full' {...carouselStyle} _before={{}}>
+        <Flex h='100vh' minH='600' w='full' {...carouselStyle}>
           {slides.map(({ text, ...rest }, sid) => (
             <Box key={`slide-${sid}`} boxSize='full' shadow='md' flex='none'>
               <Image
@@ -71,7 +71,14 @@ function Carousel() {
           ))}
         </Flex>
 
-        {/* <HStack justify='center' pos='absolute' bottom='8px' w='full'></HStack> */}
+        <Box
+          justify='center'
+          pos='absolute'
+          top='40%'
+          h='60%'
+          w='full'
+          bg='linear-gradient( transparent 56%, #fff 98%)'
+        ></Box>
       </Flex>
     </Flex>
   );
