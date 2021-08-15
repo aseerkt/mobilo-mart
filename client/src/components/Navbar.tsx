@@ -14,7 +14,15 @@ import NextLink from 'next/link';
 
 function Navbar() {
   return (
-    <Box h='16' w='full' boxShadow='base'>
+    <Box
+      h='16'
+      w='full'
+      boxShadow='base'
+      pos='sticky'
+      top='0'
+      zIndex={100}
+      bg='white'
+    >
       <Flex
         h='full'
         justifyContent='space-between'
@@ -23,8 +31,10 @@ function Navbar() {
         paddingX='5'
         marginX='auto'
       >
-        <NextLink href='/'>
+        <Link as={NextLink} href='/'>
           <Text
+            cursor='pointer'
+            textAlign='center'
             color='teal'
             textTransform='uppercase'
             fontSize='2xl'
@@ -32,7 +42,7 @@ function Navbar() {
           >
             Mobilo Mart
           </Text>
-        </NextLink>
+        </Link>
         <Box>
           <InputGroup>
             <InputLeftElement
