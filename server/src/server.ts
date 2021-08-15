@@ -1,6 +1,7 @@
 import 'dotenv-safe/config';
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 // import routes
 import userRoutes from './routes/users';
@@ -13,6 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get('/', (_, res) => res.send('Welcome to Mobile Mart Server'));
+
+app.use(cookieParser());
 
 app.use('/api/users', userRoutes);
 
