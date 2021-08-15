@@ -11,28 +11,37 @@ import {
   Link,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
+import InputField from '../shared/InputField';
+import { Form, Formik } from 'formik';
 
 function Login() {
   return (
     <FormWrapper title='Login'>
-      <FormControl isRequired>
-        <FormLabel>Email</FormLabel>
-        <Input variant='filled' type='email' />
-        <FormHelperText></FormHelperText>
-        <FormErrorMessage></FormErrorMessage>
-      </FormControl>
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        onSubmit={async function (values) {}}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <InputField label='Email' isRequired name='email' />
+            <InputField
+              label='Password'
+              isRequired
+              type='password'
+              name='password'
+            />
 
-      <FormControl isRequired>
-        <FormLabel>Password</FormLabel>
-        <Input variant='filled' type='password' />
-        <FormHelperText></FormHelperText>
-        <FormErrorMessage></FormErrorMessage>
-      </FormControl>
-
-      <Button marginY='5' colorScheme='teal' type='submit'>
-        Sign In
-      </Button>
-
+            <Button
+              isLoading={isSubmitting}
+              marginY='5'
+              colorScheme='teal'
+              type='submit'
+            >
+              Sign In
+            </Button>
+          </Form>
+        )}
+      </Formik>
       <Divider marginBottom='5' />
       <Text fontSize='small'>
         Don't have an account?{' '}

@@ -1,44 +1,38 @@
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  FormHelperText,
-  FormErrorMessage,
-  Button,
-  Divider,
-  Link,
-  Text,
-} from '@chakra-ui/react';
+import { Button, Divider, Link, Text } from '@chakra-ui/react';
+import { Form, Formik } from 'formik';
 import NextLink from 'next/link';
 import FormWrapper from '../components/FormWrapper';
+import InputField from '../shared/InputField';
 
 function Register() {
   return (
     <FormWrapper title='Sign Up'>
-      <FormControl isRequired>
-        <FormLabel>Name</FormLabel>
-        <Input variant='filled' type='text' />
-        <FormHelperText></FormHelperText>
-        <FormErrorMessage></FormErrorMessage>
-      </FormControl>
+      <Formik
+        initialValues={{ name: '', email: '', password: '' }}
+        onSubmit={async function (values) {}}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <InputField label='Name' isRequired name='name' />
+            <InputField label='Email' isRequired name='email' />
+            <InputField
+              label='Password'
+              isRequired
+              type='password'
+              name='password'
+            />
 
-      <FormControl isRequired>
-        <FormLabel>Email</FormLabel>
-        <Input variant='filled' type='email' />
-        <FormHelperText></FormHelperText>
-        <FormErrorMessage></FormErrorMessage>
-      </FormControl>
-
-      <FormControl isRequired>
-        <FormLabel>Password</FormLabel>
-        <Input variant='filled' type='password' />
-        <FormHelperText></FormHelperText>
-        <FormErrorMessage></FormErrorMessage>
-      </FormControl>
-
-      <Button marginY='5' colorScheme='teal' type='submit'>
-        Sign Up
-      </Button>
+            <Button
+              isLoading={isSubmitting}
+              marginY='5'
+              colorScheme='teal'
+              type='submit'
+            >
+              Sign Up
+            </Button>
+          </Form>
+        )}
+      </Formik>
 
       <Divider marginBottom='5' />
       <Text fontSize='small'>
