@@ -4,7 +4,7 @@ import prisma from '../prisma';
 import { hashPassword, verfiyPassword } from '../utils/passwordHandler';
 import routeHandler from '../utils/routeHandler';
 import expressAsyncHandler from 'express-async-handler';
-import { setCookie } from '../utils/cookieHandler';
+import { setCookie } from '../utils/tokenCookieHandler';
 
 const GRAVATAR_PLACEHOLDER =
   'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
@@ -66,4 +66,13 @@ export const login: RequestHandler = expressAsyncHandler(async function (
       password: undefined,
     },
   });
+});
+
+export const me: RequestHandler = expressAsyncHandler(async function (
+  _req,
+  res
+) {
+  const { userId } = res.locals;
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  res.json(user);
 });
