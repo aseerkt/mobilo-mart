@@ -4,18 +4,18 @@
 
 ## Tech Stacks
 
-| FRONTEND       |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Next.js**    | Next.js is an open-source development framework built on top of Node.js enabling React based web applications functionalities such as server-side rendering and generating static websites |
-| **Chakra UI**  | Chakra UI is a simple, modular and accessible component library that gives you the building blocks you need to build your React applications.                                              |
-| **SWR**        | React Hooks for data fetching                                                                                                                                                              |
-| **Axios**      |                                                                                                                                                                                            |
-| **Formik**     |                                                                                                                                                                                            |
+| FRONTEND       |                                                           |
+| -------------- | --------------------------------------------------------- |
+| **Next.js**    | React Framework                                           |
+| **Chakra UI**  | UI component library.                                     |
+| **SWR**        | React Hooks for data fetching                             |
+| **Axios**      | Promise based HTTP client                                 |
+| **Formik**     | Form library for React                                    |
 |                |
 | **BACKEND**    |
-| **Express**    |                                                                                                                                                                                            |
-| **Prisma**     |                                                                                                                                                                                            |
-| **PostgreSQL** |                                                                                                                                                                                            |
+| **Express**    | Fast, unopinionated, minimalist web framework for Node.js |
+| **Prisma**     | TypeScript ORM                                            |
+| **PostgreSQL** | Database                                                  |
 
 ## Roadmap
 
