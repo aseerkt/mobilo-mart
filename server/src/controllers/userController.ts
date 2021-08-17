@@ -1,10 +1,10 @@
-import { RequestHandler } from 'express';
+import { RequestHandler, Response } from 'express';
 import { Prisma } from '@prisma/client';
 import prisma from '../prisma';
 import { hashPassword, verfiyPassword } from '../utils/passwordHandler';
 import routeHandler from '../utils/routeHandler';
 import expressAsyncHandler from 'express-async-handler';
-import { setCookie } from '../utils/tokenCookieHandler';
+import { removeCookie, setCookie } from '../utils/tokenCookieHandler';
 
 const GRAVATAR_PLACEHOLDER =
   'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
@@ -77,4 +77,13 @@ export const me: RequestHandler = expressAsyncHandler(async function (
     where: { id: userId },
   });
   res.json({ user: { ...user, password: undefined } });
+});
+
+export const logout: RequestHandler = expressAsyncHandler(async function (
+  _req,
+  res: Response
+) {
+  removeCookie(res);
+  res.locals.userId = undefined;
+  return res.send('Logout successfull');
 });
