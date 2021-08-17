@@ -3,9 +3,10 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
+import { successLog } from './utils/chalkLogs';
 // import routes
 import userRoutes from './routes/users';
-import { successLog } from './utils/chalkLogs';
+import productRoutes from './routes/products';
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.get('/', (_, res) => res.send('Welcome to Mobile Mart Server'));
 app.use(cookieParser());
 
 app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
 
 const PORT = process.env.PORT || 5000;
 
