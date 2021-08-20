@@ -8,15 +8,20 @@
   "license": "MIT",
   "scripts": {
     "start": "node dist/server.js",
-    "dev": "concurrently -c yellow.bold,blue.bold -n TSC,SERVER \"yarn tsc -w\" \"nodemon dist/server.js\" "
+    "dev": "concurrently -c yellow.bold,blue.bold -n TSC,SERVER \"yarn tsc -w\" \"nodemon dist/server.js\" ",
+    "seed": "node dist/seed/index.js"
   },
   "dependencies": {
-    "@prisma/client": "^2.28.0",
+    "@mikro-orm/cli": "^4.5.7",
+    "@mikro-orm/core": "^4.5.7",
+    "@mikro-orm/postgresql": "^4.5.7",
+    "@mikro-orm/sql-highlighter": "^1.0.1",
     "@types/bcryptjs": "^2.4.2",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.12",
     "@types/jsonwebtoken": "^8.5.4",
     "@types/node": "^16.4.13",
+    "@types/uuid": "^8.3.1",
     "bcryptjs": "^2.4.3",
     "chalk": "^4.1.2",
     "cookie-parser": "^1.4.5",
@@ -27,12 +32,19 @@
     "express-validator": "^6.12.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
-    "prisma": "^2.28.0",
-    "typescript": "^4.3.5"
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^4.3.5",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "concurrently": "^6.2.1",
     "nodemon": "^2.0.12",
     "ts-node-dev": "^1.1.8"
+  },
+  "mikro-orm": {
+    "useTsNode": false,
+    "configPaths": [
+      "./dist/mikro-orm.config.js"
+    ]
   }
 }

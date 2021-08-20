@@ -1,5 +1,9 @@
-declare namespace Express {
-  export interface Response {
-    userId?: string;
+declare global {
+  namespace Express {
+    interface Response {
+      locals: {
+        userId?: number;
+      };
+    }
   }
 }

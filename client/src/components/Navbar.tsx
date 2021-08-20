@@ -8,11 +8,29 @@ import {
   Text,
   Icon,
   Link,
+  Button,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Divider,
 } from '@chakra-ui/react';
-import { FaSearch } from 'react-icons/fa';
+import { FaCartArrowDown, FaSearch, FaUserAlt } from 'react-icons/fa';
 import NextLink from 'next/link';
+import useUser from '../libs/useUser';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import useCartStore from '@/store/cartStore';
 
 function Navbar() {
+  const { user, loading } = useUser();
+  const router = useRouter();
+  const cartItems = useCartStore((state) => state.cartItems);
+
+  const logout = async function () {
+    await axios.post('/users/logout');
+    router.reload();
+  };
   return (
     <Box
       h='16'
@@ -27,7 +45,7 @@ function Navbar() {
         h='full'
         justifyContent='space-between'
         alignItems='center'
-        maxW='5xl'
+        maxW='6xl'
         paddingX='5'
         marginX='auto'
       >
@@ -43,7 +61,7 @@ function Navbar() {
             Mobilo Mart
           </Text>
         </Link>
-        <Box>
+        <Box flex='1' marginX='5'>
           <InputGroup>
             <InputLeftElement
               pointerEvents='none'
@@ -53,12 +71,32 @@ function Navbar() {
           </InputGroup>
         </Box>
         <HStack fontWeight='bold' spacing={3}>
-          <Link href='/login' as={NextLink}>
-            Login
+          <Link href='/cart' as={NextLink}>
+            <Button leftIcon={<FaCartArrowDown />}>{cartItems.length}</Button>
           </Link>
-          <Link href='/register' as={NextLink}>
-            Sign Up
-          </Link>
+          {loading ? null : user ? (
+            <>
+              <Menu placement='bottom-end'>
+                <MenuButton as={Button} rightIcon={<FaUserAlt />}>
+                  {user?.name}
+                </MenuButton>
+                <MenuList>
+                  <MenuItem>My Orders</MenuItem>
+                  <MenuItem>My Wishlist</MenuItem>
+                  <MenuItem>My Cart</MenuItem>
+                  <MenuItem>My Addresses</MenuItem>
+                  <Divider />
+                  <MenuItem onClick={logout}>Sign Out</MenuItem>
+                </MenuList>
+              </Menu>
+            </>
+          ) : (
+            <>
+              <Link href='/login' as={NextLink}>
+                Login
+              </Link>
+            </>
+          )}
         </HStack>
       </Flex>
     </Box>

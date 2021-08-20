@@ -77,7 +77,7 @@ function Carousel() {
           top='40%'
           h='60%'
           w='full'
-          bg='linear-gradient( transparent 56%, #fff 98%)'
+          bg='linear-gradient( transparent 56%, var(--chakra-colors-gray-100) 98%)'
         ></Box>
       </Flex>
     </Flex>

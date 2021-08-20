@@ -9,15 +9,19 @@ import {
   Divider,
   Text,
   Link,
+  useToast,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import InputField from '../shared/InputField';
 import { Form, Formik } from 'formik';
 import axios from 'axios';
-import useUser from '../hooks/useUser';
+import useUser from '../libs/useUser';
 import { useRouter } from 'next/router';
 
+// TODO: yup client side form validation
+
 function Login() {
+  const toast = useToast();
   const router = useRouter();
   const { revalidate } = useUser();
 
@@ -32,7 +36,16 @@ function Login() {
               data: values,
             });
             const user = res.data?.user;
-            if (user && (await revalidate())) router.push('/');
+            if (user && (await revalidate())) {
+              toast({
+                title: `Welcome ${user?.name}.`,
+                description: 'Login successfull.',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+              });
+              router.push('/');
+            }
           } catch (err) {
             console.error(err);
           }

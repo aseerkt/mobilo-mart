@@ -1,6 +1,6 @@
 import { CookieOptions, Response, Request } from 'express';
 import jwt from 'jsonwebtoken';
-import { Prisma } from '@prisma/client';
+import User from '../entities/User';
 
 const __PROD__ = process.env.NODE_ENV === 'production';
 
@@ -13,7 +13,7 @@ const COOKIE_OPTIONS: CookieOptions = {
   sameSite: __PROD__ ? 'none' : 'lax',
 };
 
-export function setCookie(res: Response, user: Prisma.UserWhereInput) {
+export function setCookie(res: Response, user: User) {
   res.cookie(
     COOKIE_NAME,
     jwt.sign({ userId: user.id }, JWT_SECRET!, { expiresIn: '7d' }),

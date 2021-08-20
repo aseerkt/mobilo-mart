@@ -1,28 +1,19 @@
+import 'reflect-metadata';
 import 'dotenv-safe/config';
-import express from 'express';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
+import http from 'http';
 
-import { successLog } from './utils/chalkLogs';
-// import routes
-import userRoutes from './routes/users';
-import productRoutes from './routes/products';
+import createApp from './app';
+import { errorLog, successLog } from './utils/chalkLogs';
 
-const app = express();
+async function startServer() {
+  const { app } = await createApp();
+  const server = http.createServer(app);
 
-app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+  const PORT = process.env.PORT || 5000;
 
-app.get('/', (_, res) => res.send('Welcome to Mobile Mart Server'));
+  server.listen({ port: PORT }, () =>
+    console.log(successLog(`Server listening on http://localhost:${PORT}`))
+  );
+}
 
-app.use(cookieParser());
-
-app.use('/api/users', userRoutes);
-app.use('/api/products', productRoutes);
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () =>
-  console.log(successLog(`Server listening: http://localhost:${PORT}`))
-);
+startServer().catch((err) => console.error(errorLog(err)));
