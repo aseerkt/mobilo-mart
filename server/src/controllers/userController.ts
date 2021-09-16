@@ -8,9 +8,18 @@ import { DI } from '../app';
 const GRAVATAR_PLACEHOLDER =
   'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
 
+interface LoginBody {
+  email: string;
+  password: string;
+}
+
+interface RegisterBody extends LoginBody {
+  name: string;
+}
+
 export const register: RequestHandler<any, any, User> = routeHandler(
   async function (req, res) {
-    const { email, password, name } = req.body;
+    const { email, password, name } = req.body as RegisterBody;
     const emailExists = await DI.userRepository.findOne({
       email,
     });
@@ -42,7 +51,7 @@ export const login: RequestHandler = expressAsyncHandler(async function (
   req,
   res
 ) {
-  const { email, password } = req.body as { email: string; password: string };
+  const { email, password } = req.body as LoginBody;
   const user = await DI.userRepository.findOne({ email });
 
   if (!user) {
