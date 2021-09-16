@@ -14,7 +14,7 @@
 |                |
 | **BACKEND**    |
 | **Express**    | Fast, unopinionated, minimalist web framework for Node.js |
-| **Prisma**     | TypeScript ORM                                            |
+| **Mikro ORM**  | TypeScript ORM                                            |
 | **PostgreSQL** | Database                                                  |
 
 ## Roadmap
