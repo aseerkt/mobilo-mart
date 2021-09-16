@@ -32,7 +32,16 @@ function CartItem({ cartItem: i }: CartItemProps) {
         </Flex>
         <Flex direction='column' flex='1'>
           <NextLink href={`/products/${i.id}`}>
-            <Text noOfLines={2} fontSize='lg' fontWeight='600'>
+            <Text
+              noOfLines={2}
+              fontSize='lg'
+              fontWeight='600'
+              cursor='pointer'
+              color='blue.800'
+              _hover={{
+                color: 'blue.500',
+              }}
+            >
               {i.name}
             </Text>
           </NextLink>

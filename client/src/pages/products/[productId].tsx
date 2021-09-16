@@ -1,18 +1,13 @@
-import { GetStaticProps, GetStaticPaths } from 'next';
+import AddToCart from '@/components/AddToCart';
+import ProductRating from '@/components/ProductRating';
 import fetcher from '@/libs/fetcher';
-import Head from 'next/head';
-import useSWR from 'swr';
 import { Mobile } from '@/types/mobile';
+import { formatPrice } from '@/utils/formatNumbers';
 import {
-  Button,
   Divider,
   Flex,
   Grid,
-  Icon,
   Image,
-  InputGroup,
-  InputLeftElement,
-  Select,
   Table,
   TableCaption,
   Tbody,
@@ -22,9 +17,9 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import ProductRating from '@/components/ProductRating';
-import { formatPrice } from '@/utils/formatNumbers';
-import AddToCart from '@/components/AddToCart';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import Head from 'next/head';
+import useSWR from 'swr';
 
 function SingleProduct({ product }) {
   const { data } = useSWR(`/produts/${product?.id}`, {

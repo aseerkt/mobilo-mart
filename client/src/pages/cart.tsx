@@ -1,12 +1,18 @@
 import CartItem from '@/components/CartItem';
 import Layout from '@/shared/Layout';
 import useCartStore from '@/store/cartStore';
-import { Box, Divider, Flex, Grid, Icon, Text } from '@chakra-ui/react';
+import { formatPrice } from '@/utils/formatNumbers';
+import { Box, Button, Divider, Flex, Grid, Icon, Text } from '@chakra-ui/react';
 import Head from 'next/head';
-import { FaCartPlus } from 'react-icons/fa';
+import { FaCartPlus, FaLock } from 'react-icons/fa';
 
 function Cart() {
   const cartItems = useCartStore((state) => state.cartItems);
+  const totalPrice = cartItems.reduce(
+    (prev, curr) => prev + curr.qty * curr.price,
+    0
+  );
+  const totalItems = cartItems.reduce((prev, curr) => prev + curr.qty, 0);
 
   return (
     <div>
@@ -32,7 +38,29 @@ function Cart() {
               )}
             </Box>
           </Box>
-          <Box borderRadius='lg' border='1px solid lightgray' p='5'></Box>
+          <Box
+            h='max-content'
+            borderRadius='lg'
+            border='1px solid lightgray'
+            p='5'
+          >
+            <Text fontSize='lg' fontWeight='500' mb='2'>
+              Subtotal ({totalItems} items):{' '}
+              <Text fontWeight='700'>{formatPrice(totalPrice)}</Text>
+            </Text>
+            <Button colorScheme='teal'>Proceed To Buy</Button>
+            <Text
+              color='gray'
+              fontSize='sm'
+              display='flex'
+              alignItems='center'
+              mt='5'
+            >
+              {' '}
+              <FaLock size='1.3em' style={{ marginRight: '0.5rem' }} />{' '}
+              <span>Secure transaction</span>
+            </Text>
+          </Box>
         </Grid>
       </Layout>
     </div>
