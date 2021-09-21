@@ -4,15 +4,16 @@
 
 ## Tech Stacks
 
-| FRONTEND       |                                                           |
+| FRONTEND      |                               |
+| ------------- | ----------------------------- |
+| **Next.js**   | React Framework               |
+| **Chakra UI** | UI component library.         |
+| **SWR**       | React Hooks for data fetching |
+| **Axios**     | Promise based HTTP client     |
+| **Formik**    | Form library for React        |
+
+| **BACKEND**    |                                                           |
 | -------------- | --------------------------------------------------------- |
-| **Next.js**    | React Framework                                           |
-| **Chakra UI**  | UI component library.                                     |
-| **SWR**        | React Hooks for data fetching                             |
-| **Axios**      | Promise based HTTP client                                 |
-| **Formik**     | Form library for React                                    |
-|                |
-| **BACKEND**    |
 | **Express**    | Fast, unopinionated, minimalist web framework for Node.js |
 | **Mikro ORM**  | TypeScript ORM                                            |
 | **PostgreSQL** | Database                                                  |
