@@ -9,7 +9,10 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "concurrently -c yellow.bold,blue.bold -n TSC,SERVER \"yarn tsc -w\" \"nodemon dist/server.js\" ",
-    "seed": "node dist/seed/index.js"
+    "seed": "node dist/seed/index.js",
+    "migration:gen": "npx mikro-orm migration:create",
+    "migration:run": "npx mikro-orm migration:up",
+    "migration:rev": "npx mikro-orm migration:down"
   },
   "dependencies": {
     "@mikro-orm/cli": "^4.5.7",
