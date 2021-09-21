@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   hydrateStore(initialState);
 
   return (
-    <SWRConfig value={{ fetcher, refreshInterval: 10000 }}>
+    <SWRConfig value={{ fetcher, dedupingInterval: 10000 }}>
       <ChakraProvider theme={theme}>
         <ShowNavbar />
         <Component {...pageProps} />
