@@ -17,4 +17,7 @@ export default {
   password: 'postgres',
   debug: __dev__,
   highlighter: __dev__ && new SqlHighlighter(),
+  driverOptions: {
+    connection: { ssl: { rejectUnauthorized: false } },
+  },
 } as Options;
