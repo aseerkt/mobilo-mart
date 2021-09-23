@@ -36,11 +36,11 @@ function SingleProduct({ product }) {
         <title>{data?.name}</title>
       </Head>
       <Grid
-        paddingX='2'
+        px='2'
         maxW='7xl'
-        marginX='auto'
+        mx='auto'
         gap={8}
-        paddingTop={10}
+        pt={10}
         templateColumns={{
           base: '1fr',
           sm: 'auto 250px 250px',
@@ -49,7 +49,7 @@ function SingleProduct({ product }) {
         }}
       >
         {/* IMAGE */}
-        <Flex justifyContent='center' alignItems='center'>
+        <Flex justify='center' align='center' border='1px solid lightblue'>
           <Image src={data?.image} alt={data?.name} />
         </Flex>
         {/* DETAILS */}

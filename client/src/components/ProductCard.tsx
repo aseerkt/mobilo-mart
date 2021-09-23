@@ -30,7 +30,13 @@ function ProductCard({ product }: ProductCardProps) {
           alt={product.name}
         />
       </Flex>
-      <Flex flex='1' flexDirection='column' justifyContent='space-between'>
+      <Flex
+        flex='1'
+        direction='column'
+        justify='space-between'
+        textAlign='center'
+        align='center'
+      >
         <NextLink href={`products/${product.id}`}>
           <Text
             cursor='pointer'

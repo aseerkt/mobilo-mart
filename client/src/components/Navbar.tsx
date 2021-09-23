@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { FaCartArrowDown, FaSearch, FaUserAlt } from 'react-icons/fa';
 import NextLink from 'next/link';
-import useUser from '../libs/useUser';
+import useUser from '@/libs/useUser';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import useCartStore from '@/store/cartStore';
@@ -72,7 +72,9 @@ function Navbar() {
         </Box>
         <HStack fontWeight='bold' spacing={3}>
           <Link href='/cart' as={NextLink}>
-            <Button leftIcon={<FaCartArrowDown />}>{cartItems.length}</Button>
+            <Button leftIcon={<FaCartArrowDown />}>
+              {cartItems.length || 0}
+            </Button>
           </Link>
           {loading ? null : user ? (
             <>
@@ -81,21 +83,24 @@ function Navbar() {
                   {user?.name}
                 </MenuButton>
                 <MenuList>
-                  <MenuItem>My Orders</MenuItem>
-                  <MenuItem>My Wishlist</MenuItem>
-                  <MenuItem>My Cart</MenuItem>
-                  <MenuItem>My Addresses</MenuItem>
+                  <NextLink href='/orders'>
+                    <MenuItem>My Orders</MenuItem>
+                  </NextLink>
+                  <NextLink href='/cart'>
+                    <MenuItem>My Cart</MenuItem>
+                  </NextLink>
+                  <NextLink href='/addresses'>
+                    <MenuItem>My Addresses</MenuItem>
+                  </NextLink>
                   <Divider />
                   <MenuItem onClick={logout}>Sign Out</MenuItem>
                 </MenuList>
               </Menu>
             </>
           ) : (
-            <>
-              <Link href='/login' as={NextLink}>
-                Login
-              </Link>
-            </>
+            <Link href='/login' as={NextLink}>
+              Login
+            </Link>
           )}
         </HStack>
       </Flex>
