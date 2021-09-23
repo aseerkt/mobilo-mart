@@ -4,15 +4,23 @@ import useCartStore from '@/store/cartStore';
 import { formatPrice } from '@/utils/formatNumbers';
 import { Box, Button, Divider, Flex, Grid, Icon, Text } from '@chakra-ui/react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { FaCartPlus, FaLock } from 'react-icons/fa';
+import useAddressStore from '../store/addressStore';
 
 function Cart() {
+  const router = useRouter();
   const cartItems = useCartStore((state) => state.cartItems);
-  const totalPrice = cartItems.reduce(
-    (prev, curr) => prev + curr.qty * curr.price,
-    0
-  );
-  const totalItems = cartItems.reduce((prev, curr) => prev + curr.qty, 0);
+  const getTotalPrice = useCartStore((state) => state.getTotalPrice);
+  const getTotalQty = useCartStore((state) => state.getTotalQty);
+  const { hasCurrentAddress } = useAddressStore();
+  const totalPrice = getTotalPrice();
+  const totalItems = getTotalQty();
+
+  const onProceedToBuy = () => {
+    if (!hasCurrentAddress()) router.push('/addresses?buy=1');
+    else router.push('/checkout');
+  };
 
   return (
     <div>
@@ -20,23 +28,21 @@ function Cart() {
         <title>My Cart</title>
       </Head>
       <Layout>
-        <Grid gap='5' templateColumns={{ base: '1fr', sm: 'auto 350px' }}>
+        <Text fontSize='2xl' fontWeight='700' pb='5'>
+          Shopping Cart
+        </Text>
+        <Divider mb='5' />
+        <Grid gap='10' templateColumns={{ base: '1fr', sm: 'auto 350px' }}>
           <Box>
-            <Text fontSize='2xl' fontWeight='700' pb='5'>
-              Shopping Cart
-            </Text>
-            <Divider />
-            <Box>
-              {cartItems.map((i) => (
-                <CartItem key={i.id} cartItem={i} />
-              ))}
-              {cartItems.length < 1 && (
-                <Flex align='center' p='10' justify='center'>
-                  <Icon as={FaCartPlus} boxSize={20} />
-                  <Text ml='5'>Your cart is empty</Text>
-                </Flex>
-              )}
-            </Box>
+            {cartItems.map((i) => (
+              <CartItem key={i.id} cartItem={i} />
+            ))}
+            {cartItems.length < 1 && (
+              <Flex align='center' p='10' justify='center'>
+                <Icon as={FaCartPlus} boxSize={20} />
+                <Text ml='5'>Your cart is empty</Text>
+              </Flex>
+            )}
           </Box>
           <Box
             h='max-content'
@@ -48,18 +54,16 @@ function Cart() {
               Subtotal ({totalItems} items):{' '}
               <Text fontWeight='700'>{formatPrice(totalPrice)}</Text>
             </Text>
-            <Button colorScheme='teal'>Proceed To Buy</Button>
-            <Text
-              color='gray'
-              fontSize='sm'
-              display='flex'
-              alignItems='center'
-              mt='5'
+            <Button
+              disabled={cartItems.length === 0}
+              onClick={onProceedToBuy}
+              colorScheme='teal'
             >
-              {' '}
-              <FaLock size='1.3em' style={{ marginRight: '0.5rem' }} />{' '}
-              <span>Secure transaction</span>
-            </Text>
+              Proceed To Buy
+            </Button>
+            <Flex color='gray' fontSize='sm' align='center' mt='5'>
+              <FaLock size='1.3em' /> <Text ml='3'>Secure transaction</Text>
+            </Flex>
           </Box>
         </Grid>
       </Layout>

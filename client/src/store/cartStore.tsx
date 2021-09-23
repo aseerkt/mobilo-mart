@@ -9,6 +9,9 @@ export interface CartItemType extends Mobile {
 interface CartStore {
   cartItems: CartItemType[];
   addToCart: (mobile: Mobile, qty: number) => void;
+  getTotalPrice: () => number;
+  getTotalQty: () => number;
+  isCartEmpty: () => boolean;
   removeItem: (mobileId: string) => void;
   changeItemQty: (mobileId: string, qty: number) => void;
 }
@@ -27,6 +30,11 @@ const useCartStore = create<CartStore>(
           });
         }
       },
+      getTotalPrice: () =>
+        get().cartItems.reduce((prev, curr) => prev + curr.qty * curr.price, 0),
+      getTotalQty: () =>
+        get().cartItems.reduce((prev, curr) => prev + curr.qty, 0),
+      isCartEmpty: () => get().cartItems.length === 0,
       removeItem: (mobileId) => {
         const { cartItems } = get();
         const newItems = cartItems.filter((i) => i.id !== mobileId);
