@@ -1,16 +1,22 @@
 import express from 'express';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-
 import { MikroORM, EntityRepository, RequestContext } from '@mikro-orm/core';
-// import config from './mikro-orm.config';
+import { EntityManager } from '@mikro-orm/postgresql';
+
+// Entities
 import User from './entities/User';
 import Mobile from './entities/Mobile';
+import OrderItem from './entities/OrderItem';
+import Review from './entities/Review';
 
+// Routes
 import userRoutes from './routes/users';
 import productRoutes from './routes/products';
-import { EntityManager } from '@mikro-orm/postgresql';
-import OrderItem from './entities/OrderItem';
+import orderRoutes from './routes/orders';
+
+// Middlewares
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import { errorHandler, notFound } from './middlewares/errorMiddleware';
 
 export const DI = {} as {
   orm: MikroORM;
@@ -18,6 +24,7 @@ export const DI = {} as {
   userRepository: EntityRepository<User>;
   mobileRepository: EntityRepository<Mobile>;
   orderRepository: EntityRepository<OrderItem>;
+  reviewRepository: EntityRepository<Review>;
 };
 
 export default async function createApp() {
@@ -26,6 +33,7 @@ export default async function createApp() {
   DI.userRepository = DI.orm.em.getRepository(User);
   DI.mobileRepository = DI.orm.em.getRepository(Mobile);
   DI.orderRepository = DI.orm.em.getRepository(OrderItem);
+  DI.reviewRepository = DI.orm.em.getRepository(Review);
 
   const app = express();
 
@@ -34,12 +42,16 @@ export default async function createApp() {
   app.use(express.json());
   app.use((_req, _res, next) => RequestContext.create(DI.orm.em, next));
 
-  app.get('/', (_, res) => res.send('Welcome to Mobile Mart Server'));
+  app.get('/', (_, res) => res.send('Welcome to Mobilo Mart Server'));
 
   app.use(cookieParser());
 
   app.use('/api/users', userRoutes);
   app.use('/api/products', productRoutes);
+  app.use('/api/orders', orderRoutes);
+
+  app.use(notFound);
+  app.use(errorHandler);
 
   return { app };
 }
