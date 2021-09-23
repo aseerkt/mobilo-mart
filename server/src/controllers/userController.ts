@@ -38,7 +38,7 @@ export const register: RequestHandler = routeHandler(async function (req, res) {
     avatar: GRAVATAR_PLACEHOLDER,
   });
 
-  DI.em.persistAndFlush(user);
+  await DI.em.persistAndFlush(user);
 
   setCookie(res, user);
   return res.status(201).json({ user: { ...user, password: undefined } });
