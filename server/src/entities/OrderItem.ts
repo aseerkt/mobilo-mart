@@ -6,7 +6,6 @@ import Mobile from './Mobile';
 export enum OrderItemStatus {
   CANCELLED = 'cancelled',
   PAID = 'paid',
-  DELIVERED = 'delivered',
 }
 
 @Entity({ tableName: 'order-items' })
