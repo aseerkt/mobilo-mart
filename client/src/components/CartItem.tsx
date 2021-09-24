@@ -20,10 +20,15 @@ function CartItem({ cartItem: i }: CartItemProps) {
         gap='5'
       >
         <Flex h='44' w='44' justify='center' align='center'>
-          <Image h='full' objectFit='contain' src={i.image} alt={i.name} />
+          <Image
+            h='full'
+            objectFit='contain'
+            src={i.mobile.image}
+            alt={i.mobile.name}
+          />
         </Flex>
         <Flex direction='column' flex='1'>
-          <NextLink href={`/products/${i.id}`}>
+          <NextLink href={`/products/${i.mobile.id}`}>
             <Text
               noOfLines={2}
               fontSize='lg'
@@ -34,7 +39,7 @@ function CartItem({ cartItem: i }: CartItemProps) {
                 color: 'blue.500',
               }}
             >
-              {i.name}
+              {i.mobile.name}
             </Text>
           </NextLink>
           <Text fontWeight='500' fontSize='sm' color='green'>
@@ -47,13 +52,13 @@ function CartItem({ cartItem: i }: CartItemProps) {
                 minimalText
                 qty={i.qty}
                 onQtyChange={(e) =>
-                  changeItemQty(i.id, parseInt(e.target.value))
+                  changeItemQty(i.mobile.id, parseInt(e.target.value))
                 }
               />
             </Flex>
             <Divider mx='2' orientation='vertical' />
             <Button
-              onClick={() => removeItem(i.id)}
+              onClick={() => removeItem(i.mobile.id)}
               fontWeight='500'
               variant='link'
             >
@@ -62,7 +67,7 @@ function CartItem({ cartItem: i }: CartItemProps) {
           </Flex>
         </Flex>
         <Text textAlign='right' fontWeight='800' color='red'>
-          {formatPrice(i.price)}
+          {formatPrice(i.mobile.price)}
         </Text>
       </Grid>
       <Divider />
