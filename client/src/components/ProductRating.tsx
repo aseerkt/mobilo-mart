@@ -1,6 +1,6 @@
 import { numberWithCommas } from '@/utils/formatNumbers';
 import { Flex, Text } from '@chakra-ui/react';
-import { FaStar, FaStarHalf, FaRegStar } from 'react-icons/fa';
+import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa';
 
 interface RatingProps {
   id: string;
@@ -15,13 +15,14 @@ function ProductRating({ id, stars, numReviews }: RatingProps) {
       userSelect='none'
       marginY='2'
       alignItems='center'
+      w='max-content'
     >
       <Flex color='yellow.400' marginRight='2'>
         {[1, 2, 3, 4, 5].map((v) =>
           stars >= v ? (
             <FaStar key={`star_full_${v}_${id}`} size='1.4em' />
           ) : stars >= v - 0.5 ? (
-            <FaStarHalf key={`star_half_${v}_${id}`} size='1.4em' />
+            <FaStarHalfAlt key={`star_half_${v}_${id}`} size='1.4em' />
           ) : (
             <FaRegStar key={`star_none_${v}_${id}`} size='1.4em' />
           )

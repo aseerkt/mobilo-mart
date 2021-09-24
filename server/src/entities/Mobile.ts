@@ -18,7 +18,7 @@ export default class Mobile {
   @Property()
   discount: number;
 
-  @Property()
+  @Property({ type: 'float' })
   stars: number = 0;
 
   @Property()
