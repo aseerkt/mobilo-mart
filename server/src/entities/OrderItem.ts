@@ -1,14 +1,14 @@
 import { Entity, Enum, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
-import User from './User';
 import Mobile from './Mobile';
+import Order from './Order';
 
 export enum OrderItemStatus {
   CANCELLED = 'cancelled',
   PAID = 'paid',
 }
 
-@Entity({ tableName: 'order-items' })
+@Entity({ tableName: 'order_items' })
 export default class OrderItem {
   @PrimaryKey()
   id: string = v4();
@@ -16,15 +16,19 @@ export default class OrderItem {
   @Property()
   qty: number;
 
-  @ManyToOne(() => User)
-  user: User;
+  @ManyToOne(() => Order)
+  order: Order;
 
   @ManyToOne(() => Mobile)
-  Mobile: Mobile;
+  mobile: Mobile;
 
   @Enum({
     type: 'OrderItemStatus',
     items: () => OrderItemStatus,
+    default: OrderItemStatus.PAID,
   })
   status: OrderItemStatus;
+
+  @Property({ type: 'date' })
+  createdAt = new Date();
 }

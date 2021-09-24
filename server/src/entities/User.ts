@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 
 @Entity({ tableName: 'users' })
 export default class User {
-  @PrimaryKey()
+  @PrimaryKey({ type: 'uuid' })
   id: string = v4();
 
   @Property({ unique: true })

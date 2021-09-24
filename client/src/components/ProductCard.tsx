@@ -51,7 +51,7 @@ function ProductCard({ product }: ProductCardProps) {
             {product.name}
           </Text>
         </NextLink>
-        <Flex flexDirection='column' justifyContent='flex-end'>
+        <Flex flexDirection='column' justifyContent='flex-end' align='center'>
           <ProductRating
             id={product.id}
             stars={product.stars}

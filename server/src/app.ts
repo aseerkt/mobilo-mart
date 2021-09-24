@@ -6,6 +6,7 @@ import { EntityManager } from '@mikro-orm/postgresql';
 import User from './entities/User';
 import Mobile from './entities/Mobile';
 import OrderItem from './entities/OrderItem';
+import Order from './entities/Order';
 import Review from './entities/Review';
 
 // Routes
@@ -23,7 +24,8 @@ export const DI = {} as {
   em: EntityManager;
   userRepository: EntityRepository<User>;
   mobileRepository: EntityRepository<Mobile>;
-  orderRepository: EntityRepository<OrderItem>;
+  orderRepository: EntityRepository<Order>;
+  orderItemRepository: EntityRepository<OrderItem>;
   reviewRepository: EntityRepository<Review>;
 };
 
@@ -32,7 +34,8 @@ export default async function createApp() {
   DI.em = DI.orm.em as EntityManager;
   DI.userRepository = DI.orm.em.getRepository(User);
   DI.mobileRepository = DI.orm.em.getRepository(Mobile);
-  DI.orderRepository = DI.orm.em.getRepository(OrderItem);
+  DI.orderRepository = DI.orm.em.getRepository(Order);
+  DI.orderItemRepository = DI.orm.em.getRepository(OrderItem);
   DI.reviewRepository = DI.orm.em.getRepository(Review);
 
   const app = express();

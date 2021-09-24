@@ -1,9 +1,14 @@
 import { Router } from 'express';
-import { placeOrder, setRazorOrder } from '../controllers/orderController';
+import {
+  getMyOrders,
+  placeOrder,
+  setRazorOrder,
+} from '../controllers/orderController';
 import { requireAuth } from '../middlewares/permissions';
 
 const router = Router();
 
+router.get('/', requireAuth, getMyOrders);
 router.post('/', requireAuth, setRazorOrder);
 router.post('/save', requireAuth, placeOrder);
 

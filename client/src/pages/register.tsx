@@ -3,9 +3,9 @@ import axios from 'axios';
 import { Form, Formik } from 'formik';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import FormWrapper from '../components/FormWrapper';
-import useUser from '../libs/useUser';
-import InputField from '../shared/InputField';
+import FormWrapper from '@/components/FormWrapper';
+import useUser from '@/libs/useUser';
+import InputField from '@/shared/InputField';
 
 // TODO: yup client side form validation
 

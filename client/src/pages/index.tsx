@@ -3,9 +3,9 @@ import { Box } from '@chakra-ui/react';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import useSWR from 'swr';
-import Carousel from '../components/Carousel';
-import ProductCard from '../components/ProductCard';
-import fetcher from '../libs/fetcher';
+import Carousel from '@/components/Carousel';
+import ProductCard from '@/components/ProductCard';
+import fetcher from '@/libs/fetcher';
 
 interface HomePageProps {
   products: Mobile[];
@@ -23,11 +23,12 @@ export default function Home({ products }: HomePageProps) {
       <Box
         pos='relative'
         maxW='7xl'
-        marginX='auto'
+        mx='auto'
         display='grid'
         gridTemplateColumns='repeat(auto-fit, minmax(250px, 1fr))'
         gridGap='5'
         zIndex={50}
+        pb='10'
       >
         {data?.map((p) => (
           <ProductCard key={p.id} product={p} />

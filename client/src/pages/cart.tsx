@@ -6,7 +6,8 @@ import { Box, Button, Divider, Flex, Grid, Icon, Text } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { FaCartPlus, FaLock } from 'react-icons/fa';
-import useAddressStore from '../store/addressStore';
+import useAddressStore from '@/store/addressStore';
+import { TWO_GRID_STYLES } from '../shared/twoGridStyles';
 
 function Cart() {
   const router = useRouter();
@@ -32,10 +33,10 @@ function Cart() {
           Shopping Cart
         </Text>
         <Divider mb='5' />
-        <Grid gap='10' templateColumns={{ base: '1fr', sm: 'auto 350px' }}>
+        <Grid {...TWO_GRID_STYLES}>
           <Box>
             {cartItems.map((i) => (
-              <CartItem key={i.id} cartItem={i} />
+              <CartItem key={i.mobile.id} cartItem={i} />
             ))}
             {cartItems.length < 1 && (
               <Flex align='center' p='10' justify='center'>

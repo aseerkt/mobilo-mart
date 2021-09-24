@@ -72,14 +72,18 @@ function Navbar() {
         </Box>
         <HStack fontWeight='bold' spacing={3}>
           <Link href='/cart' as={NextLink}>
-            <Button leftIcon={<FaCartArrowDown />}>
+            <Button leftIcon={<FaCartArrowDown size='1.3em' />}>
               {cartItems.length || 0}
             </Button>
           </Link>
           {loading ? null : user ? (
             <>
               <Menu placement='bottom-end'>
-                <MenuButton as={Button} rightIcon={<FaUserAlt />}>
+                <MenuButton
+                  as={Button}
+                  variant='outline'
+                  leftIcon={<FaUserAlt size='1.3em' />}
+                >
                   {user?.name}
                 </MenuButton>
                 <MenuList>

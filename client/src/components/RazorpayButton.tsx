@@ -1,9 +1,19 @@
-import useCartStore from '@/store/cartStore';
+import { Button } from '@chakra-ui/button';
+import useRazorpay from '../libs/useRazorpay';
 
 function RazorpayButton() {
-  const getTotalPrice = useCartStore((state) => state.getTotalPrice);
+  const { makePayment } = useRazorpay();
 
-  return <div></div>;
+  return (
+    <Button
+      colorScheme='teal'
+      color='white'
+      fontWeight='semibold'
+      onClick={makePayment}
+    >
+      Pay with Razorpay
+    </Button>
+  );
 }
 
 export default RazorpayButton;

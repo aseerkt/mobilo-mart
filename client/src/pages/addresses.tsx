@@ -7,8 +7,7 @@ import {
   GridItemProps,
   Text,
 } from '@chakra-ui/layout';
-import { IconButton, Button } from '@chakra-ui/react';
-import next from 'next';
+import { IconButton } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import {
@@ -18,11 +17,9 @@ import {
   FaPlusSquare,
   FaTrash,
 } from 'react-icons/fa';
-import AddressModal from '../components/AddressModal';
-import useUser from '../libs/useUser';
-import Layout from '../shared/Layout';
-import useAddressStore from '../store/addressStore';
-import useCartStore from '../store/cartStore';
+import AddressModal from '@/components/AddressModal';
+import Layout from '@/shared/Layout';
+import useAddressStore from '@/store/addressStore';
 
 const addressCardStyles: GridItemProps = {
   minH: '60',

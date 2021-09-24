@@ -9,8 +9,9 @@ export const notFound: RequestHandler = (req, res, next) => {
   next(error);
 };
 
-export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+  if (!__prod__) console.error(err);
   res.status(statusCode);
   res.json({
     message: err.message,

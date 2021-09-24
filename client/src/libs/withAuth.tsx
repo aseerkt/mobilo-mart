@@ -2,7 +2,7 @@ import { Spinner, useToast, Flex } from '@chakra-ui/react';
 import Head from 'next/head';
 import router from 'next/router';
 import { ReactNode } from 'react';
-import Layout from '../shared/Layout';
+import Layout from '@/shared/Layout';
 import useUser from './useUser';
 
 interface WithAuthProps {
@@ -17,7 +17,14 @@ const withAuth =
     const toast = useToast();
 
     if (user) {
-      return <Component {...props} />;
+      return (
+        <>
+          <Head>
+            <title>{title}</title>
+          </Head>
+          <Component {...props} />
+        </>
+      );
     }
 
     if (!loading && !user) {

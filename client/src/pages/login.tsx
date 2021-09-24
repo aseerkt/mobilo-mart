@@ -1,10 +1,10 @@
-import FormWrapper from '../components/FormWrapper';
+import FormWrapper from '@/components/FormWrapper';
 import { Button, Divider, Text, Link, useToast } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import InputField from '../shared/InputField';
+import InputField from '@/shared/InputField';
 import { Form, Formik } from 'formik';
 import axios from 'axios';
-import useUser from '../libs/useUser';
+import useUser from '@/libs/useUser';
 import { useRouter } from 'next/router';
 
 // TODO: yup client side form validation

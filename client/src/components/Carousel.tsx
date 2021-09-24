@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Box, Flex, Img, Text, TextProps } from '@chakra-ui/react';
 
-const TEXT_MARGIN = '10vh';
+const TEXT_MARGIN = '15vh';
 
 const slides = [
   {
@@ -19,7 +19,7 @@ const slides = [
     src: '/slideshow/pexels-thiago-japyassu-1069798.jpg',
     alt: 'Samsung Galaxy',
     objectPosition: 'right bottom',
-    text: 'Dummy Text',
+    text: 'Purchase mobiles with considerable price',
     textStyles: {
       color: 'white',
       left: TEXT_MARGIN,
@@ -29,7 +29,7 @@ const slides = [
     src: '/slideshow/pexels-pixabay-257923.jpg',
     alt: 'Samsung Galaxy',
     objectPosition: 'left top',
-    text: 'Dummy Text',
+    text: 'All your favourite brands in one place',
     textStyles: {
       color: 'black',
       right: TEXT_MARGIN,
@@ -45,12 +45,12 @@ function Carousel() {
     function goToNextSlide() {
       setCurrentSlide((s) => (s === slides.length - 1 ? 0 : s + 1));
     }
-    let slideshow = setInterval(goToNextSlide, 3000);
+    let slideshow = setInterval(goToNextSlide, 5000);
     return () => clearInterval(slideshow);
   }, []);
 
   const carouselStyle = {
-    transition: 'all 1s',
+    transition: 'all 1.5s',
     ml: `-${currentSlide * 100}%`,
   };
 
@@ -86,12 +86,12 @@ function Carousel() {
                 display={{ base: 'none', md: 'block' }}
                 zIndex='5'
                 pos='absolute'
-                top='50%'
-                w='30%'
+                top='40%'
+                w='35%'
                 fontWeight='extrabold'
-                fontSize='6xl'
-                lineHeight='1'
-                transform='translateY(-100%)'
+                fontSize='5xl'
+                lineHeight='1.2'
+                transform='translateY(-50%)'
                 {...(textStyles as TextProps)}
               >
                 {text}
