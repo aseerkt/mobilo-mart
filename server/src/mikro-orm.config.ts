@@ -11,6 +11,8 @@ export default {
     path: path.join(__dirname, './migrations'),
     emit: 'js',
     pattern: /^[\w-]+\d+\.js$/,
+    // https://github.com/mikro-orm/mikro-orm/issues/190
+    disableForeignKeys: true,
   },
   entities: [path.join('./dist/entities')],
   type: 'postgresql',
