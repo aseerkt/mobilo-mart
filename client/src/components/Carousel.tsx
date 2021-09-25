@@ -83,13 +83,13 @@ function Carousel() {
                 {...rest}
               />
               <Text
-                display={{ base: 'none', md: 'block' }}
+                display={{ base: 'none', lg: 'block' }}
                 zIndex='5'
                 pos='absolute'
                 top='40%'
                 w='35%'
                 fontWeight='extrabold'
-                fontSize='5xl'
+                fontSize={{ md: '4xl', lg: '5xl' }}
                 lineHeight='1.2'
                 transform='translateY(-50%)'
                 {...(textStyles as TextProps)}
