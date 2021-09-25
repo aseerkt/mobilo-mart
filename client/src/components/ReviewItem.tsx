@@ -3,7 +3,6 @@ import { IconButton } from '@chakra-ui/button';
 import { Box, Flex, HStack, Text } from '@chakra-ui/layout';
 import { useToast } from '@chakra-ui/toast';
 import axios from 'axios';
-import React, { useCallback } from 'react';
 import { FaRegStar, FaStar, FaStarHalfAlt, FaTrash } from 'react-icons/fa';
 import useSWR from 'swr';
 import useUser from '../libs/useUser';

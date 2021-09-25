@@ -5,7 +5,6 @@ import {
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
-  useSlider,
 } from '@chakra-ui/slider';
 import { Box, Divider, Flex, Text } from '@chakra-ui/layout';
 import {
@@ -26,11 +25,9 @@ import {
 } from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/toast';
 import axios from 'axios';
-import { useRouter } from 'next/router';
-import React, { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { FaEdit, FaPlusCircle, FaStar } from 'react-icons/fa';
 import useSWR from 'swr';
-import InputField from '../shared/InputField';
 import { Review } from '../types/mobile';
 
 interface ReviewFormProps {

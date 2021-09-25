@@ -24,7 +24,7 @@ import Reviews from '../../components/Reviews';
 import Layout from '../../shared/Layout';
 
 function SingleProduct({ product }) {
-  const { data } = useSWR<Mobile>(`/products/${product?.id}`, {
+  const { data } = useSWR<Mobile | null>(`/products/${product?.id}`, {
     initialData: product,
   });
 
@@ -116,14 +116,16 @@ function SingleProduct({ product }) {
             <Text color='teal' fontWeight='semibold' my='2'>
               FREE Delivery
             </Text>
-            <Text>{data.deliveryDays} day delivery</Text>
+            <Text>{data?.deliveryDays} day delivery</Text>
           </Flex>
         </Grid>
-        <Reviews
-          mobileId={data.id}
-          reviews={data.reviews}
-          numReviews={data.numReviews}
-        />
+        {data?.reviews && (
+          <Reviews
+            mobileId={data?.id}
+            reviews={data.reviews}
+            numReviews={data?.numReviews}
+          />
+        )}
       </Layout>
     </div>
   );
