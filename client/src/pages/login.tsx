@@ -1,5 +1,12 @@
 import FormWrapper from '@/components/FormWrapper';
-import { Button, Divider, Text, Link, useToast } from '@chakra-ui/react';
+import {
+  Button,
+  Divider,
+  Text,
+  Link,
+  useToast,
+  HStack,
+} from '@chakra-ui/react';
 import NextLink from 'next/link';
 import InputField from '@/shared/InputField';
 import { Form, Formik } from 'formik';
@@ -62,14 +69,45 @@ function Login() {
               name='password'
             />
 
-            <Button
-              isLoading={isSubmitting}
-              marginY='5'
-              colorScheme='teal'
-              type='submit'
-            >
-              Sign In
-            </Button>
+            <HStack spacing={3}>
+              <Button
+                isLoading={isSubmitting}
+                marginY='5'
+                colorScheme='teal'
+                type='submit'
+              >
+                Sign In
+              </Button>
+              <Button
+                marginY='5'
+                colorScheme='teal'
+                variant='outline'
+                typ='button'
+                onClick={async () => {
+                  try {
+                    const res = await axios('/users/login', {
+                      method: 'POST',
+                      data: { isTest: true },
+                    });
+                    const user = res.data?.user;
+                    if (user && (await revalidate())) {
+                      toast({
+                        title: `Welcome ${user?.name}.`,
+                        description: 'Login successfull.',
+                        status: 'success',
+                        duration: 3000,
+                        isClosable: true,
+                      });
+                      router.push('/');
+                    }
+                  } catch (err) {
+                    console.error(err);
+                  }
+                }}
+              >
+                Login as Guest
+              </Button>
+            </HStack>
           </Form>
         )}
       </Formik>
