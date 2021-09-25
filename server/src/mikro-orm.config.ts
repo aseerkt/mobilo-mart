@@ -6,8 +6,6 @@ import path from 'path';
 const __dev__ = process.env.NODE_ENV !== 'production';
 const config = parse(process.env.DATABASE_URL!);
 
-console.log(config, __dev__);
-
 export default {
   migrations: {
     path: path.join(__dirname, './migrations'),
@@ -18,9 +16,11 @@ export default {
   type: 'postgresql',
   dbName: config.database,
   user: config.user,
+  host: config.host,
+  port: config.port,
   password: config.password,
-  debug: true,
-  highlighter: true && new SqlHighlighter(),
+  debug: __dev__,
+  highlighter: __dev__ && new SqlHighlighter(),
   driverOptions: {
     connection: { ssl: { rejectUnauthorized: false } },
   },
