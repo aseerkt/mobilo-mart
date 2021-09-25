@@ -1,16 +1,15 @@
 import { CookieOptions, Response, Request } from 'express';
 import jwt from 'jsonwebtoken';
+import { __prod__ } from '../constants';
 import User from '../entities/User';
-
-const __PROD__ = process.env.NODE_ENV === 'production';
 
 const { JWT_SECRET } = process.env;
 const COOKIE_NAME = 'mobilo-auth';
 const COOKIE_OPTIONS: CookieOptions = {
   httpOnly: true,
-  secure: __PROD__,
+  secure: __prod__,
   maxAge: 7 * 24 * 60 * 60 * 1000,
-  sameSite: __PROD__ ? 'none' : 'lax',
+  sameSite: __prod__ ? 'none' : 'lax',
 };
 
 export function setCookie(res: Response, user: User) {

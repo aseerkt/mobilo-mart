@@ -55,13 +55,13 @@ function Navbar() {
             textAlign='center'
             color='teal'
             textTransform='uppercase'
-            fontSize='2xl'
+            fontSize={{ base: 'md', sm: '2xl' }}
             fontWeight='bold'
           >
             Mobilo Mart
           </Text>
         </Link>
-        <Box flex='1' marginX='5'>
+        {/* <Box flex='1' marginX='5'>
           <InputGroup>
             <InputLeftElement
               pointerEvents='none'
@@ -69,7 +69,7 @@ function Navbar() {
             />
             <Input variant='filled' type='number' />
           </InputGroup>
-        </Box>
+        </Box> */}
         <HStack fontWeight='bold' spacing={3}>
           <Link href='/cart' as={NextLink}>
             <Button leftIcon={<FaCartArrowDown size='1.3em' />}>

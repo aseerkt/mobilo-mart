@@ -11,10 +11,14 @@ export const getProducts: RequestHandler = expressAsyncHandler(async function (
 });
 
 export const getSingleProduct: RequestHandler = expressAsyncHandler(
-  async function (req, res) {
+  async function (req, res, next) {
     const mobile = await DI.mobileRepository.findOne({
       id: req.params.productId,
     });
-    return res.json(mobile);
+    if (mobile) {
+      await DI.em.populate(mobile, ['reviews', 'reviews.user']);
+      return res.json(mobile);
+    }
+    return next();
   }
 );

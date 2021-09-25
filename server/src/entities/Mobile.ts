@@ -1,5 +1,6 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
+import Review from './Review';
 
 @Entity({ tableName: 'mobiles' })
 export default class Mobile {
@@ -32,4 +33,7 @@ export default class Mobile {
 
   @Property()
   keywords: string[];
+
+  @OneToMany(() => Review, (review) => review.mobile)
+  reviews: Review[];
 }
