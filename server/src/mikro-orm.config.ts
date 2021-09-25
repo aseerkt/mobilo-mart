@@ -1,7 +1,7 @@
+import path from 'path';
 import { Options } from '@mikro-orm/core';
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
 import { parse } from 'pg-connection-string';
-import path from 'path';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 
 const __dev__ = process.env.NODE_ENV !== 'production';
@@ -17,6 +17,7 @@ export default {
     wrap: false,
   },
   entities: [path.join('./dist/entities')],
+  tsNode: false,
   type: 'postgresql',
   dbName: config.database,
   user: config.user,
@@ -24,7 +25,7 @@ export default {
   port: config.port,
   password: config.password,
   debug: __dev__,
-  highlighter: __dev__ && new SqlHighlighter(),
+  highlighter: new SqlHighlighter(),
   driverOptions: {
     connection: { ssl: { rejectUnauthorized: false } },
   },
