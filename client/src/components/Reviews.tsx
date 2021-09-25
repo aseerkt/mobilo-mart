@@ -1,3 +1,4 @@
+import { Button } from '@chakra-ui/button';
 import { Divider, Flex, Grid, GridItem, Text } from '@chakra-ui/layout';
 import { useMemo } from 'react';
 import useUser from '../libs/useUser';
@@ -13,7 +14,7 @@ interface ReviewsFCProps {
 }
 
 function Reviews({ mobileId, reviews, numReviews }: ReviewsFCProps) {
-  const { user } = useUser();
+  const { user, loading } = useUser();
   const cannotReview = useMemo(
     () => !user || reviews.some((review) => review.user.id === user.id),
     [reviews, user]
@@ -38,6 +39,11 @@ function Reviews({ mobileId, reviews, numReviews }: ReviewsFCProps) {
           </Flex>
         )}
         {!cannotReview && <ReviewForm mobileId={mobileId} />}
+        {!loading && !user && (
+          <Button colorScheme='teal' size='sm' my='2'>
+            Log in to add review
+          </Button>
+        )}
         {reviews.map((review) => (
           <ReviewItem key={review.id} review={review} />
         ))}
