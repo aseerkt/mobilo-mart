@@ -49,7 +49,7 @@ function SingleProduct({ product }) {
         }}
       >
         {/* IMAGE */}
-        <Flex justify='center' align='center' border='1px solid lightblue'>
+        <Flex justify='center' align='center' border='1px solid lightcyan'>
           <Image src={data?.image} alt={data?.name} />
         </Flex>
         {/* DETAILS */}
