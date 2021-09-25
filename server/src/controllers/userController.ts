@@ -10,6 +10,7 @@ const GRAVATAR_PLACEHOLDER =
 interface LoginBody {
   email: string;
   password: string;
+  isTest?: boolean;
 }
 
 interface RegisterBody extends LoginBody {
@@ -48,9 +49,15 @@ export const login: RequestHandler = expressAsyncHandler(async function (
   req,
   res
 ) {
-  const { email, password } = req.body as LoginBody;
+  const { email, password, isTest } = req.body as LoginBody;
+  if (isTest) {
+    const testUser = await DI.userRepository.findOne({
+      email: 'bob@gmail.com',
+    });
+    setCookie(res, testUser!);
+    return res.json({ user: { ...testUser, password: undefined } });
+  }
   const user = await DI.userRepository.findOne({ email });
-
   if (!user) {
     return res.status(400).json({
       errors: [{ path: 'email', message: 'Email is not registered' }],
