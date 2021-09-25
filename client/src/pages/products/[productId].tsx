@@ -133,7 +133,7 @@ function SingleProduct({ product }) {
 
 export const getStaticProps: GetStaticProps = async function ({ params }) {
   const productData = await fetcher(`/products/${params.productId}`);
-  return { props: { product: productData } };
+  return { props: { product: productData }, revalidate: 120 };
 };
 export const getStaticPaths: GetStaticPaths = async function () {
   const productsData = await fetcher('/products');
