@@ -6,7 +6,7 @@ import path from 'path';
 const __dev__ = process.env.NODE_ENV !== 'production';
 const config = parse(process.env.DATABASE_URL!);
 
-console.log(config);
+console.log(config, __dev__);
 
 export default {
   migrations: {
