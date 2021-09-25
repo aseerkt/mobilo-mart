@@ -53,10 +53,9 @@ function DeliveryCD({ deliveryDays, purchasedDate, mobileId }: CountdownProps) {
   return (
     <Box border='3px solid teal' borderRadius='md' w='max-content' my='3'>
       <Flex p='2' align='center'>
-        <FaClock />
-        <Text ml='1'>
-          Delivery date:{' '}
-          <chakra.span fontWeight='semibold'>
+        <Text fontWeight='normal'>
+          Delivery date{' '}
+          <chakra.span fontWeight='semibold' ml='2'>
             {new Date().toLocaleDateString('en-IN', {
               month: 'short',
               day: '2-digit',
@@ -65,7 +64,7 @@ function DeliveryCD({ deliveryDays, purchasedDate, mobileId }: CountdownProps) {
           </chakra.span>
         </Text>
       </Flex>
-      <Divider my='2' />
+      <Divider />
       <HStack p='2' spacing={4}>
         {Object.entries(timeData).map(([selector, value]) => (
           <Flex

@@ -1,5 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Box, Flex, Img, Text, TextProps } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Img,
+  Text,
+  TextProps,
+  Link,
+  Button,
+} from '@chakra-ui/react';
+import { FaCaretDown } from 'react-icons/fa';
 
 const TEXT_MARGIN = '15vh';
 
@@ -99,6 +108,23 @@ function Carousel() {
             </Box>
           ))}
         </Flex>
+        <Link
+          href='#browse'
+          zIndex='5'
+          pos='absolute'
+          bottom='30%'
+          left='50%'
+          transform='translateX(-50%)'
+          _hover={{ textDecoration: 'none' }}
+        >
+          <Button
+            leftIcon={<FaCaretDown />}
+            rightIcon={<FaCaretDown />}
+            colorScheme='teal'
+          >
+            BROWSE
+          </Button>
+        </Link>
 
         <Box
           justify='center'

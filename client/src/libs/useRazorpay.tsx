@@ -73,13 +73,20 @@ export default function useRazorpay() {
     });
 
     if (res.data.ok) {
-      clearCart();
       await revalidateOrders();
       toast({
         id: 'payment success',
         title: 'Order placed',
         description: 'Payment Successfull',
         status: 'success',
+        isClosable: true,
+        duration: 2000,
+      });
+      clearCart();
+      toast({
+        id: 'clear cart',
+        title: 'Cart cleared',
+        status: 'info',
         isClosable: true,
         duration: 2000,
       });

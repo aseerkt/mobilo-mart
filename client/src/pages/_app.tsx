@@ -1,5 +1,5 @@
 import { AppProps } from 'next/app';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, GlobalStyle } from '@chakra-ui/react';
 import '@fontsource/montserrat/400.css';
 import '@fontsource/montserrat/500.css';
 import '@fontsource/montserrat/700.css';
@@ -24,6 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SWRConfig value={{ fetcher, dedupingInterval: 10000 }}>
       <ChakraProvider theme={theme}>
+        <GlobalStyle />
         <ShowNavbar />
         <Component {...pageProps} />
       </ChakraProvider>

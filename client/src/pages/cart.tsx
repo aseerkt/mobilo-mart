@@ -39,7 +39,13 @@ function Cart() {
               <CartItem key={i.mobile.id} cartItem={i} />
             ))}
             {cartItems.length < 1 && (
-              <Flex align='center' p='10' justify='center'>
+              <Flex
+                h='full'
+                align='center'
+                p='10'
+                justify='center'
+                border='1px solid lightblue'
+              >
                 <Icon as={FaCartPlus} boxSize={20} />
                 <Text ml='5'>Your cart is empty</Text>
               </Flex>

@@ -1,5 +1,5 @@
 import { Mobile } from '@/types/mobile';
-import { Box } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import useSWR from 'swr';
@@ -20,6 +20,20 @@ export default function Home({ products }: HomePageProps) {
         <meta name='description' content='Mobile focused shopping franchise' />
       </Head>
       <Carousel />
+      <Text
+        id='browse'
+        color='blackAlpha'
+        textTransform='uppercase'
+        fontSize='3xl'
+        textAlign='center'
+        mb='6'
+        pt='16'
+        mt='-16'
+        fontWeight='700'
+      >
+        {' '}
+        Browse Mobiles
+      </Text>
       <Box
         pos='relative'
         maxW='7xl'

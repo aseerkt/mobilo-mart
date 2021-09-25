@@ -8,7 +8,7 @@ interface OrderEntryProps {
   orderItem: OrderItem;
 }
 
-function OrderEntry({ orderItem: i }: OrderEntryProps) {
+function OrderEntry({ orderItem: item }: OrderEntryProps) {
   return (
     <>
       <Grid
@@ -21,12 +21,12 @@ function OrderEntry({ orderItem: i }: OrderEntryProps) {
           <Image
             h='full'
             objectFit='contain'
-            src={i.mobile.image}
-            alt={i.mobile.name}
+            src={item.mobile.image}
+            alt={item.mobile.name}
           />
         </Flex>
         <Flex direction='column' flex='1'>
-          <NextLink href={`/products/${i.mobile.id}`}>
+          <NextLink href={`/products/${item.mobile.id}`}>
             <Text
               noOfLines={2}
               fontSize='lg'
@@ -37,15 +37,16 @@ function OrderEntry({ orderItem: i }: OrderEntryProps) {
                 color: 'blue.500',
               }}
             >
-              {i.mobile.name}
+              {item.mobile.name}
             </Text>
           </NextLink>
 
           <Text>FREE Delivery</Text>
+          <Text>Quantity: {item.qty}</Text>
           <DeliveryCD
-            mobileId={i.mobile.id}
-            purchasedDate={i.createdAt}
-            deliveryDays={i.mobile.deliveryDays}
+            mobileId={item.mobile.id}
+            purchasedDate={item.createdAt}
+            deliveryDays={item.mobile.deliveryDays}
           />
         </Flex>
       </Grid>

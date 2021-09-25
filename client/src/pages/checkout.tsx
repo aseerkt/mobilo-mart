@@ -1,16 +1,18 @@
+import Head from 'next/head';
+import NextLink from 'next/link';
 import CartItem from '@/components/CartItem';
 import withAuth from '@/libs/withAuth';
 import Layout from '@/shared/Layout';
 import useAddressStore from '@/store/addressStore';
 import useCartStore from '@/store/cartStore';
-import { Divider, Grid, GridItem, Text } from '@chakra-ui/layout';
+import { Divider, Flex, Grid, GridItem, Text } from '@chakra-ui/layout';
 import { useToast } from '@chakra-ui/toast';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import RazorpayButton from '../components/RazorpayButton';
 import ShowAddress from '../components/ShowAddress';
 import { TWO_GRID_STYLES } from '../shared/twoGridStyles';
+import { Button } from '@chakra-ui/button';
 
 function CheckoutPage() {
   const getCurrentAddress = useAddressStore((state) => state.getCurrentAddress);
@@ -21,18 +23,18 @@ function CheckoutPage() {
   const address = getCurrentAddress();
 
   useEffect(() => {
-    if (!address || cartItems.length === 0) {
+    if (!address) {
       toast({
         id: 'Checkout route redirect',
-        title: 'Cannot proceed with Checkout',
-        description: !address ? 'No address for delivery' : 'Cart is empty',
+        title: 'Cannot proceed with vheckout',
+        description: 'No address for delivery',
         status: 'info',
         duration: 2000,
         isClosable: true,
       });
-      router.push(!address ? '/addresses?buy=1' : '/');
+      router.push('/addresses?buy=1');
     }
-  }, [cartItems, address]);
+  }, [address]);
 
   return (
     <div>
@@ -42,7 +44,7 @@ function CheckoutPage() {
       </Head>
       <Layout>
         <Grid {...TWO_GRID_STYLES}>
-          <GridItem>
+          <GridItem h='full'>
             <Text fontSize='2xl' fontWeight='700' pb='5'>
               Confirm order
             </Text>
@@ -50,10 +52,29 @@ function CheckoutPage() {
             {cartItems.map((i) => (
               <CartItem key={i.mobile.id} cartItem={i} />
             ))}
+            {cartItems.length === 0 && (
+              <Flex
+                direction='column'
+                h='60'
+                align='center'
+                p='10'
+                border='1px solid lightblue'
+              >
+                <Text fontWeight='700' mb='5'>
+                  Cart is empty
+                </Text>
+                <Text mb='10' fontSize='sm'>
+                  Cannot proceed with checkout
+                </Text>
+                <NextLink href='/#browse'>
+                  <Button colorScheme='teal'>Browse Mobiles</Button>
+                </NextLink>
+              </Flex>
+            )}
           </GridItem>
           <ShowAddress address={address} showChangeAddress />
           <Divider my='5' />
-          <RazorpayButton />
+          <RazorpayButton disabled={!address || cartItems.length === 0} />
         </Grid>
       </Layout>
     </div>

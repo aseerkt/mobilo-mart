@@ -14,11 +14,11 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html style={{ scrollBehavior: 'smooth', scrollMargin: '-30px' }}>
         <Head>
           <link rel='icon' href='/favicon.ico' />
         </Head>
-        <body>
+        <body style={{ scrollBehavior: 'smooth' }}>
           <Main />
           <NextScript />
         </body>
