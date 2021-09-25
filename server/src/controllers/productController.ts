@@ -7,6 +7,7 @@ export const getProducts: RequestHandler = expressAsyncHandler(async function (
   res
 ) {
   const mobiles = await DI.mobileRepository.findAll();
+  await DI.em.populate(mobiles, ['reviews', 'reviews.user']);
   return res.json(mobiles);
 });
 
