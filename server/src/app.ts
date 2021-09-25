@@ -13,6 +13,7 @@ import Review from './entities/Review';
 import userRoutes from './routes/users';
 import productRoutes from './routes/products';
 import orderRoutes from './routes/orders';
+import reviewRoutes from './routes/reviews';
 
 // Middlewares
 import cors from 'cors';
@@ -52,6 +53,7 @@ export default async function createApp() {
   app.use('/api/users', userRoutes);
   app.use('/api/products', productRoutes);
   app.use('/api/orders', orderRoutes);
+  app.use('/api/reviews', reviewRoutes);
 
   app.use(notFound);
   app.use(errorHandler);

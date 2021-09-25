@@ -15,12 +15,7 @@ function AddToCart({ product }: AddToCartProps) {
   const addToCart = useCartStore((state) => state.addToCart);
 
   return (
-    <Flex
-      direction='column'
-      p='5'
-      border='1px solid lightgray'
-      borderRadius='lg'
-    >
+    <>
       <Button
         colorScheme='teal'
         onClick={() => {
@@ -36,7 +31,7 @@ function AddToCart({ product }: AddToCartProps) {
           onQtyChange={(e) => setQty(parseInt(e.target.value))}
         />
       </Flex>
-    </Flex>
+    </>
   );
 }
 

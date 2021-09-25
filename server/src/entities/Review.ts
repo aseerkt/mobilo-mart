@@ -14,10 +14,10 @@ export default class Review {
   @ManyToOne(() => Mobile)
   mobile: Mobile;
 
-  @Property({ type: 'int' })
+  @Property()
   rating: number = 3;
 
-  @Property({ type: 'varchar', length: 255 })
+  @Property()
   title: string;
 
   @Property({ type: 'text' })

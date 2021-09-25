@@ -1,4 +1,3 @@
-import { LoadStrategy } from '@mikro-orm/core';
 import { RequestHandler } from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import { DI } from '../app';
@@ -12,13 +11,14 @@ export const getProducts: RequestHandler = expressAsyncHandler(async function (
 });
 
 export const getSingleProduct: RequestHandler = expressAsyncHandler(
-  async function (req, res) {
-    const mobile = await DI.mobileRepository.findOne(
-      {
-        id: req.params.productId,
-      },
-      { reviews: LoadStrategy.JOINED }
-    );
-    return res.json(mobile);
+  async function (req, res, next) {
+    const mobile = await DI.mobileRepository.findOne({
+      id: req.params.productId,
+    });
+    if (mobile) {
+      await DI.em.populate(mobile, ['reviews', 'reviews.user']);
+      return res.json(mobile);
+    }
+    return next();
   }
 );

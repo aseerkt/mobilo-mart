@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, HStack, Text } from '@chakra-ui/layout';
+import { Badge, Box, Divider, Flex, HStack, Text } from '@chakra-ui/layout';
 import { chakra } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { FaClock } from 'react-icons/fa';
@@ -16,6 +16,7 @@ function DeliveryCD({ deliveryDays, purchasedDate, mobileId }: CountdownProps) {
     minutes: '',
     seconds: '',
   });
+  const [isDelivered, setIsDelivered] = useState(false);
   let deliveryDate = new Date(purchasedDate);
   deliveryDate = new Date(
     deliveryDate.setDate(deliveryDate.getDate() + deliveryDays)
@@ -26,6 +27,10 @@ function DeliveryCD({ deliveryDays, purchasedDate, mobileId }: CountdownProps) {
       // https://stackoverflow.com/a/27187801/10240723
       const today = new Date() as any;
       const diffMs = ((deliveryDate as any) - today) / 1000;
+      if (diffMs < 0) {
+        setIsDelivered(true);
+        return;
+      }
       let days = Math.floor(diffMs / 24 / 60 / 60);
       let hoursLeft = Math.floor(diffMs - days * 86400);
       let hours = Math.floor(hoursLeft / 3600);
@@ -65,21 +70,29 @@ function DeliveryCD({ deliveryDays, purchasedDate, mobileId }: CountdownProps) {
         </Text>
       </Flex>
       <Divider />
-      <HStack p='2' spacing={4}>
-        {Object.entries(timeData).map(([selector, value]) => (
-          <Flex
-            direction='column'
-            align='center'
-            key={`${purchasedDate}_${mobileId}_${selector}`}
-            fontSize='sm'
-          >
-            <Text fontSize='lg' fontWeight='semibold' color='green'>
-              {value}
-            </Text>
-            <Text>{selector.toUpperCase()}</Text>
-          </Flex>
-        ))}
-      </HStack>
+      {isDelivered ? (
+        <Flex p='2'>
+          <Badge colorScheme='green' fontSize='sm'>
+            Item Delivered
+          </Badge>
+        </Flex>
+      ) : (
+        <HStack p='2' spacing={4}>
+          {Object.entries(timeData).map(([selector, value]) => (
+            <Flex
+              direction='column'
+              align='center'
+              key={`${purchasedDate}_${mobileId}_${selector}`}
+              fontSize='sm'
+            >
+              <Text fontSize='lg' fontWeight='semibold' color='green'>
+                {value}
+              </Text>
+              <Text>{selector.toUpperCase()}</Text>
+            </Flex>
+          ))}
+        </HStack>
+      )}
     </Box>
   );
 }
