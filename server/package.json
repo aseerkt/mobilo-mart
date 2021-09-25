@@ -12,7 +12,8 @@
     "seed": "npx tsc && node dist/seed/index.js",
     "migration:gen": "npx tsc && npx mikro-orm migration:create",
     "migration:run": "npx mikro-orm migration:up",
-    "migration:rev": "npx mikro-orm migration:down"
+    "migration:rev": "npx mikro-orm migration:down",
+    "heroku-postbuild": "npx tsc"
   },
   "dependencies": {
     "@mikro-orm/cli": "^4.5.7",
