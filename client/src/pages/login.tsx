@@ -36,6 +36,18 @@ function Login() {
               router.push('/');
             }
           } catch (err) {
+            if (err.response.data) {
+              toast({
+                title: 'Login failed',
+                description: err.response?.data?.errors
+                  .map(({ path, message }) => message)
+                  .join(', '),
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+              });
+            }
+
             console.error(err);
           }
         }}
