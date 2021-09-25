@@ -12,7 +12,7 @@ export default {
     emit: 'js',
     pattern: /^[\w-]+\d+\.js$/,
     // https://github.com/mikro-orm/mikro-orm/issues/190
-    disableForeignKeys: true,
+    disableForeignKeys: false,
   },
   entities: [path.join('./dist/entities')],
   type: 'postgresql',
