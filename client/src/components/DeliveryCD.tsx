@@ -56,7 +56,7 @@ function DeliveryCD({ deliveryDays, purchasedDate, mobileId }: CountdownProps) {
         <Text fontWeight='normal'>
           Delivery date{' '}
           <chakra.span fontWeight='semibold' ml='2'>
-            {new Date().toLocaleDateString('en-IN', {
+            {new Date(deliveryDate).toLocaleDateString('en-IN', {
               month: 'short',
               day: '2-digit',
               year: 'numeric',
