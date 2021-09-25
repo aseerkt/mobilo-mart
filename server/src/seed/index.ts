@@ -38,8 +38,8 @@ async function seedMockData() {
   const em = orm.em as EntityManager;
   const generator = orm.getSchemaGenerator();
 
-  await generator.dropSchema();
-  await generator.createSchema();
+  await generator.dropSchema(false);
+  await generator.createSchema(false);
 
   const hashedPassword = await bcrypt.hash(process.env.SEED_PASSWORD!, 12);
 
