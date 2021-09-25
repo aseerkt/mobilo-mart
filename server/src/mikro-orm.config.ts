@@ -1,8 +1,10 @@
 import { Options } from '@mikro-orm/core';
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
+import { parse } from 'pg-connection-string';
 import path from 'path';
 
 const __dev__ = process.env.NODE_ENV !== 'production';
+const config = parse(process.env.DATABASE_URL!);
 
 export default {
   migrations: {
@@ -12,9 +14,9 @@ export default {
   },
   entities: [path.join('./dist/entities')],
   type: 'postgresql',
-  dbName: 'mobilo',
-  user: 'postgres',
-  password: 'postgres',
+  dbName: config.database,
+  user: config.user,
+  password: config.password,
   debug: __dev__,
   highlighter: __dev__ && new SqlHighlighter(),
   driverOptions: {
