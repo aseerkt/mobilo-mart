@@ -8,7 +8,7 @@ export const registerValidators = [
         .isEmpty()
         .withMessage('Email is required'),
     body('password')
-        .isLength({ max: 6 })
+        .isLength({ min: 6 })
         .withMessage('Password is too short')
         .not()
         .isEmpty()
