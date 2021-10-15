@@ -29,18 +29,20 @@ function CartItem({ cartItem: i }: CartItemProps) {
         </Flex>
         <Flex direction='column' flex='1'>
           <NextLink href={`/products/${i.mobile.id}`}>
-            <Text
-              noOfLines={2}
-              fontSize='lg'
-              fontWeight='600'
-              cursor='pointer'
-              color='blue.800'
-              _hover={{
-                color: 'blue.500',
-              }}
-            >
-              {i.mobile.name}
-            </Text>
+            <a>
+              <Text
+                noOfLines={2}
+                fontSize='lg'
+                fontWeight='600'
+                cursor='pointer'
+                color='blue.800'
+                _hover={{
+                  color: 'blue.500',
+                }}
+              >
+                {i.mobile.name}
+              </Text>
+            </a>
           </NextLink>
           <Text fontWeight='500' fontSize='sm' color='green'>
             In Stock

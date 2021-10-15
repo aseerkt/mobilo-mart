@@ -27,18 +27,20 @@ function OrderEntry({ orderItem: item }: OrderEntryProps) {
         </Flex>
         <Flex direction='column' flex='1'>
           <NextLink href={`/products/${item.mobile.id}`}>
-            <Text
-              noOfLines={2}
-              fontSize='lg'
-              fontWeight='600'
-              cursor='pointer'
-              color='blue.800'
-              _hover={{
-                color: 'blue.500',
-              }}
-            >
-              {item.mobile.name}
-            </Text>
+            <a>
+              <Text
+                noOfLines={2}
+                fontSize='lg'
+                fontWeight='600'
+                cursor='pointer'
+                color='blue.800'
+                _hover={{
+                  color: 'blue.500',
+                }}
+              >
+                {item.mobile.name}
+              </Text>
+            </a>
           </NextLink>
 
           <Text>FREE Delivery</Text>

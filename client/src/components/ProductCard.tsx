@@ -38,18 +38,20 @@ function ProductCard({ product }: ProductCardProps) {
         align='center'
       >
         <NextLink href={`products/${product.id}`}>
-          <Text
-            cursor='pointer'
-            noOfLines={3}
-            fontSize='md'
-            color='blue.800'
-            fontWeight='bold'
-            _hover={{
-              color: 'blue.500',
-            }}
-          >
-            {product.name}
-          </Text>
+          <a>
+            <Text
+              cursor='pointer'
+              noOfLines={3}
+              fontSize='md'
+              color='blue.800'
+              fontWeight='bold'
+              _hover={{
+                color: 'blue.500',
+              }}
+            >
+              {product.name}
+            </Text>
+          </a>
         </NextLink>
         <Flex flexDirection='column' justifyContent='flex-end' align='center'>
           <ProductRating
