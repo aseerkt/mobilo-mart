@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import FormWrapper from '@/components/FormWrapper';
 import {
   Button,
@@ -18,6 +19,7 @@ import { useRouter } from 'next/router';
 
 function Login() {
   const toast = useToast();
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { revalidate } = useUser();
 
@@ -80,11 +82,13 @@ function Login() {
               </Button>
               <Button
                 marginY='5'
+                isLoading={loading}
                 colorScheme='teal'
                 variant='outline'
                 typ='button'
                 onClick={async () => {
                   try {
+                    setLoading(true);
                     const res = await axios('/users/login', {
                       method: 'POST',
                       data: { isTest: true },
@@ -98,9 +102,11 @@ function Login() {
                         duration: 3000,
                         isClosable: true,
                       });
+                      setLoading(false);
                       router.push('/');
                     }
                   } catch (err) {
+                    setLoading(false);
                     console.error(err);
                   }
                 }}

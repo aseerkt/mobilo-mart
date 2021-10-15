@@ -2,16 +2,16 @@ import { Divider, GridItem, Text, Flex } from '@chakra-ui/layout';
 import { Progress } from '@chakra-ui/progress';
 import { Review } from '../types/mobile';
 
-interface ReviewsProgressProps {
+interface ReviewsRatingsProps {
   reviews: Review[];
   numReviews: number;
 }
 
-function ReviewsProgress({ reviews, numReviews }: ReviewsProgressProps) {
+function ReviewsRatings({ reviews, numReviews }: ReviewsRatingsProps) {
   return (
     <GridItem>
       <Text fontSize='xl' fontWeight='bold'>
-        Customer Reviews
+        Customer Ratings
       </Text>
       <Divider my='5' />
       {reviews.length === 0 ? (
@@ -56,4 +56,4 @@ function ReviewsProgress({ reviews, numReviews }: ReviewsProgressProps) {
   );
 }
 
-export default ReviewsProgress;
+export default ReviewsRatings;

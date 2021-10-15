@@ -5,7 +5,7 @@ import useUser from '../libs/useUser';
 import { Review } from '../types/mobile';
 import ReviewForm from './ReviewForm';
 import ReviewItem from './ReviewItem';
-import ReviewsProgress from './ReviewsProgress';
+import ReviewsRatings from './ReviewsRatings';
 
 interface ReviewsFCProps {
   reviews: Review[];
@@ -27,7 +27,7 @@ function Reviews({ mobileId, reviews, numReviews }: ReviewsFCProps) {
       gridTemplateColumns={{ base: '1fr', md: '250px auto', lg: '450px auto' }}
       gap={8}
     >
-      <ReviewsProgress reviews={reviews} numReviews={numReviews} />
+      <ReviewsRatings reviews={reviews} numReviews={numReviews} />
       <GridItem>
         <Text fontSize='xl' fontWeight='bold'>
           Reviews

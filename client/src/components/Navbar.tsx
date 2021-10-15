@@ -70,37 +70,35 @@ function Navbar() {
             <Input variant='filled' type='number' />
           </InputGroup>
         </Box> */}
-        <HStack fontWeight='bold' spacing={3}>
+        <HStack fontWeight='bold' spacing={3} ml='auto'>
           <Link href='/cart' as={NextLink}>
             <Button leftIcon={<FaCartArrowDown size='1.3em' />}>
               {cartItems.length || 0}
             </Button>
           </Link>
           {loading ? null : user ? (
-            <>
-              <Menu placement='bottom-end'>
-                <MenuButton
-                  as={Button}
-                  variant='outline'
-                  leftIcon={<FaUserAlt size='1.3em' />}
-                >
-                  {user?.name}
-                </MenuButton>
-                <MenuList>
-                  <NextLink href='/orders'>
-                    <MenuItem>My Orders</MenuItem>
-                  </NextLink>
-                  <NextLink href='/cart'>
-                    <MenuItem>My Cart</MenuItem>
-                  </NextLink>
-                  <NextLink href='/addresses'>
-                    <MenuItem>My Addresses</MenuItem>
-                  </NextLink>
-                  <Divider />
-                  <MenuItem onClick={logout}>Sign Out</MenuItem>
-                </MenuList>
-              </Menu>
-            </>
+            <Menu placement='bottom-end'>
+              <MenuButton
+                as={Button}
+                variant='outline'
+                leftIcon={<FaUserAlt size='1.3em' />}
+              >
+                {user?.name}
+              </MenuButton>
+              <MenuList>
+                <NextLink href='/orders'>
+                  <MenuItem>My Orders</MenuItem>
+                </NextLink>
+                <NextLink href='/cart'>
+                  <MenuItem>My Cart</MenuItem>
+                </NextLink>
+                <NextLink href='/addresses'>
+                  <MenuItem>My Addresses</MenuItem>
+                </NextLink>
+                <Divider />
+                <MenuItem onClick={logout}>Sign Out</MenuItem>
+              </MenuList>
+            </Menu>
           ) : (
             <Link href='/login' as={NextLink}>
               Login
