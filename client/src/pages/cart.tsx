@@ -2,7 +2,16 @@ import CartItem from '@/components/CartItem';
 import Layout from '@/shared/Layout';
 import useCartStore from '@/store/cartStore';
 import { formatPrice } from '@/utils/formatNumbers';
-import { Box, Button, Divider, Flex, Grid, Icon, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Grid,
+  Icon,
+  Text,
+  chakra,
+} from '@chakra-ui/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { FaCartPlus, FaLock } from 'react-icons/fa';
@@ -59,7 +68,9 @@ function Cart() {
           >
             <Text fontSize='lg' fontWeight='500' mb='2'>
               Subtotal ({totalItems} items):{' '}
-              <Text fontWeight='700'>{formatPrice(totalPrice)}</Text>
+              <chakra.span fontWeight='700'>
+                {formatPrice(totalPrice)}
+              </chakra.span>
             </Text>
             <Button
               disabled={cartItems.length === 0}
