@@ -1,8 +1,8 @@
 import { RequestHandler } from 'express';
-import expressAsyncHandler from 'express-async-handler';
 import { DI } from '../app';
+import { asyncHandler } from '../utils/routeHandler';
 
-export const getProducts: RequestHandler = expressAsyncHandler(async function (
+export const getProducts: RequestHandler = asyncHandler(async function (
   _req,
   res
 ) {
@@ -11,15 +11,17 @@ export const getProducts: RequestHandler = expressAsyncHandler(async function (
   return res.json(mobiles);
 });
 
-export const getSingleProduct: RequestHandler = expressAsyncHandler(
-  async function (req, res, next) {
-    const mobile = await DI.mobileRepository.findOne({
-      id: req.params.productId,
-    });
-    if (mobile) {
-      await DI.em.populate(mobile, ['reviews', 'reviews.user']);
-      return res.json(mobile);
-    }
-    return next();
+export const getSingleProduct: RequestHandler = asyncHandler(async function (
+  req,
+  res,
+  next
+) {
+  const mobile = await DI.mobileRepository.findOne({
+    id: req.params.productId,
+  });
+  if (mobile) {
+    await DI.em.populate(mobile, ['reviews', 'reviews.user']);
+    return res.json(mobile);
   }
-);
+  return next();
+});

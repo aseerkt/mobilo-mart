@@ -1,7 +1,7 @@
 import { DI } from '../app';
 import Mobile from '../entities/Mobile';
 import Review from '../entities/Review';
-import routeHandler from '../utils/routeHandler';
+import { validateHandler } from '../utils/routeHandler';
 
 type PostBody = {
   title: string;
@@ -12,7 +12,7 @@ type PostBody = {
 
 // Post Review
 
-export const postReview = routeHandler(async (req, res) => {
+export const postReview = validateHandler(async (req, res) => {
   const { body, title, mobileId, rating } = req.body as PostBody;
 
   const newReview = await DI.em.transactional(async (em) => {
@@ -60,7 +60,7 @@ export const postReview = routeHandler(async (req, res) => {
 
 // Edit Review
 
-export const editReview = routeHandler(async (req, res) => {
+export const editReview = validateHandler(async (req, res) => {
   const { body, title, mobileId, rating } = req.body as PostBody;
   const editedReview = await DI.em.transactional(async (em) => {
     const existingReview = await em.findOne(Review, {
@@ -104,7 +104,7 @@ export const editReview = routeHandler(async (req, res) => {
 
 // Delete Review
 
-export const deleteReview = routeHandler(async (req, res) => {
+export const deleteReview = validateHandler(async (req, res) => {
   await DI.em.transactional(async (em) => {
     const reviewToDelete = await em.findOne(Review, {
       mobile: req.params.mobileId,

@@ -1,10 +1,19 @@
 import { RequestHandler } from 'express';
-import expressAsyncHandler from 'express-async-handler';
 import { validationResult } from 'express-validator';
 import { formatErrors } from './formatErrors';
 
-export default function routeHandler(controllerFn: RequestHandler) {
-  return expressAsyncHandler(async function (req, res, next) {
+export function asyncHandler(controller: RequestHandler): RequestHandler {
+  return async function (req, res, next) {
+    try {
+      await controller(req, res, next);
+    } catch (err) {
+      next(err);
+    }
+  };
+}
+
+export function validateHandler(controllerFn: RequestHandler) {
+  return asyncHandler(async function (req, res, next) {
     // deals with express-validator errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

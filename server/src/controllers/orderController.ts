@@ -1,6 +1,6 @@
 import { DI } from '../app';
 import OrderItem from '../entities/OrderItem';
-import routeHandler from '../utils/routeHandler';
+import { validateHandler } from '../utils/routeHandler';
 import Razorpay from 'razorpay-node-typescript';
 import { v4 } from 'uuid';
 import { EntityData, LoadStrategy } from '@mikro-orm/core';
@@ -30,7 +30,7 @@ const instance = new Razorpay({
   key_secret: RAZORPAY_KEY_SECRET!,
 });
 
-export const getMyOrders = routeHandler(async (_req, res) => {
+export const getMyOrders = validateHandler(async (_req, res) => {
   const myOrders = await DI.orderRepository.find(
     { user: res.locals.userId },
     { populate: { items: LoadStrategy.JOINED, address: LoadStrategy.JOINED } }
@@ -39,7 +39,7 @@ export const getMyOrders = routeHandler(async (_req, res) => {
   return res.json(myOrders);
 });
 
-export const setRazorOrder = routeHandler(async (req, res) => {
+export const setRazorOrder = validateHandler(async (req, res) => {
   const { amount, receipt, notes } = req.body as RazorOrderBody;
   const orderEntity = await instance.orders.create({
     amount,
@@ -50,7 +50,7 @@ export const setRazorOrder = routeHandler(async (req, res) => {
   return res.json(orderEntity);
 });
 
-export const placeOrder = routeHandler(async (req, res) => {
+export const placeOrder = validateHandler(async (req, res) => {
   const { orders, address } = req.body as PlaceOrderBody;
   await DI.em.transactional(async (em) => {
     let orderAddress = await em

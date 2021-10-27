@@ -1,6 +1,5 @@
 import { RequestHandler, Response } from 'express';
-import routeHandler from '../utils/routeHandler';
-import expressAsyncHandler from 'express-async-handler';
+import { asyncHandler, validateHandler } from '../utils/routeHandler';
 import { removeCookie, setCookie } from '../utils/tokenCookieHandler';
 import { DI } from '../app';
 
@@ -17,7 +16,10 @@ interface RegisterBody extends LoginBody {
   name: string;
 }
 
-export const register: RequestHandler = routeHandler(async function (req, res) {
+export const register: RequestHandler = validateHandler(async function (
+  req,
+  res
+) {
   const { email, password, name } = req.body as RegisterBody;
   const emailExists = await DI.userRepository.findOne({
     email,
@@ -45,10 +47,7 @@ export const register: RequestHandler = routeHandler(async function (req, res) {
   return res.status(201).json({ user: { ...user, password: undefined } });
 });
 
-export const login: RequestHandler = expressAsyncHandler(async function (
-  req,
-  res
-) {
+export const login: RequestHandler = asyncHandler(async function (req, res) {
   const { email, password, isTest } = req.body as LoginBody;
   if (isTest) {
     const testUser = await DI.userRepository.findOne({
@@ -78,10 +77,7 @@ export const login: RequestHandler = expressAsyncHandler(async function (
   });
 });
 
-export const me: RequestHandler = expressAsyncHandler(async function (
-  _req,
-  res
-) {
+export const me: RequestHandler = asyncHandler(async function (_req, res) {
   const { userId } = res.locals;
   const user = await DI.userRepository.findOne({
     id: userId,
@@ -89,7 +85,7 @@ export const me: RequestHandler = expressAsyncHandler(async function (
   res.json({ user });
 });
 
-export const logout: RequestHandler = expressAsyncHandler(async function (
+export const logout: RequestHandler = asyncHandler(async function (
   _req,
   res: Response
 ) {

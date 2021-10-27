@@ -1,5 +1,5 @@
 import { Request, Response, RequestHandler } from 'express';
-import expressAsyncHandler from 'express-async-handler';
+import { asyncHandler } from '../utils/routeHandler';
 import { getToken, verifyToken } from '../utils/tokenCookieHandler';
 
 function setAuthLocals(req: Request, res: Response) {
@@ -8,7 +8,7 @@ function setAuthLocals(req: Request, res: Response) {
   res.locals.userId = payload.userId;
 }
 
-export const requireAuth: RequestHandler = expressAsyncHandler(async function (
+export const requireAuth: RequestHandler = asyncHandler(async function (
   req,
   res,
   next
@@ -22,7 +22,7 @@ export const requireAuth: RequestHandler = expressAsyncHandler(async function (
   }
 });
 
-export const checkAuth: RequestHandler = expressAsyncHandler(async function (
+export const checkAuth: RequestHandler = asyncHandler(async function (
   req,
   res,
   next
