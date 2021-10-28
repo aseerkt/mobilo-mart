@@ -10,6 +10,7 @@ import { Button } from '@chakra-ui/button';
 
 function OrdersPage() {
   const { loading, orders } = useOrders();
+
   return (
     <div>
       <Layout>

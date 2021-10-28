@@ -55,5 +55,5 @@ export default function Home({ products }: HomePageProps) {
 export const getStaticProps: GetStaticProps = async function () {
   const productsData = await fetcher('/products');
 
-  return { props: { products: productsData }, revalidate: 120 };
+  return { props: { products: productsData }, revalidate: 1800 };
 };

@@ -13,7 +13,7 @@ const withAuth =
   ({ title }: WithAuthProps) =>
   (Component: React.FC) =>
   (props: JSX.IntrinsicAttributes & { children?: ReactNode }) => {
-    const { loading, error, user } = useUser();
+    const { loading, user } = useUser();
     const toast = useToast();
 
     if (user) {
