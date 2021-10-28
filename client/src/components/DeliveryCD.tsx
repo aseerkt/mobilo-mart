@@ -85,10 +85,10 @@ function DeliveryCD({ deliveryDays, purchasedDate, mobileId }: CountdownProps) {
               key={`${purchasedDate}_${mobileId}_${selector}`}
               fontSize='sm'
             >
-              <Text fontSize='lg' fontWeight='semibold' color='green'>
+              <Text fontWeight='semibold' color='green'>
                 {value}
               </Text>
-              <Text>{selector.toUpperCase()}</Text>
+              <Text fontSize='x-small'>{selector.toUpperCase()}</Text>
             </Flex>
           ))}
         </HStack>
