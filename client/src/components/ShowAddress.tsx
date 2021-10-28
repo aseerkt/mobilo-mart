@@ -22,7 +22,7 @@ const BORDER_STYLE = '1px solid lightgray';
 function ShowAddress({ address, showChangeAddress = false }: ShowAddressProps) {
   const gridItemStyles: GridItemProps = {
     p: '5',
-    h: 'max-content',
+    h: 'full',
     ...(showChangeAddress
       ? { border: BORDER_STYLE, borderRadius: 'lg' }
       : {
