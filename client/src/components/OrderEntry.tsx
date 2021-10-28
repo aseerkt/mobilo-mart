@@ -12,12 +12,17 @@ function OrderEntry({ orderItem: item }: OrderEntryProps) {
   return (
     <>
       <Grid
-        templateColumns={{ base: '1fr', sm: '176px auto ' }}
+        templateColumns={{ base: '1fr', sm: '176px auto' }}
         py='4'
         gap='5'
         alignItems='center'
       >
-        <Flex h='44' w='44' justify='center' align='center'>
+        <Flex
+          h='44'
+          w={{ base: 'w-full', sm: '44' }}
+          justify='center'
+          align='center'
+        >
           <Image
             h='full'
             objectFit='contain'
@@ -25,7 +30,7 @@ function OrderEntry({ orderItem: item }: OrderEntryProps) {
             alt={item.mobile.name}
           />
         </Flex>
-        <Flex direction='column' flex='1'>
+        <Flex px={{ base: '4', sm: 0 }} direction='column' flex='1'>
           <NextLink href={`/products/${item.mobile.id}`}>
             <a>
               <Text

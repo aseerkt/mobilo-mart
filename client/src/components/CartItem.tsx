@@ -16,6 +16,7 @@ function CartItem({ cartItem: i }: CartItemProps) {
     <>
       <Grid
         templateColumns={{ base: '1fr', sm: '176px auto 130px' }}
+        justifyItems={{ base: 'center', sm: 'unset' }}
         py='4'
         gap='5'
       >
@@ -27,7 +28,12 @@ function CartItem({ cartItem: i }: CartItemProps) {
             alt={i.mobile.name}
           />
         </Flex>
-        <Flex direction='column' flex='1'>
+        <Flex
+          direction='column'
+          alignItems={{ base: 'center', sm: 'flex-start' }}
+          minH={{ base: '44', sm: 'unset' }}
+          px={{ base: '5', sm: 'unset' }}
+        >
           <NextLink href={`/products/${i.mobile.id}`}>
             <a>
               <Text
@@ -36,6 +42,7 @@ function CartItem({ cartItem: i }: CartItemProps) {
                 fontWeight='600'
                 cursor='pointer'
                 color='blue.800'
+                textAlign='center'
                 _hover={{
                   color: 'blue.500',
                 }}
@@ -68,7 +75,12 @@ function CartItem({ cartItem: i }: CartItemProps) {
             </Button>
           </Flex>
         </Flex>
-        <Text textAlign='right' fontWeight='800' color='red'>
+        <Text
+          textAlign='right'
+          fontSize={{ base: 'xl', sm: 'unset' }}
+          fontWeight='800'
+          color='red'
+        >
           {formatPrice(i.mobile.price)}
         </Text>
       </Grid>

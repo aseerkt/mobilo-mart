@@ -17,13 +17,18 @@ interface ShowAddressProps {
   showChangeAddress?: boolean;
 }
 
+const BORDER_STYLE = '1px solid lightgray';
+
 function ShowAddress({ address, showChangeAddress = false }: ShowAddressProps) {
   const gridItemStyles: GridItemProps = {
     p: '5',
     h: 'max-content',
     ...(showChangeAddress
-      ? { border: '1px solid lightgray', borderRadius: 'lg' }
-      : { borderLeft: '1px solid lightgray' }),
+      ? { border: BORDER_STYLE, borderRadius: 'lg' }
+      : {
+          borderLeft: { base: 'none', sm: BORDER_STYLE },
+          borderTop: { base: BORDER_STYLE, sm: 'none' },
+        }),
   };
   return (
     <GridItem {...gridItemStyles}>

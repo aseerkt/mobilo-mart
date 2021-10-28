@@ -7,7 +7,7 @@ interface ReviewsRatingsProps {
   numReviews: number;
 }
 
-function ReviewsRatings({ reviews, numReviews }: ReviewsRatingsProps) {
+function ReviewsRatings({ reviews }: ReviewsRatingsProps) {
   return (
     <GridItem>
       <Text fontSize='xl' fontWeight='bold'>
@@ -22,9 +22,12 @@ function ReviewsRatings({ reviews, numReviews }: ReviewsRatingsProps) {
         <Flex
           border='1px solid lightblue'
           borderRadius='md'
-          p='5'
+          p={{ base: '3', sm: '5' }}
           direction='column'
         >
+          <Text mb='3'>
+            {reviews.length} public rating{reviews.length !== 1 && 's'}
+          </Text>
           {[5, 4, 3, 2, 1].map((v) => {
             const count = reviews.reduce(
               (prev, curr) => prev + (curr.rating === v ? 1 : 0),
@@ -35,7 +38,7 @@ function ReviewsRatings({ reviews, numReviews }: ReviewsRatingsProps) {
             );
             return (
               <Flex my='2' align='center' justify='space-between'>
-                <Text w='16'>{v} star</Text>
+                <Text w={{ base: '12', sm: '16' }}>{v} star</Text>
                 <Progress
                   colorScheme='yellow'
                   size='lg'
@@ -43,8 +46,11 @@ function ReviewsRatings({ reviews, numReviews }: ReviewsRatingsProps) {
                   mx='1'
                   hasStripe
                   value={percent}
+                  title={
+                    percent > 0 && `${percent}% of reviews have ${v} stars`
+                  }
                 />
-                <Text w='16' textAlign='right'>
+                <Text w={{ base: '10', sm: '16' }} textAlign='right'>
                   {percent}%
                 </Text>
               </Flex>
