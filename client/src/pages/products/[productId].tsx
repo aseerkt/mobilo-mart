@@ -142,7 +142,7 @@ export const getStaticPaths: GetStaticPaths = async function () {
     params: { productId: p.id },
   }));
 
-  return { paths, fallback: true };
+  return { paths, fallback: false };
 };
 
 export default SingleProduct;
