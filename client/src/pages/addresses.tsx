@@ -20,6 +20,7 @@ import {
 import AddressModal from '@/components/AddressModal';
 import Layout from '@/shared/Layout';
 import useAddressStore from '@/store/addressStore';
+import { useStore } from '../store';
 
 const addressCardStyles: GridItemProps = {
   minH: '60',
@@ -32,7 +33,7 @@ const addressCardStyles: GridItemProps = {
 function AddressesPage() {
   const router = useRouter();
   const { currentAddressId, addresses, selectAddress, removeAddress } =
-    useAddressStore();
+    useStore();
 
   return (
     <div>

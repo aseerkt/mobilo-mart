@@ -1,22 +1,20 @@
 import axios from 'axios';
-import useAddressStore from '@/store/addressStore';
-import useCartStore from '@/store/cartStore';
+import router from 'next/router';
+import { useToast } from '@chakra-ui/toast';
 import { Address } from '@/types/address';
 import { RazorPayOptions } from '@/types/razorpay';
 import useUser from './useUser';
 import useOrders from './useOrders';
-import { useToast } from '@chakra-ui/toast';
-import router from 'next/router';
-import React from 'react';
+import { useStore } from '../store';
 
 const KEY_ID = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
 
 export default function useRazorpay() {
-  const getCurrentAddress = useAddressStore((state) => state.getCurrentAddress);
-  const isCartEmpty = useCartStore((state) => state.isCartEmpty);
-  const getTotalPrice = useCartStore((state) => state.getTotalPrice);
-  const cartItems = useCartStore((state) => state.cartItems);
-  const clearCart = useCartStore((state) => state.clearCart);
+  const getCurrentAddress = useStore((state) => state.getCurrentAddress);
+  const isCartEmpty = useStore((state) => state.isCartEmpty);
+  const getTotalPrice = useStore((state) => state.getTotalPrice);
+  const cartItems = useStore((state) => state.cartItems);
+  const clearCart = useStore((state) => state.clearCart);
   const { revalidate: revalidateOrders } = useOrders();
   const { user } = useUser();
   const toast = useToast();

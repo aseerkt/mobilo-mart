@@ -13,8 +13,8 @@ import {
 import { Form, Formik } from 'formik';
 import { FaEdit, FaPlusCircle } from 'react-icons/fa';
 import InputField from '@/shared/InputField';
-import useAddressStore from '@/store/addressStore';
 import { Address } from '@/types/address';
+import { useStore } from '../store';
 
 const AddressModal: React.FC<{ edit?: boolean; addressToEdit?: Address }> = ({
   children,
@@ -22,7 +22,7 @@ const AddressModal: React.FC<{ edit?: boolean; addressToEdit?: Address }> = ({
   addressToEdit,
 }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const { addAddress, editAddress } = useAddressStore();
+  const { addAddress, editAddress } = useStore();
 
   return (
     <>

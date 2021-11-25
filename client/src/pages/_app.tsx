@@ -11,7 +11,7 @@ import { SWRConfig } from 'swr';
 import theme from '@/theme';
 import Navbar from '@/components/Navbar';
 import fetcher from '@/libs/fetcher';
-import { hydrateStore } from '@/store/cartStore';
+import { Provider, useHydrate } from '../store';
 
 function ShowNavbar() {
   const router = useRouter();
@@ -25,17 +25,18 @@ Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const { initialState } = pageProps;
-  hydrateStore(initialState);
+  const store = useHydrate(pageProps.initialZustandState);
 
   return (
-    <SWRConfig value={{ fetcher, dedupingInterval: 10000 }}>
-      <ChakraProvider theme={theme}>
-        <GlobalStyle />
-        <ShowNavbar />
-        <Component {...pageProps} />
-      </ChakraProvider>
-    </SWRConfig>
+    <Provider createStore={store}>
+      <SWRConfig value={{ fetcher, dedupingInterval: 10000 }}>
+        <ChakraProvider theme={theme}>
+          <GlobalStyle />
+          <ShowNavbar />
+          <Component {...pageProps} />
+        </ChakraProvider>
+      </SWRConfig>
+    </Provider>
   );
 }
 
