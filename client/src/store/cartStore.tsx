@@ -9,6 +9,7 @@ export interface CartSlice {
   getTotalPrice: () => number;
   getTotalQty: () => number;
   isCartEmpty: () => boolean;
+  itemCount: () => number;
   addToCart: (mobile: Mobile, qty: number) => void;
   removeItem: (mobileId: string) => void;
   changeItemQty: (mobileId: string, qty: number) => void;
@@ -17,6 +18,7 @@ export interface CartSlice {
 
 const cartSlice: StoreSlice<CartSlice> = (set, get) => ({
   cartItems: [],
+  itemCount: () => get().cartItems.length || 0,
   addToCart: (mobile, qty) => {
     const itemIdx = get().cartItems.findIndex((i) => i.mobile.id === mobile.id);
     if (itemIdx !== -1) {
