@@ -22,6 +22,7 @@ const CartItem = dynamic(() => import('../components/CartItem'));
 function Cart() {
   const router = useRouter();
   const cartItems = useStore((state) => state.cartItems);
+  const isCartEmpty = useStore((state) => state.isCartEmpty);
   const getTotalPrice = useStore((state) => state.getTotalPrice);
   const getTotalQty = useStore((state) => state.getTotalQty);
   const { hasCurrentAddress } = useStore();
@@ -74,7 +75,7 @@ function Cart() {
               </chakra.span>
             </Text>
             <Button
-              disabled={cartItems.length === 0}
+              disabled={isCartEmpty()}
               onClick={onProceedToBuy}
               colorScheme='teal'
             >
