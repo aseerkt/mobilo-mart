@@ -1,7 +1,6 @@
-import CartItem from '@/components/CartItem';
-import Layout from '@/shared/Layout';
-import useCartStore from '@/store/cartStore';
-import { formatPrice } from '@/utils/formatNumbers';
+import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
 import {
   Box,
   Button,
@@ -12,18 +11,21 @@ import {
   Text,
   chakra,
 } from '@chakra-ui/react';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { FaCartPlus, FaLock } from 'react-icons/fa';
-import useAddressStore from '@/store/addressStore';
+import Layout from '@/shared/Layout';
+import { formatPrice } from '@/utils/formatNumbers';
 import { TWO_GRID_STYLES } from '../shared/twoGridStyles';
+import { useStore } from '../store';
+
+const CartItem = dynamic(() => import('../components/CartItem'));
 
 function Cart() {
   const router = useRouter();
-  const cartItems = useCartStore((state) => state.cartItems);
-  const getTotalPrice = useCartStore((state) => state.getTotalPrice);
-  const getTotalQty = useCartStore((state) => state.getTotalQty);
-  const { hasCurrentAddress } = useAddressStore();
+  const cartItems = useStore((state) => state.cartItems);
+  const isCartEmpty = useStore((state) => state.isCartEmpty);
+  const getTotalPrice = useStore((state) => state.getTotalPrice);
+  const getTotalQty = useStore((state) => state.getTotalQty);
+  const { hasCurrentAddress } = useStore();
   const totalPrice = getTotalPrice();
   const totalItems = getTotalQty();
 
@@ -73,7 +75,7 @@ function Cart() {
               </chakra.span>
             </Text>
             <Button
-              disabled={cartItems.length === 0}
+              disabled={isCartEmpty()}
               onClick={onProceedToBuy}
               colorScheme='teal'
             >

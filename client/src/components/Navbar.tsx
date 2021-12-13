@@ -15,17 +15,17 @@ import {
   MenuList,
   Divider,
 } from '@chakra-ui/react';
-import { FaCartArrowDown, FaSearch, FaUserAlt } from 'react-icons/fa';
+import { FaCartArrowDown, FaUserAlt } from 'react-icons/fa';
 import NextLink from 'next/link';
 import useUser from '@/libs/useUser';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import useCartStore from '@/store/cartStore';
+import { useStore } from '../store';
 
 function Navbar() {
   const { user, loading } = useUser();
   const router = useRouter();
-  const cartItems = useCartStore((state) => state.cartItems);
+  const itemCount = useStore((state) => state.itemCount);
 
   const logout = async function () {
     await axios.post('/users/logout');
@@ -73,7 +73,7 @@ function Navbar() {
         <HStack fontWeight='bold' spacing={3} ml='auto'>
           <Link href='/cart' as={NextLink}>
             <Button leftIcon={<FaCartArrowDown size='1.3em' />}>
-              {cartItems.length || 0}
+              {itemCount()}
             </Button>
           </Link>
           {loading ? null : user ? (

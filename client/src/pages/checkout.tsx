@@ -1,22 +1,21 @@
 import Head from 'next/head';
 import NextLink from 'next/link';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { Button } from '@chakra-ui/button';
+import { useToast } from '@chakra-ui/toast';
+import { Divider, Flex, Grid, GridItem, Text } from '@chakra-ui/layout';
 import CartItem from '@/components/CartItem';
 import withAuth from '@/libs/withAuth';
 import Layout from '@/shared/Layout';
-import useAddressStore from '@/store/addressStore';
-import useCartStore from '@/store/cartStore';
-import { Divider, Flex, Grid, GridItem, Text } from '@chakra-ui/layout';
-import { useToast } from '@chakra-ui/toast';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import RazorpayButton from '../components/RazorpayButton';
 import ShowAddress from '../components/ShowAddress';
 import { TWO_GRID_STYLES } from '../shared/twoGridStyles';
-import { Button } from '@chakra-ui/button';
+import { useStore } from '../store';
 
 function CheckoutPage() {
-  const getCurrentAddress = useAddressStore((state) => state.getCurrentAddress);
-  const cartItems = useCartStore((state) => state.cartItems);
+  const getCurrentAddress = useStore((state) => state.getCurrentAddress);
+  const cartItems = useStore((state) => state.cartItems);
   const router = useRouter();
   const toast = useToast();
 

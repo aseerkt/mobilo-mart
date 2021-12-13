@@ -2,6 +2,7 @@ import useCartStore, { CartItemType } from '@/store/cartStore';
 import { formatPrice } from '@/utils/formatNumbers';
 import { Button, Divider, Flex, Grid, Image, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
+import { useStore } from '../store';
 import QuantitySelector from './QuantitySelector';
 
 interface CartItemProps {
@@ -9,8 +10,8 @@ interface CartItemProps {
 }
 
 function CartItem({ cartItem: i }: CartItemProps) {
-  const changeItemQty = useCartStore((state) => state.changeItemQty);
-  const removeItem = useCartStore((state) => state.removeItem);
+  const changeItemQty = useStore((state) => state.changeItemQty);
+  const removeItem = useStore((state) => state.removeItem);
 
   return (
     <>
@@ -42,7 +43,7 @@ function CartItem({ cartItem: i }: CartItemProps) {
                 fontWeight='600'
                 cursor='pointer'
                 color='blue.800'
-                textAlign='center'
+                textAlign={{ base: 'center', sm: 'left' }}
                 _hover={{
                   color: 'blue.500',
                 }}

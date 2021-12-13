@@ -1,17 +1,18 @@
 import { AppProps } from 'next/app';
+import dynamic from 'next/dynamic';
+import Router, { useRouter } from 'next/router';
 import { ChakraProvider, GlobalStyle } from '@chakra-ui/react';
-import Router from 'next/router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import '@fontsource/montserrat/400.css';
 import '@fontsource/montserrat/500.css';
 import '@fontsource/montserrat/700.css';
-import { useRouter } from 'next/router';
 import { SWRConfig } from 'swr';
 import theme from '@/theme';
-import Navbar from '@/components/Navbar';
 import fetcher from '@/libs/fetcher';
-import { hydrateStore } from '@/store/cartStore';
+import { Provider, useHydrate } from '../store';
+
+const Navbar = dynamic(() => import('../components/Navbar'));
 
 function ShowNavbar() {
   const router = useRouter();
@@ -25,17 +26,18 @@ Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const { initialState } = pageProps;
-  hydrateStore(initialState);
+  const store = useHydrate(pageProps.initialZustandState);
 
   return (
-    <SWRConfig value={{ fetcher, dedupingInterval: 10000 }}>
-      <ChakraProvider theme={theme}>
-        <GlobalStyle />
-        <ShowNavbar />
-        <Component {...pageProps} />
-      </ChakraProvider>
-    </SWRConfig>
+    <Provider createStore={store}>
+      <SWRConfig value={{ fetcher, dedupingInterval: 10000 }}>
+        <ChakraProvider theme={theme}>
+          <GlobalStyle />
+          <ShowNavbar />
+          <Component {...pageProps} />
+        </ChakraProvider>
+      </SWRConfig>
+    </Provider>
   );
 }
 

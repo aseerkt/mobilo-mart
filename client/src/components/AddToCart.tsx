@@ -1,8 +1,8 @@
-import useCartStore from '@/store/cartStore';
 import { Mobile } from '@/types/mobile';
 import { Flex, Button } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useStore } from '../store';
 import QuantitySelector from './QuantitySelector';
 
 interface AddToCartProps {
@@ -12,7 +12,7 @@ interface AddToCartProps {
 function AddToCart({ product }: AddToCartProps) {
   const router = useRouter();
   const [qty, setQty] = useState(1);
-  const addToCart = useCartStore((state) => state.addToCart);
+  const addToCart = useStore((state) => state.addToCart);
 
   return (
     <>
