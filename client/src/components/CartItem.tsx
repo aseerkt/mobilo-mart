@@ -1,4 +1,4 @@
-import useCartStore, { CartItemType } from '@/store/cartStore';
+import { CartItemType } from '@/store/cartStore';
 import { formatPrice } from '@/utils/formatNumbers';
 import { Button, Divider, Flex, Grid, Image, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';

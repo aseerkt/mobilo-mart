@@ -1,7 +1,6 @@
 import { Badge, Box, Divider, Flex, HStack, Text } from '@chakra-ui/layout';
 import { chakra } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { FaClock } from 'react-icons/fa';
 
 interface CountdownProps {
   deliveryDays: number;
