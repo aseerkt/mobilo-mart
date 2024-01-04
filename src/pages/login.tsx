@@ -1,27 +1,62 @@
-import { useState } from 'react';
 import FormWrapper from '@/components/FormWrapper';
+import InputField from '@/shared/InputField';
 import {
   Button,
   Divider,
-  Text,
-  Link,
-  useToast,
   HStack,
+  Link,
+  Text,
+  useToast,
 } from '@chakra-ui/react';
-import NextLink from 'next/link';
-import InputField from '@/shared/InputField';
 import { Form, Formik } from 'formik';
-import axios from 'axios';
-import useUser from '@/libs/useUser';
+import { signIn, useSession } from 'next-auth/react';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useSWRConfig } from 'swr';
 
 // TODO: yup client side form validation
 
 function Login() {
   const toast = useToast();
-  const [loading, setLoading] = useState(false);
+  const [loadingGuestUser, setLoadingGuestUser] = useState(false);
   const router = useRouter();
-  const { revalidate } = useUser();
+  const { mutate } = useSWRConfig();
+  const { data, status } = useSession();
+
+  const guestLoginCredentials = {
+    email: 'test@email.com',
+    password: 'Test@123',
+  };
+
+  const handleGuestLogin = async () => {
+    try {
+      setLoadingGuestUser(true);
+      await signIn('credentials', guestLoginCredentials);
+    } catch (err) {
+      setLoadingGuestUser(false);
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    const handleSuccessLogin = async () => {
+      if (status === 'authenticated' && data.user) {
+        toast({
+          title: `Welcome ${data.user.name}.`,
+          description: 'Login successfull.',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+        await mutate('/api/users');
+        if (loadingGuestUser) setLoadingGuestUser(false);
+        router.push('/');
+      }
+    };
+
+    handleSuccessLogin();
+  }, [status]);
 
   return (
     <FormWrapper title='Login'>
@@ -29,21 +64,7 @@ function Login() {
         initialValues={{ email: '', password: '' }}
         onSubmit={async function (values) {
           try {
-            const res = await axios('/users/login', {
-              method: 'POST',
-              data: values,
-            });
-            const user = res.data?.user;
-            if (user && (await revalidate())) {
-              toast({
-                title: `Welcome ${user?.name}.`,
-                description: 'Login successfull.',
-                status: 'success',
-                duration: 3000,
-                isClosable: true,
-              });
-              router.push('/');
-            }
+            await signIn('credentials', { ...values, redirect: false });
           } catch (err) {
             if (err.response.data) {
               toast({
@@ -56,8 +77,6 @@ function Login() {
                 isClosable: true,
               });
             }
-
-            console.error(err);
           }
         }}
       >
@@ -82,34 +101,11 @@ function Login() {
               </Button>
               <Button
                 marginY='5'
-                isLoading={loading}
+                isLoading={loadingGuestUser}
                 colorScheme='teal'
                 variant='outline'
-                typ='button'
-                onClick={async () => {
-                  try {
-                    setLoading(true);
-                    const res = await axios('/users/login', {
-                      method: 'POST',
-                      data: { isTest: true },
-                    });
-                    const user = res.data?.user;
-                    if (user && (await revalidate())) {
-                      toast({
-                        title: `Welcome ${user?.name}.`,
-                        description: 'Login successfull.',
-                        status: 'success',
-                        duration: 3000,
-                        isClosable: true,
-                      });
-                      setLoading(false);
-                      router.push('/');
-                    }
-                  } catch (err) {
-                    setLoading(false);
-                    console.error(err);
-                  }
-                }}
+                type='button'
+                onClick={handleGuestLogin}
               >
                 Login as Guest
               </Button>

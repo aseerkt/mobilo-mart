@@ -1,6 +1,14 @@
-import { Badge, Box, Divider, Flex, HStack, Text } from '@chakra-ui/layout';
-import { chakra } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { addDaysToDate } from '@/utils/dateUtils';
+import {
+  Badge,
+  Box,
+  Divider,
+  Flex,
+  HStack,
+  Text,
+  chakra,
+} from '@chakra-ui/react';
+import { useEffect, useMemo, useState } from 'react';
 
 interface CountdownProps {
   deliveryDays: number;
@@ -16,9 +24,10 @@ function DeliveryCD({ deliveryDays, purchasedDate, mobileId }: CountdownProps) {
     seconds: '',
   });
   const [isDelivered, setIsDelivered] = useState(false);
-  let deliveryDate = new Date(purchasedDate);
-  deliveryDate = new Date(
-    deliveryDate.setDate(deliveryDate.getDate() + deliveryDays)
+
+  const deliveryDate = useMemo(
+    () => addDaysToDate(purchasedDate, deliveryDays),
+    [purchasedDate]
   );
 
   useEffect(() => {

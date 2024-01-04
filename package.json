@@ -6,31 +6,42 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "npx tsx -r dotenv/config src/database/seeds/index.ts"
   },
   "dependencies": {
+    "@auth/mongodb-adapter": "^2.0.10",
+    "@chakra-ui/next-js": "^2.2.0",
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@fontsource/montserrat": "^4.5.14",
     "axios": "^0.21.4",
+    "bcrypt": "^5.1.1",
     "formik": "^2.4.5",
     "framer-motion": "^10.16.16",
+    "mongoose": "^8.0.3",
     "next": "14.0.4",
+    "next-auth": "^4.24.5",
+    "next-connect": "^1.0.0",
     "nprogress": "^0.2.0",
+    "razorpay": "^2.9.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.12.0",
     "swr": "^2.2.4",
+    "tsx": "^4.7.0",
     "uuid": "^8.3.2",
     "yup": "^0.32.11",
     "zustand": "^3.7.2"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "20.10.6",
     "@types/nprogress": "^0.2.3",
     "@types/react": "^17.0.74",
     "@types/uuid": "^8.3.4",
+    "dotenv": "^16.3.1",
     "eslint-config-next": "^14.0.4",
     "typescript": "^4.9.5"
   }

@@ -1,6 +1,6 @@
 import { BeforeCreate, Entity, PrimaryKey, Property } from '@mikro-orm/core';
-import { v4 } from 'uuid';
 import bcrypt from 'bcryptjs';
+import { v4 } from 'uuid';
 
 @Entity({ tableName: 'users' })
 export default class User {

@@ -1,9 +1,8 @@
-import { Spinner, useToast, Flex } from '@chakra-ui/react';
-import Head from 'next/head';
-import router from 'next/router';
-import { ReactNode } from 'react';
 import Layout from '@/shared/Layout';
-import useUser from './useUser';
+import { Flex, Spinner, useToast } from '@chakra-ui/react';
+import { signIn, useSession } from 'next-auth/react';
+import Head from 'next/head';
+import { ReactNode, useEffect } from 'react';
 
 interface WithAuthProps {
   title: string;
@@ -13,10 +12,10 @@ const withAuth =
   ({ title }: WithAuthProps) =>
   (Component: React.FC) =>
   (props: JSX.IntrinsicAttributes & { children?: ReactNode }) => {
-    const { loading, user } = useUser();
+    const { status } = useSession();
     const toast = useToast();
 
-    if (user) {
+    if (status === 'authenticated') {
       return (
         <>
           <Head>
@@ -27,17 +26,19 @@ const withAuth =
       );
     }
 
-    if (!loading && !user) {
-      router.replace('/');
-      toast({
-        id: 'Not Authenticated',
-        title: 'User not logged in',
-        description: 'Login to proceed further',
-        duration: 2000,
-        isClosable: true,
-        status: 'error',
-      });
-    }
+    useEffect(() => {
+      if (status === 'unauthenticated') {
+        signIn();
+        toast({
+          id: 'Not Authenticated',
+          title: 'User not logged in',
+          description: 'Login to proceed further',
+          duration: 2000,
+          isClosable: true,
+          status: 'error',
+        });
+      }
+    }, [status]);
 
     return (
       <Layout>

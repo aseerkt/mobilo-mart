@@ -2,12 +2,13 @@ import useSWR from 'swr';
 import { Order } from '../types/order';
 
 function useOrders() {
-  const { data, error, revalidate } = useSWR('/orders');
+  const { data, error, mutate } = useSWR('/api/orders');
+
   return {
     orders: data as Order[] | null,
     loading: !data && !error,
     error,
-    revalidate,
+    mutate,
   };
 }
 

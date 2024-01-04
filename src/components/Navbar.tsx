@@ -1,36 +1,36 @@
+import { cartSelectors } from '@/store/cartStore';
 import {
   Box,
+  Button,
+  Divider,
   Flex,
   HStack,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Text,
-  Icon,
   Link,
-  Button,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
-  Divider,
+  Text,
 } from '@chakra-ui/react';
-import { FaCartArrowDown, FaUserAlt } from 'react-icons/fa';
+import { signOut, useSession } from 'next-auth/react';
 import NextLink from 'next/link';
-import useUser from '@/libs/useUser';
-import axios from 'axios';
 import { useRouter } from 'next/router';
+import { FaCartArrowDown, FaUserAlt } from 'react-icons/fa';
 import { useStore } from '../store';
 
 function Navbar() {
-  const { user, loading } = useUser();
+  const { data, status } = useSession();
   const router = useRouter();
-  const itemCount = useStore((state) => state.itemCount);
+  const itemCount = useStore(cartSelectors.itemCountSelector);
 
   const logout = async function () {
-    await axios.post('/users/logout');
+    signOut({ redirect: false });
     router.reload();
   };
+
+  const user = data?.user;
+  const loading = status === 'loading';
+
   return (
     <Box
       h='16'
@@ -73,7 +73,7 @@ function Navbar() {
         <HStack fontWeight='bold' spacing={3} ml='auto'>
           <Link href='/cart' as={NextLink}>
             <Button leftIcon={<FaCartArrowDown size='1.3em' />}>
-              {itemCount()}
+              {itemCount}
             </Button>
           </Link>
           {loading ? null : user ? (

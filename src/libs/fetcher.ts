@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + '/api';
+axios.defaults.baseURL = `http://localhost:3000`;
 axios.defaults.withCredentials = true;
 axios.defaults.headers['Content-Type'] = 'application/json';
 

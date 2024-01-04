@@ -19,18 +19,26 @@ import {
 } from '@chakra-ui/react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useMemo } from 'react';
 import useSWR from 'swr';
-import Reviews from '../../components/Reviews';
-import Layout from '../../shared/Layout';
+import Reviews from '../../../components/Reviews';
+import Layout from '../../../shared/Layout';
 
-function SingleProduct({ product }) {
-  const { data } = useSWR<Mobile | null>(`/products/${product?.id}`, {
-    initialData: product,
-  });
+function SingleProduct() {
+  const router = useRouter();
+  const { data } = useSWR<Mobile | null>(
+    `/api/products/${router.query.productId}`,
+    fetcher
+  );
 
   const mrp = (data?.price * 100) / (100 - data?.discount) || 0;
-  let deliveryDate = new Date();
-  deliveryDate.setDate(deliveryDate.getDate() + data?.deliveryDays);
+
+  const deliveryDate = useMemo(() => {
+    const date = new Date();
+    date.setDate(date.getDate() + data?.deliveryDays);
+    return date;
+  }, [data?.deliveryDays]);
 
   return (
     <div>
@@ -132,14 +140,18 @@ function SingleProduct({ product }) {
 }
 
 export const getStaticProps: GetStaticProps = async function ({ params }) {
-  const productData = await fetcher(`/products/${params.productId}`);
-  return { props: { product: productData }, revalidate: 1800 };
+  const productData = await fetcher(`/api/products/${params.productId}`);
+  return {
+    props: { fallback: { [`/api/products/${params.productId}`]: productData } },
+    revalidate: 1800,
+  };
 };
-export const getStaticPaths: GetStaticPaths = async function () {
-  const productsData = await fetcher('/products');
 
-  const paths = productsData?.map((p: Mobile) => ({
-    params: { productId: p.id },
+export const getStaticPaths: GetStaticPaths = async function () {
+  const productsData = await fetcher('/api/products');
+
+  const paths = productsData?.map((p) => ({
+    params: { productId: p._id },
   }));
 
   return { paths, fallback: false };

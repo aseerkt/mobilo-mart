@@ -1,3 +1,5 @@
+import AddressModal from '@/components/AddressModal';
+import Layout from '@/shared/Layout';
 import {
   Badge,
   Divider,
@@ -5,9 +7,9 @@ import {
   Grid,
   GridItem,
   GridItemProps,
+  IconButton,
   Text,
-} from '@chakra-ui/layout';
-import { IconButton } from '@chakra-ui/react';
+} from '@chakra-ui/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import {
@@ -17,9 +19,6 @@ import {
   FaPlusSquare,
   FaTrash,
 } from 'react-icons/fa';
-import AddressModal from '@/components/AddressModal';
-import Layout from '@/shared/Layout';
-import useAddressStore from '@/store/addressStore';
 import { useStore } from '../store';
 
 const addressCardStyles: GridItemProps = {

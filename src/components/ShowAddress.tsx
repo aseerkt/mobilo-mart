@@ -1,15 +1,15 @@
-import NextLink from 'next/link';
-import { Button } from '@chakra-ui/button';
 import {
-  GridItem,
-  Divider,
   Box,
+  Button,
+  Divider,
   Flex,
+  GridItem,
+  GridItemProps,
   Link,
   Text,
-  GridItemProps,
-} from '@chakra-ui/layout';
-import { FaPhone, FaEnvelope, FaMapMarker } from 'react-icons/fa';
+} from '@chakra-ui/react';
+import NextLink from 'next/link';
+import { FaEnvelope, FaMapMarker, FaPhone } from 'react-icons/fa';
 import { Address } from '../types/address';
 
 interface ShowAddressProps {

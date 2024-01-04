@@ -1,14 +1,23 @@
 import { User } from '@/types/user';
+import { useSession } from 'next-auth/react';
 import useSWR from 'swr';
 
-function useUser() {
-  const { data, error, revalidate } = useSWR('/users');
+function useUser(userId?: string) {
+  const { data, error, mutate, isLoading } = useSWR(
+    userId ? `/api/users/${userId}` : null
+  );
   return {
     user: data?.user as User | undefined,
-    loading: !data && !error,
+    loading: isLoading,
     error,
-    revalidate,
+    mutate,
   };
+}
+
+export function useCurrentUser() {
+  const { data: session } = useSession();
+
+  return useUser(session.user.id);
 }
 
 export default useUser;

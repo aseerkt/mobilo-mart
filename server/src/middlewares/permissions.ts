@@ -1,4 +1,4 @@
-import { Request, Response, RequestHandler } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 import { asyncHandler } from '../utils/routeHandler';
 import { getToken, verifyToken } from '../utils/tokenCookieHandler';
 

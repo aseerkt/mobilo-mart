@@ -1,5 +1,5 @@
 import { Mobile } from '@/types/mobile';
-import { Flex, Button } from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useStore } from '../store';

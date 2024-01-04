@@ -1,9 +1,9 @@
 import { useLayoutEffect } from 'react';
-import createContext from 'zustand/context';
 import create from 'zustand';
-import cartSlice, { CartSlice } from './cartStore';
-import addressSlice, { AddressSlice } from './addressStore';
+import createContext from 'zustand/context';
 import { persist } from 'zustand/middleware';
+import addressSlice, { AddressSlice } from './addressStore';
+import cartSlice, { CartSlice } from './cartStore';
 
 // https://github.com/vercel/next.js/blob/master/examples/with-zustand/lib/store.js
 // https://github.com/pmndrs/zustand/issues/508#issue-951331506

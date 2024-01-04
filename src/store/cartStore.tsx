@@ -3,21 +3,23 @@ import { OrderItem } from '../types/order';
 import { StoreSlice } from '../types/store';
 
 export type CartItemType = Omit<OrderItem, 'status' | 'createdAt' | 'id'>;
-
-export interface CartSlice {
+export type CartState = {
   cartItems: CartItemType[];
-  getTotalPrice: () => number;
-  getTotalQty: () => number;
-  isCartEmpty: () => boolean;
-  itemCount: () => number;
+};
+
+export interface CartSlice extends CartState {
   addToCart: (mobile: Mobile, qty: number) => void;
   removeItem: (mobileId: string) => void;
   changeItemQty: (mobileId: string, qty: number) => void;
   clearCart: () => void;
 }
 
-const cartSlice: StoreSlice<CartSlice> = (set, get) => ({
+export const cartInitialState: CartState = {
   cartItems: [],
+};
+
+const cartSlice: StoreSlice<CartSlice> = (set, get) => ({
+  ...cartInitialState,
   itemCount: () => get().cartItems.length || 0,
   addToCart: (mobile, qty) => {
     const itemIdx = get().cartItems.findIndex((i) => i.mobile.id === mobile.id);
@@ -58,5 +60,17 @@ const cartSlice: StoreSlice<CartSlice> = (set, get) => ({
   },
   clearCart: () => set({ cartItems: [] }),
 });
+
+export const cartSelectors = {
+  itemCountSelector: (state: CartSlice) => state.cartItems.length,
+  totalPriceSelector: (state: CartSlice) =>
+    state.cartItems.reduce(
+      (prev, curr) => prev + curr.qty * curr.mobile.price,
+      0
+    ),
+  totalQtySelector: (state: CartSlice) =>
+    state.cartItems.reduce((prev, curr) => prev + curr.qty, 0),
+  isCartEmptySelector: (state: CartSlice) => state.cartItems.length === 0,
+};
 
 export default cartSlice;

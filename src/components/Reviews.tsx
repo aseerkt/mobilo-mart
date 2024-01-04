@@ -1,7 +1,6 @@
-import { Button } from '@chakra-ui/button';
-import { Divider, Flex, Grid, GridItem, Text } from '@chakra-ui/layout';
+import { Button, Divider, Flex, Grid, GridItem, Text } from '@chakra-ui/react';
+import { useSession } from 'next-auth/react';
 import { useMemo } from 'react';
-import useUser from '../libs/useUser';
 import { Review } from '../types/mobile';
 import ReviewForm from './ReviewForm';
 import ReviewItem from './ReviewItem';
@@ -14,9 +13,13 @@ interface ReviewsFCProps {
 }
 
 function Reviews({ mobileId, reviews, numReviews }: ReviewsFCProps) {
-  const { user, loading } = useUser();
+  const { data, status } = useSession();
+  const user = data?.user;
+  const unauthenticated = status === 'unauthenticated';
   const cannotReview = useMemo(
-    () => !user || reviews.some((review) => review.user.id === user.id),
+    () =>
+      unauthenticated ||
+      reviews.some((review) => review.user.email === user.email),
     [reviews, user]
   );
 
@@ -39,7 +42,7 @@ function Reviews({ mobileId, reviews, numReviews }: ReviewsFCProps) {
           </Flex>
         )}
         {!cannotReview && <ReviewForm mobileId={mobileId} />}
-        {!loading && !user && (
+        {unauthenticated && (
           <Button colorScheme='teal' size='sm' my='2'>
             Log in to add review
           </Button>

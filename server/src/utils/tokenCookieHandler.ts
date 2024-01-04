@@ -1,4 +1,4 @@
-import { CookieOptions, Response, Request } from 'express';
+import { CookieOptions, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { __prod__ } from '../constants';
 import User from '../entities/User';

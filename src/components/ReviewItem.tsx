@@ -1,10 +1,15 @@
-import { Avatar } from '@chakra-ui/avatar';
-import { IconButton } from '@chakra-ui/button';
-import { Box, Flex, HStack, Text } from '@chakra-ui/layout';
-import { useToast } from '@chakra-ui/toast';
+import {
+  Avatar,
+  Box,
+  Flex,
+  HStack,
+  IconButton,
+  Text,
+  useToast,
+} from '@chakra-ui/react';
 import axios from 'axios';
 import { FaRegStar, FaStar, FaStarHalfAlt, FaTrash } from 'react-icons/fa';
-import useSWR from 'swr';
+import { useSWRConfig } from 'swr';
 import useUser from '../libs/useUser';
 import { Review } from '../types/mobile';
 import ReviewForm from './ReviewForm';
@@ -16,12 +21,14 @@ interface ReviewItemProps {
 function ReviewItem({ review }: ReviewItemProps) {
   const toast = useToast();
   const { user } = useUser();
-  const { revalidate } = useSWR(`/products/${review.mobile}`);
+  const { mutate } = useSWRConfig();
+
+  const revalidateProduct = () => mutate(`/products/${review.mobile}`);
 
   const deleteReview = async () => {
     try {
       await axios.delete(`/reviews/${review.mobile}`);
-      await revalidate();
+      await revalidateProduct();
 
       toast({
         id: 'delete-review',

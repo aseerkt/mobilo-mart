@@ -1,6 +1,5 @@
+import { Divider, Flex, Grid, Image, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import { Grid, Flex, Divider, Button, Text, Image } from '@chakra-ui/react';
-import { formatPrice } from '@/utils/formatNumbers';
 import { OrderItem } from '../types/order';
 import DeliveryCD from './DeliveryCD';
 

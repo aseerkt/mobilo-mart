@@ -1,23 +1,23 @@
-import express from 'express';
-import { MikroORM, EntityRepository, RequestContext } from '@mikro-orm/core';
+import { EntityRepository, MikroORM, RequestContext } from '@mikro-orm/core';
 import { EntityManager } from '@mikro-orm/postgresql';
+import express from 'express';
 
 // Entities
-import User from './entities/User';
 import Mobile from './entities/Mobile';
-import OrderItem from './entities/OrderItem';
 import Order from './entities/Order';
+import OrderItem from './entities/OrderItem';
 import Review from './entities/Review';
+import User from './entities/User';
 
 // Routes
-import userRoutes from './routes/users';
-import productRoutes from './routes/products';
 import orderRoutes from './routes/orders';
+import productRoutes from './routes/products';
 import reviewRoutes from './routes/reviews';
+import userRoutes from './routes/users';
 
 // Middlewares
-import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import { errorHandler, notFound } from './middlewares/errorMiddleware';
 
 export const DI = {} as {

@@ -1,11 +1,11 @@
-import { DI } from '../app';
-import OrderItem from '../entities/OrderItem';
-import { validateHandler } from '../utils/routeHandler';
+import { EntityData, LoadStrategy } from '@mikro-orm/core';
 import Razorpay from 'razorpay-node-typescript';
 import { v4 } from 'uuid';
-import { EntityData, LoadStrategy } from '@mikro-orm/core';
+import { DI } from '../app';
 import Address from '../entities/Address';
 import Order from '../entities/Order';
+import OrderItem from '../entities/OrderItem';
+import { validateHandler } from '../utils/routeHandler';
 
 interface RazorOrderBody {
   amount: number;

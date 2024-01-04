@@ -1,7 +1,7 @@
 import { RequestHandler, Response } from 'express';
+import { DI } from '../app';
 import { asyncHandler, validateHandler } from '../utils/routeHandler';
 import { removeCookie, setCookie } from '../utils/tokenCookieHandler';
-import { DI } from '../app';
 
 const GRAVATAR_PLACEHOLDER =
   'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';

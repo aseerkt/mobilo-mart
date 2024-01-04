@@ -1,13 +1,13 @@
-import 'reflect-metadata';
-import 'dotenv-safe/config';
 import { MikroORM } from '@mikro-orm/core';
 import { EntityManager } from '@mikro-orm/postgresql';
 import bcrypt from 'bcryptjs';
-import User from '../entities/User';
-import mobileData from './data';
+import 'dotenv-safe/config';
+import 'reflect-metadata';
 import { v4 } from 'uuid';
 import Mobile from '../entities/Mobile';
+import User from '../entities/User';
 import { errorLog } from '../utils/chalkLogs';
+import mobileData from './data';
 
 let userData: Partial<User>[] = [
   {

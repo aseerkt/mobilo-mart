@@ -1,6 +1,6 @@
 import { numberWithCommas } from '@/utils/formatNumbers';
 import { Flex, Text } from '@chakra-ui/react';
-import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa';
+import { FaRegStar, FaStar, FaStarHalfAlt } from 'react-icons/fa';
 
 interface RatingProps {
   id: string;

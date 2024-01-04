@@ -1,6 +1,7 @@
-import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
-import Head from 'next/head';
+import Layout from '@/shared/Layout';
+import { addressSelectors } from '@/store/addressStore';
+import { cartSelectors } from '@/store/cartStore';
+import { formatPrice } from '@/utils/formatNumbers';
 import {
   Box,
   Button,
@@ -11,9 +12,10 @@ import {
   Text,
   chakra,
 } from '@chakra-ui/react';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { FaCartPlus, FaLock } from 'react-icons/fa';
-import Layout from '@/shared/Layout';
-import { formatPrice } from '@/utils/formatNumbers';
 import { TWO_GRID_STYLES } from '../shared/twoGridStyles';
 import { useStore } from '../store';
 
@@ -22,15 +24,15 @@ const CartItem = dynamic(() => import('../components/CartItem'));
 function Cart() {
   const router = useRouter();
   const cartItems = useStore((state) => state.cartItems);
-  const isCartEmpty = useStore((state) => state.isCartEmpty);
-  const getTotalPrice = useStore((state) => state.getTotalPrice);
-  const getTotalQty = useStore((state) => state.getTotalQty);
-  const { hasCurrentAddress } = useStore();
-  const totalPrice = getTotalPrice();
-  const totalItems = getTotalQty();
+  const isCartEmpty = useStore(cartSelectors.isCartEmptySelector);
+  const totalPrice = useStore(cartSelectors.totalPriceSelector);
+  const totalQty = useStore(cartSelectors.totalQtySelector);
+  const hasCurrentAddress = useStore(
+    addressSelectors.hasCurrentAddressSelector
+  );
 
   const onProceedToBuy = () => {
-    if (!hasCurrentAddress()) router.push('/addresses?buy=1');
+    if (!hasCurrentAddress) router.push('/addresses?buy=1');
     else router.push('/checkout');
   };
 
@@ -69,13 +71,13 @@ function Cart() {
             p='5'
           >
             <Text fontSize='lg' fontWeight='500' mb='2'>
-              Subtotal ({totalItems} items):{' '}
+              Subtotal ({totalQty} items):{' '}
               <chakra.span fontWeight='700'>
                 {formatPrice(totalPrice)}
               </chakra.span>
             </Text>
             <Button
-              disabled={isCartEmpty()}
+              disabled={isCartEmpty}
               onClick={onProceedToBuy}
               colorScheme='teal'
             >

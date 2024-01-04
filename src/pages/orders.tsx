@@ -1,12 +1,11 @@
-import NextLink from 'next/link';
 import withAuth from '@/libs/withAuth';
-import useOrders from '../libs/useOrders';
-import { Divider, Flex, Grid, GridItem, Text } from '@chakra-ui/layout';
+import { Button, Divider, Flex, Grid, GridItem, Text } from '@chakra-ui/react';
+import NextLink from 'next/link';
 import OrderEntry from '../components/OrderEntry';
-import Layout from '../shared/Layout';
 import ShowAddress from '../components/ShowAddress';
+import useOrders from '../libs/useOrders';
+import Layout from '../shared/Layout';
 import { TWO_GRID_STYLES } from '../shared/twoGridStyles';
-import { Button } from '@chakra-ui/button';
 
 function OrdersPage() {
   const { loading, orders } = useOrders();

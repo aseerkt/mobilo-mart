@@ -1,7 +1,8 @@
-import { Button } from '@chakra-ui/button';
-import { useDisclosure } from '@chakra-ui/hooks';
-import { Divider } from '@chakra-ui/layout';
+import InputField from '@/shared/InputField';
+import { Address } from '@/types/address';
 import {
+  Button,
+  Divider,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -9,11 +10,10 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-} from '@chakra-ui/modal';
+  useDisclosure,
+} from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import { FaEdit, FaPlusCircle } from 'react-icons/fa';
-import InputField from '@/shared/InputField';
-import { Address } from '@/types/address';
 import { useStore } from '../store';
 
 const AddressModal: React.FC<{ edit?: boolean; addressToEdit?: Address }> = ({

@@ -1,18 +1,14 @@
-import { Mobile } from '@/types/mobile';
+import Carousel from '@/components/Carousel';
+import ProductCard from '@/components/ProductCard';
+import fetcher from '@/libs/fetcher';
 import { Box, Text } from '@chakra-ui/react';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import useSWR from 'swr';
-import Carousel from '@/components/Carousel';
-import ProductCard from '@/components/ProductCard';
-import fetcher from '@/libs/fetcher';
 
-interface HomePageProps {
-  products: Mobile[];
-}
+export default function Home() {
+  const { data } = useSWR('/api/products', fetcher);
 
-export default function Home({ products }: HomePageProps) {
-  const { data } = useSWR('/products', { initialData: products });
   return (
     <Box bg='gray.100'>
       <Head>
@@ -53,7 +49,10 @@ export default function Home({ products }: HomePageProps) {
 }
 
 export const getStaticProps: GetStaticProps = async function () {
-  const productsData = await fetcher('/products');
+  const productsData = await fetcher('/api/products');
 
-  return { props: { products: productsData }, revalidate: 1800 };
+  return {
+    props: { fallback: { '/api/products': productsData } },
+    revalidate: 1800,
+  };
 };

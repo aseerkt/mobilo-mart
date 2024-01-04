@@ -1,6 +1,6 @@
-import 'reflect-metadata';
 import 'dotenv-safe/config';
 import http from 'http';
+import 'reflect-metadata';
 
 import createApp from './app';
 import { errorLog, successLog } from './utils/chalkLogs';

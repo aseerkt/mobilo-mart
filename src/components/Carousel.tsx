@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
 import {
   Box,
+  Button,
   Flex,
   Img,
+  Link,
   Text,
   TextProps,
-  Link,
-  Button,
 } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { FaCaretDown } from 'react-icons/fa';
 
 const TEXT_MARGIN = '15vh';
@@ -127,7 +127,7 @@ function Carousel() {
         </Link>
 
         <Box
-          justify='center'
+          justifyContent='center'
           pos='absolute'
           top='40%'
           h='60%'

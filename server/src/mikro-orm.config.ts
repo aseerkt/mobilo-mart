@@ -1,8 +1,8 @@
-import path from 'path';
 import { Options } from '@mikro-orm/core';
-import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
-import { parse } from 'pg-connection-string';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
+import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
+import path from 'path';
+import { parse } from 'pg-connection-string';
 
 const __dev__ = process.env.NODE_ENV !== 'production';
 const config = parse(process.env.DATABASE_URL!);

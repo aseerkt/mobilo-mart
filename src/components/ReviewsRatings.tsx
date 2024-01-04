@@ -1,5 +1,4 @@
-import { Divider, GridItem, Text, Flex } from '@chakra-ui/layout';
-import { Progress } from '@chakra-ui/progress';
+import { Divider, Flex, GridItem, Progress, Text } from '@chakra-ui/react';
 import { Review } from '../types/mobile';
 
 interface ReviewsRatingsProps {

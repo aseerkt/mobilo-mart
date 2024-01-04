@@ -1,8 +1,8 @@
-import NextLink from 'next/link';
-import { Box, Flex, Image, Text } from '@chakra-ui/react';
-import ProductRating from './ProductRating';
-import { formatPrice } from '@/utils/formatNumbers';
 import { Mobile } from '@/types/mobile';
+import { formatPrice } from '@/utils/formatNumbers';
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
+import NextLink from 'next/link';
+import ProductRating from './ProductRating';
 
 interface ProductCardProps {
   product: Mobile;
@@ -38,20 +38,18 @@ function ProductCard({ product }: ProductCardProps) {
         align='center'
       >
         <NextLink href={`products/${product.id}`}>
-          <a>
-            <Text
-              cursor='pointer'
-              noOfLines={3}
-              fontSize='md'
-              color='blue.800'
-              fontWeight='bold'
-              _hover={{
-                color: 'blue.500',
-              }}
-            >
-              {product.name}
-            </Text>
-          </a>
+          <Text
+            cursor='pointer'
+            noOfLines={3}
+            fontSize='md'
+            color='blue.800'
+            fontWeight='bold'
+            _hover={{
+              color: 'blue.500',
+            }}
+          >
+            {product.name}
+          </Text>
         </NextLink>
         <Flex flexDirection='column' justifyContent='flex-end' align='center'>
           <ProductRating

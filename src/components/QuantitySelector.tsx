@@ -1,5 +1,4 @@
-import { Text } from '@chakra-ui/layout';
-import { Select } from '@chakra-ui/select';
+import { Select, Text } from '@chakra-ui/react';
 
 interface QuarntitySelectorProps {
   minimalText?: boolean;

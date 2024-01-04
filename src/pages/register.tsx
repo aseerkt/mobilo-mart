@@ -1,30 +1,28 @@
+import FormWrapper from '@/components/FormWrapper';
+import InputField from '@/shared/InputField';
 import { Button, Divider, Link, Text, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { Form, Formik } from 'formik';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import FormWrapper from '@/components/FormWrapper';
-import useUser from '@/libs/useUser';
-import InputField from '@/shared/InputField';
 
 // TODO: yup client side form validation
 
 function Register() {
   const toast = useToast();
   const router = useRouter();
-  const { revalidate } = useUser();
   return (
     <FormWrapper title='Sign Up'>
       <Formik
         initialValues={{ name: '', email: '', password: '' }}
         onSubmit={async function (values) {
           try {
-            const res = await axios('/users', {
+            const res = await axios('/api/users', {
               method: 'POST',
               data: values,
             });
             const user = res.data?.user;
-            if (user && (await revalidate())) {
+            if (user) {
               toast({
                 title: 'Account created.',
                 description: "We've created your account for you.",
@@ -32,10 +30,17 @@ function Register() {
                 duration: 3000,
                 isClosable: true,
               });
-              router.push('/');
+              router.push('/login');
             }
           } catch (err) {
             console.error(err);
+            toast({
+              title: 'Invalid form data',
+              description: err.response.data.message || err.message,
+              status: 'error',
+              duration: 3000,
+              isClosable: true,
+            });
           }
         }}
       >

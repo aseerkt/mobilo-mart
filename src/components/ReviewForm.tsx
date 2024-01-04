@@ -1,33 +1,31 @@
-import { Button } from '@chakra-ui/button';
-import { useDisclosure } from '@chakra-ui/hooks';
 import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Slider,
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
-} from '@chakra-ui/slider';
-import { Box, Divider, Flex, Text } from '@chakra-ui/layout';
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-} from '@chakra-ui/modal';
-import {
-  FormControl,
-  FormLabel,
-  FormHelperText,
   Textarea,
-  Input,
+  useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
-import { useToast } from '@chakra-ui/toast';
 import axios from 'axios';
 import { useState } from 'react';
 import { FaEdit, FaPlusCircle, FaStar } from 'react-icons/fa';
-import useSWR from 'swr';
+import { useSWRConfig } from 'swr';
 import { Review } from '../types/mobile';
 
 interface ReviewFormProps {
@@ -42,8 +40,11 @@ function ReviewForm({ mobileId, edit = false, reviewToEdit }: ReviewFormProps) {
     edit ? reviewToEdit : { title: '', rating: 3, body: '' }
   );
 
-  const { revalidate } = useSWR(mobileId ? `/products/${mobileId}` : null);
+  const { mutate } = useSWRConfig();
   const toast = useToast();
+
+  const revalidateProduct = () =>
+    mobileId ? mutate(`/products/${mobileId}`) : null;
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -54,7 +55,7 @@ function ReviewForm({ mobileId, edit = false, reviewToEdit }: ReviewFormProps) {
       } else {
         await axios.post('/reviews', { ...formData, mobileId });
       }
-      await revalidate();
+      await revalidateProduct();
       toast({
         id: `${edit ? 'edit' : 'post'}-review`,
         title: `Review ${edit ? 'edited' : 'posted'}`,

@@ -36,27 +36,25 @@ function CartItem({ cartItem: i }: CartItemProps) {
           px={{ base: '5', sm: 'unset' }}
         >
           <NextLink href={`/products/${i.mobile.id}`}>
-            <a>
-              <Text
-                noOfLines={2}
-                fontSize='lg'
-                fontWeight='600'
-                cursor='pointer'
-                color='blue.800'
-                textAlign={{ base: 'center', sm: 'left' }}
-                _hover={{
-                  color: 'blue.500',
-                }}
-              >
-                {i.mobile.name}
-              </Text>
-            </a>
+            <Text
+              noOfLines={2}
+              fontSize='lg'
+              fontWeight='600'
+              cursor='pointer'
+              color='blue.800'
+              textAlign={{ base: 'center', sm: 'left' }}
+              _hover={{
+                color: 'blue.500',
+              }}
+            >
+              {i.mobile.name}
+            </Text>
           </NextLink>
           <Text fontWeight='500' fontSize='sm' color='green'>
             In Stock
           </Text>
           <Text>FREE Delivery</Text>
-          <Flex mt='auto' mb='1' aling='center'>
+          <Flex mt='auto' mb='1' align='center'>
             <Flex align='center'>
               <QuantitySelector
                 minimalText
