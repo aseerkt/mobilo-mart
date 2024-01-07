@@ -1,5 +1,5 @@
 import { Schema, Types, model, models } from 'mongoose';
-import { IUser, UserSchema } from '../User';
+import { IUser, PublicUserSchema } from '../User';
 import { AddressSchema, IAddress } from './Address';
 import { IOrderItem, OrderItemSchema } from './OrderItem';
 
@@ -11,7 +11,7 @@ interface IOrder {
 
 const OrderSchema = new Schema<IOrder>({
   user: {
-    type: UserSchema,
+    type: PublicUserSchema,
     required: true,
   },
   address: {

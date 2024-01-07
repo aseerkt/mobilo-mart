@@ -6,11 +6,10 @@ export interface IUser {
   password: string;
 }
 
-export const UserSchema = new Schema<IUser>({
+const schemaStruct = {
   email: {
     type: String,
     required: true,
-    unique: true,
   },
   name: {
     type: String,
@@ -21,6 +20,12 @@ export const UserSchema = new Schema<IUser>({
     required: true,
     select: false,
   },
-});
+};
+
+export const UserSchema = new Schema<IUser>(schemaStruct);
+
+export const PublicUserSchema = new Schema<IUser>(schemaStruct);
+
+UserSchema.index({ email: 1 }, { unique: true });
 
 export default models.User || model('User', UserSchema);

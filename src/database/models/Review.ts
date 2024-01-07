@@ -1,5 +1,5 @@
 import { Schema, Types } from 'mongoose';
-import { IUser, UserSchema } from './User';
+import { IUser, PublicUserSchema } from './User';
 
 export interface IReview {
   rating: number;
@@ -22,7 +22,7 @@ export const ReviewSchema = new Schema<IReview>(
       type: String,
     },
     user: {
-      type: UserSchema,
+      type: PublicUserSchema,
       required: true,
     },
   },

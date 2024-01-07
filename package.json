@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "npx tsx -r dotenv/config src/database/seeds/index.ts"
+    "seed": "npx tsx src/database/seeds/index.ts"
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^2.0.10",
