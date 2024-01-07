@@ -1,8 +1,8 @@
 import { Divider, Flex, GridItem, Progress, Text } from '@chakra-ui/react';
-import { Review } from '../types/mobile';
+import { IReview } from '../types/mobile';
 
 interface ReviewsRatingsProps {
-  reviews: Review[];
+  reviews: IReview[];
   numReviews: number;
 }
 

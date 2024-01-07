@@ -1,13 +1,13 @@
 import { Button, Divider, Flex, Grid, GridItem, Text } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import { useMemo } from 'react';
-import { Review } from '../types/mobile';
+import { IReview } from '../types/mobile';
 import ReviewForm from './ReviewForm';
 import ReviewItem from './ReviewItem';
 import ReviewsRatings from './ReviewsRatings';
 
 interface ReviewsFCProps {
-  reviews: Review[];
+  reviews: IReview[];
   numReviews: number;
   mobileId: string;
 }

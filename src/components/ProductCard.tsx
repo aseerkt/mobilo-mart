@@ -1,11 +1,11 @@
-import { Mobile } from '@/types/mobile';
+import { IMobile } from '@/types/mobile';
 import { formatPrice } from '@/utils/formatNumbers';
 import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import ProductRating from './ProductRating';
 
 interface ProductCardProps {
-  product: Mobile;
+  product: IMobile;
 }
 
 function ProductCard({ product }: ProductCardProps) {

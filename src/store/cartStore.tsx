@@ -1,4 +1,4 @@
-import { Mobile } from '@/types/mobile';
+import { IMobile } from '@/types/mobile';
 import { OrderItem } from '../types/order';
 import { StoreSlice } from '../types/store';
 
@@ -8,7 +8,7 @@ export type CartState = {
 };
 
 export interface CartSlice extends CartState {
-  addToCart: (mobile: Mobile, qty: number) => void;
+  addToCart: (mobile: IMobile, qty: number) => void;
   removeItem: (mobileId: string) => void;
   changeItemQty: (mobileId: string, qty: number) => void;
   clearCart: () => void;

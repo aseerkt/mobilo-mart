@@ -1,13 +1,13 @@
 import { useStore } from '@/store';
 import { addressSelectors } from '@/store/addressStore';
 import { cartSelectors } from '@/store/cartStore';
+import { Address } from '@/types/address';
 import { RazorPayOptions } from '@/types/razorpay';
 import { Button, ButtonProps, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import router from 'next/router';
 import { useSWRConfig } from 'swr';
-import Address from '../../server/src/entities/Address';
 import useRazorpay from '../libs/useRazorpay';
 
 function RazorpayButton({ disabled }: ButtonProps) {

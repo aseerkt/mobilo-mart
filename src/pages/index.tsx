@@ -1,5 +1,7 @@
 import Carousel from '@/components/Carousel';
 import ProductCard from '@/components/ProductCard';
+import dbConnect from '@/database';
+import Mobile from '@/database/models/Mobile';
 import fetcher from '@/libs/fetcher';
 import { Box, Text } from '@chakra-ui/react';
 import { GetStaticProps } from 'next';
@@ -49,10 +51,13 @@ export default function Home() {
 }
 
 export const getStaticProps: GetStaticProps = async function () {
-  const productsData = await fetcher('/api/products');
+  await dbConnect();
+  const mobiles = await Mobile.find({});
 
   return {
-    props: { fallback: { '/api/products': productsData } },
+    props: {
+      fallback: { '/api/products': JSON.parse(JSON.stringify(mobiles)) },
+    },
     revalidate: 1800,
   };
 };

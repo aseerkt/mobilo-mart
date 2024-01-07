@@ -1,7 +1,11 @@
 import AddToCart from '@/components/AddToCart';
 import ProductRating from '@/components/ProductRating';
+import Reviews from '@/components/Reviews';
+import dbConnect from '@/database';
+import Mobile from '@/database/models/Mobile';
 import fetcher from '@/libs/fetcher';
-import { Mobile } from '@/types/mobile';
+import Layout from '@/shared/Layout';
+import { IMobile } from '@/types/mobile';
 import { formatPrice } from '@/utils/formatNumbers';
 import {
   Divider,
@@ -22,12 +26,10 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import useSWR from 'swr';
-import Reviews from '../../../components/Reviews';
-import Layout from '../../../shared/Layout';
 
 function SingleProduct() {
   const router = useRouter();
-  const { data } = useSWR<Mobile | null>(
+  const { data } = useSWR<IMobile | null>(
     `/api/products/${router.query.productId}`,
     fetcher
   );
@@ -140,18 +142,33 @@ function SingleProduct() {
 }
 
 export const getStaticProps: GetStaticProps = async function ({ params }) {
-  const productData = await fetcher(`/api/products/${params.productId}`);
+  await dbConnect();
+  const mobile = await Mobile.findById(params.productId);
+
+  if (!mobile) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
-    props: { fallback: { [`/api/products/${params.productId}`]: productData } },
+    props: {
+      fallback: {
+        [`/api/products/${params.productId}`]: JSON.parse(
+          JSON.stringify(mobile)
+        ),
+      },
+    },
     revalidate: 1800,
   };
 };
 
 export const getStaticPaths: GetStaticPaths = async function () {
-  const productsData = await fetcher('/api/products');
+  await dbConnect();
+  const mobiles = await Mobile.find({}).select('_id');
 
-  const paths = productsData?.map((p) => ({
-    params: { productId: p._id },
+  const paths = mobiles?.map((p) => ({
+    params: { productId: p._id.toString() },
   }));
 
   return { paths, fallback: false };

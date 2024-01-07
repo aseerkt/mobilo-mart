@@ -18,22 +18,25 @@ if (!cached) {
 }
 
 async function dbConnect() {
+  mongoose.set('toJSON', { getters: true });
+  mongoose.set('debug', true);
   if (cached.conn) {
+    console.log('👌 Using existing DB connection');
     return cached.conn;
   }
   if (!cached.promise) {
-    const opts = {
+    const opts: mongoose.ConnectOptions = {
       bufferCommands: false,
     };
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       return mongoose;
     });
-    mongoose.set('toJSON', { getters: true });
-    mongoose.set('debug', true);
   }
   try {
+    console.log('🔥 New DB Connection');
     cached.conn = await cached.promise;
   } catch (e) {
+    console.error('DB connection failed');
     cached.promise = null;
     throw e;
   }

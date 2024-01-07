@@ -26,11 +26,11 @@ import axios from 'axios';
 import { useState } from 'react';
 import { FaEdit, FaPlusCircle, FaStar } from 'react-icons/fa';
 import { useSWRConfig } from 'swr';
-import { Review } from '../types/mobile';
+import { IReview } from '../types/mobile';
 
 interface ReviewFormProps {
   edit?: boolean;
-  reviewToEdit?: Review;
+  reviewToEdit?: IReview;
   mobileId: string;
 }
 

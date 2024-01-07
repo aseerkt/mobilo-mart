@@ -1,6 +1,6 @@
 import { User } from './user';
 
-export interface Review {
+export interface IReview {
   id: string;
   mobile: string;
   user: User;
@@ -10,7 +10,7 @@ export interface Review {
   createdAt: Date;
 }
 
-export interface Mobile {
+export interface IMobile {
   id: string;
   name: string;
   image: string;
@@ -21,5 +21,5 @@ export interface Mobile {
   deliveryDays: number;
   fullfilled: boolean;
   keywords: string[];
-  reviews: Review[];
+  reviews: IReview[];
 }

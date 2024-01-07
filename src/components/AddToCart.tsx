@@ -1,4 +1,4 @@
-import { Mobile } from '@/types/mobile';
+import { IMobile } from '@/types/mobile';
 import { Button, Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -6,7 +6,7 @@ import { useStore } from '../store';
 import QuantitySelector from './QuantitySelector';
 
 interface AddToCartProps {
-  product?: Mobile;
+  product?: IMobile;
 }
 
 function AddToCart({ product }: AddToCartProps) {

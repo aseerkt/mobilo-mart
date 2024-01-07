@@ -1,11 +1,11 @@
 import { Address } from './address';
-import { Mobile } from './mobile';
+import { IMobile } from './mobile';
 import { User } from './user';
 
 export interface OrderItem {
   id: string;
   qty: number;
-  mobile: Mobile;
+  mobile: IMobile;
   status: string;
   createdAt: Date;
 }

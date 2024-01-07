@@ -1,4 +1,4 @@
-import { GridProps } from '@chakra-ui/styled-system';
+import { GridProps } from '@chakra-ui/react';
 
 export const TWO_GRID_STYLES: GridProps = {
   gridTemplateColumns: {

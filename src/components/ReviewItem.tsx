@@ -11,11 +11,11 @@ import axios from 'axios';
 import { FaRegStar, FaStar, FaStarHalfAlt, FaTrash } from 'react-icons/fa';
 import { useSWRConfig } from 'swr';
 import useUser from '../libs/useUser';
-import { Review } from '../types/mobile';
+import { IReview } from '../types/mobile';
 import ReviewForm from './ReviewForm';
 
 interface ReviewItemProps {
-  review: Review;
+  review: IReview;
 }
 
 function ReviewItem({ review }: ReviewItemProps) {
