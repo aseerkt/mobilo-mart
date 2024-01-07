@@ -36,7 +36,7 @@ function ReviewsRatings({ reviews }: ReviewsRatingsProps) {
               ((count * 100) / reviews.length).toFixed(0)
             );
             return (
-              <Flex my='2' align='center' justify='space-between'>
+              <Flex key={v} my='2' align='center' justify='space-between'>
                 <Text w={{ base: '12', sm: '16' }}>{v} star</Text>
                 <Progress
                   colorScheme='yellow'

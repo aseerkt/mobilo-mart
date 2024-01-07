@@ -27,7 +27,7 @@ function DeliveryCD({ deliveryDays, purchasedDate, mobileId }: CountdownProps) {
 
   const deliveryDate = useMemo(
     () => addDaysToDate(purchasedDate, deliveryDays),
-    [purchasedDate]
+    [purchasedDate, deliveryDays]
   );
 
   useEffect(() => {
@@ -61,7 +61,7 @@ function DeliveryCD({ deliveryDays, purchasedDate, mobileId }: CountdownProps) {
     return () => {
       clearInterval(countdownInterval);
     };
-  }, []);
+  }, [deliveryDate]);
 
   return (
     <Box border='3px solid teal' borderRadius='md' w='max-content' my='3'>

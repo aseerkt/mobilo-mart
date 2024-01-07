@@ -14,6 +14,7 @@ import {
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import Script from 'next/script';
 import { useEffect } from 'react';
 import RazorpayButton from '../components/RazorpayButton';
 import ShowAddress from '../components/ShowAddress';
@@ -38,14 +39,15 @@ function CheckoutPage() {
       });
       router.push('/addresses?buy=1');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address]);
 
   return (
     <div>
       <Head>
         <title>Checkout</title>
-        <script src='https://checkout.razorpay.com/v1/checkout.js'></script>
       </Head>
+      <Script src='https://checkout.razorpay.com/v1/checkout.js'></Script>
       <Layout>
         <Grid {...TWO_GRID_STYLES}>
           <GridItem h='full'>

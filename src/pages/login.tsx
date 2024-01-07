@@ -56,6 +56,7 @@ function Login() {
     };
 
     handleSuccessLogin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   return (
@@ -115,7 +116,7 @@ function Login() {
       </Formik>
       <Divider marginBottom='5' />
       <Text fontSize='small'>
-        Don't have an account?{' '}
+        Don&apos;t have an account?{' '}
         <Link colorScheme='blue' as={NextLink} href='/register'>
           Register
         </Link>

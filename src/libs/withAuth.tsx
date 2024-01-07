@@ -10,46 +10,51 @@ interface WithAuthProps {
 
 const withAuth =
   ({ title }: WithAuthProps) =>
-  (Component: React.FC) =>
-  (props: JSX.IntrinsicAttributes & { children?: ReactNode }) => {
-    const { status } = useSession();
-    const toast = useToast();
+  (Component: React.FC) => {
+    const WithAuthComponent: React.FC = (
+      props: JSX.IntrinsicAttributes & { children?: ReactNode }
+    ) => {
+      const { status } = useSession();
+      const toast = useToast();
 
-    if (status === 'authenticated') {
+      useEffect(() => {
+        if (status === 'unauthenticated') {
+          signIn();
+          toast({
+            id: 'Not Authenticated',
+            title: 'User not logged in',
+            description: 'Login to proceed further',
+            duration: 2000,
+            isClosable: true,
+            status: 'error',
+          });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [status]);
+
+      if (status === 'authenticated') {
+        return (
+          <>
+            <Head>
+              <title>{title}</title>
+            </Head>
+            <Component {...props} />
+          </>
+        );
+      }
+
       return (
-        <>
+        <Layout>
           <Head>
             <title>{title}</title>
           </Head>
-          <Component {...props} />
-        </>
+          <Flex h='full' justify='center' align='center'>
+            <Spinner size='xl' />
+          </Flex>
+        </Layout>
       );
-    }
-
-    useEffect(() => {
-      if (status === 'unauthenticated') {
-        signIn();
-        toast({
-          id: 'Not Authenticated',
-          title: 'User not logged in',
-          description: 'Login to proceed further',
-          duration: 2000,
-          isClosable: true,
-          status: 'error',
-        });
-      }
-    }, [status]);
-
-    return (
-      <Layout>
-        <Head>
-          <title>{title}</title>
-        </Head>
-        <Flex h='full' justify='center' align='center'>
-          <Spinner size='xl' />
-        </Flex>
-      </Layout>
-    );
+    };
+    WithAuthComponent.displayName = `WithAuth${Component.displayName}`;
   };
 
 export default withAuth;

@@ -20,7 +20,7 @@ function Reviews({ mobileId, reviews, numReviews }: ReviewsFCProps) {
     () =>
       unauthenticated ||
       reviews.some((review) => review.user.email === user.email),
-    [reviews, user]
+    [reviews, user, unauthenticated]
   );
 
   return (
