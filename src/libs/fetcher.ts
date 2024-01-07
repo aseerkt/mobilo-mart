@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = `${window.location.protocol}:${window.location.hostname}`;
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_APP_URL;
 axios.defaults.withCredentials = true;
 axios.defaults.headers['Content-Type'] = 'application/json';
 
