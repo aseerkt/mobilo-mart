@@ -3,7 +3,7 @@ import { Button, Divider, Flex, Grid, GridItem, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import OrderEntry from '../components/OrderEntry';
 import ShowAddress from '../components/ShowAddress';
-import useOrders from '../libs/useOrders';
+import useOrders from '../libs/hooks/useOrders';
 import Layout from '../shared/Layout';
 import { TWO_GRID_STYLES } from '../shared/twoGridStyles';
 

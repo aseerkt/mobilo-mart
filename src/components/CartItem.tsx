@@ -25,8 +25,8 @@ function CartItem({ cartItem: i }: CartItemProps) {
           <Image
             h='full'
             objectFit='contain'
-            src={i.mobile.image}
-            alt={i.mobile.name}
+            src={i.product.image}
+            alt={i.product.name}
           />
         </Flex>
         <Flex
@@ -35,7 +35,7 @@ function CartItem({ cartItem: i }: CartItemProps) {
           minH={{ base: '44', sm: 'unset' }}
           px={{ base: '5', sm: 'unset' }}
         >
-          <NextLink href={`/products/${i.mobile.id}`}>
+          <NextLink href={`/products/${i.product.id}`}>
             <Text
               noOfLines={2}
               fontSize='lg'
@@ -47,7 +47,7 @@ function CartItem({ cartItem: i }: CartItemProps) {
                 color: 'blue.500',
               }}
             >
-              {i.mobile.name}
+              {i.product.name}
             </Text>
           </NextLink>
           <Text fontWeight='500' fontSize='sm' color='green'>
@@ -60,13 +60,13 @@ function CartItem({ cartItem: i }: CartItemProps) {
                 minimalText
                 qty={i.qty}
                 onQtyChange={(e) =>
-                  changeItemQty(i.mobile.id, parseInt(e.target.value))
+                  changeItemQty(i.product.id, parseInt(e.target.value))
                 }
               />
             </Flex>
             <Divider mx='2' orientation='vertical' />
             <Button
-              onClick={() => removeItem(i.mobile.id)}
+              onClick={() => removeItem(i.product.id)}
               fontWeight='500'
               variant='link'
             >
@@ -80,7 +80,7 @@ function CartItem({ cartItem: i }: CartItemProps) {
           fontWeight='800'
           color='red'
         >
-          {formatPrice(i.mobile.price)}
+          {formatPrice(i.product.price)}
         </Text>
       </Grid>
       <Divider />

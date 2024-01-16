@@ -61,15 +61,6 @@ function Navbar() {
             Mobilo Mart
           </Text>
         </Link>
-        {/* <Box flex='1' marginX='5'>
-          <InputGroup>
-            <InputLeftElement
-              pointerEvents='none'
-              children={<Icon as={FaSearch} color='teal' />}
-            />
-            <Input variant='filled' type='number' />
-          </InputGroup>
-        </Box> */}
         <HStack fontWeight='bold' spacing={3} ml='auto'>
           <Link href='/cart' as={NextLink}>
             <Button leftIcon={<FaCartArrowDown size='1.3em' />}>

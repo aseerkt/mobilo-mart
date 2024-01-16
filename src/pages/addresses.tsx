@@ -32,7 +32,12 @@ const addressCardStyles: GridItemProps = {
 function AddressesPage() {
   const router = useRouter();
   const { currentAddressId, addresses, selectAddress, removeAddress } =
-    useStore();
+    useStore((state) => ({
+      currentAddressId: state.currentAddressId,
+      addresses: state.addresses,
+      selectAddress: state.selectAddress,
+      removeAddress: state.removeAddress,
+    }));
 
   return (
     <div>

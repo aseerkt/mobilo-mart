@@ -13,15 +13,19 @@ import { useEffect, useMemo, useState } from 'react';
 interface CountdownProps {
   deliveryDays: number;
   purchasedDate: Date;
-  mobileId: string;
+  productId: string;
 }
 
-function DeliveryCD({ deliveryDays, purchasedDate, mobileId }: CountdownProps) {
+function DeliveryCD({
+  deliveryDays,
+  purchasedDate,
+  productId,
+}: CountdownProps) {
   const [timeData, setTimeData] = useState({
-    days: '',
-    hours: '',
-    minutes: '',
-    seconds: '',
+    days: '00',
+    hours: '00',
+    minutes: '00',
+    seconds: '00',
   });
   const [isDelivered, setIsDelivered] = useState(false);
 
@@ -37,6 +41,7 @@ function DeliveryCD({ deliveryDays, purchasedDate, mobileId }: CountdownProps) {
       const diffMs = ((deliveryDate as any) - today) / 1000;
       if (diffMs < 0) {
         setIsDelivered(true);
+        clearInterval(countdownInterval);
         return;
       }
       let days = Math.floor(diffMs / 24 / 60 / 60);
@@ -64,7 +69,13 @@ function DeliveryCD({ deliveryDays, purchasedDate, mobileId }: CountdownProps) {
   }, [deliveryDate]);
 
   return (
-    <Box border='3px solid teal' borderRadius='md' w='max-content' my='3'>
+    <Box
+      border='3px solid teal'
+      height={99}
+      borderRadius='md'
+      w='max-content'
+      my='3'
+    >
       <Flex p='2' align='center'>
         <Text fontWeight='normal'>
           Delivery date{' '}
@@ -90,7 +101,7 @@ function DeliveryCD({ deliveryDays, purchasedDate, mobileId }: CountdownProps) {
             <Flex
               direction='column'
               align='center'
-              key={`${purchasedDate}_${mobileId}_${selector}`}
+              key={`${purchasedDate}_${productId}_${selector}`}
               fontSize='sm'
             >
               <Text fontWeight='semibold' color='green'>

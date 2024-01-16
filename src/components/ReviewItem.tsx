@@ -1,3 +1,4 @@
+import { deleteReview } from '@/libs/services/reviews';
 import {
   Avatar,
   Box,
@@ -7,27 +8,24 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import axios from 'axios';
+import { useSession } from 'next-auth/react';
 import { FaRegStar, FaStar, FaStarHalfAlt, FaTrash } from 'react-icons/fa';
-import { useSWRConfig } from 'swr';
-import useUser from '../libs/useUser';
 import { IReview } from '../types/mobile';
 import ReviewForm from './ReviewForm';
 
 interface ReviewItemProps {
   review: IReview;
+  productId: string;
+  revalidateProduct: () => Promise<void>;
 }
 
-function ReviewItem({ review }: ReviewItemProps) {
+function ReviewItem({ review, productId, revalidateProduct }: ReviewItemProps) {
   const toast = useToast();
-  const { user } = useUser();
-  const { mutate } = useSWRConfig();
+  const { data: session } = useSession();
 
-  const revalidateProduct = () => mutate(`/products/${review.mobile}`);
-
-  const deleteReview = async () => {
+  const handleDeleteReview = async () => {
     try {
-      await axios.delete(`/reviews/${review.mobile}`);
+      await deleteReview(productId, review._id);
       await revalidateProduct();
 
       toast({
@@ -58,11 +56,11 @@ function ReviewItem({ review }: ReviewItemProps) {
       <Flex my='2' color='yellow.400' marginRight='2'>
         {[1, 2, 3, 4, 5].map((v) =>
           review.rating >= v ? (
-            <FaStar key={`star_full_${v}_${review.id}`} size='1em' />
+            <FaStar key={`star_full_${v}_${review._id}`} size='1em' />
           ) : review.rating >= v - 0.5 ? (
-            <FaStarHalfAlt key={`star_half_${v}_${review.id}`} size='1em' />
+            <FaStarHalfAlt key={`star_half_${v}_${review._id}`} size='1em' />
           ) : (
-            <FaRegStar key={`star_none_${v}_${review.id}`} size='1em' />
+            <FaRegStar key={`star_none_${v}_${review._id}`} size='1em' />
           )
         )}
       </Flex>
@@ -79,9 +77,14 @@ function ReviewItem({ review }: ReviewItemProps) {
       </Text>
       <Text fontSize='sm'>{review.body}</Text>
 
-      {review.user.id === user?.id && (
+      {review.user._id === session?.user?.id && (
         <HStack spacing={3} my='2'>
-          <ReviewForm mobileId={review.mobile} edit reviewToEdit={review} />
+          <ReviewForm
+            productId={productId}
+            edit
+            reviewToEdit={review}
+            revalidateProduct={revalidateProduct}
+          />
           <IconButton
             ml='2'
             size='sm'
@@ -89,7 +92,7 @@ function ReviewItem({ review }: ReviewItemProps) {
             aria-label='delete address'
             onClick={(e) => {
               e.stopPropagation();
-              deleteReview();
+              handleDeleteReview();
             }}
             icon={<FaTrash />}
           />

@@ -1,16 +1,9 @@
-import axios from 'axios';
+import wretch from 'wretch';
 
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_APP_URL;
-axios.defaults.withCredentials = true;
-axios.defaults.headers['Content-Type'] = 'application/json';
+export const serverApi = wretch(process.env.NEXT_PUBLIC_APP_URL).headers({
+  'Content-Type': 'application/json',
+});
 
-const fetcher = async (url: string) => {
-  try {
-    const res = await axios.get(url);
-    return res.data;
-  } catch (err) {
-    throw err?.response?.data || err.message;
-  }
-};
+const fetcher = (url: string) => serverApi.get(url).json<any>();
 
 export default fetcher;

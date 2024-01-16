@@ -30,6 +30,7 @@ function ShowAddress({ address, showChangeAddress = false }: ShowAddressProps) {
           borderTop: { base: BORDER_STYLE, sm: 'none' },
         }),
   };
+
   return (
     <GridItem {...gridItemStyles}>
       <Text fontSize='xl' fontWeight='700' pb='5'>

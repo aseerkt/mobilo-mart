@@ -7,8 +7,7 @@ import dynamic from 'next/dynamic';
 import Router, { useRouter } from 'next/router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import { SWRConfig } from 'swr';
-import { Provider, useHydrate } from '../store';
+import { SWRConfig, SWRConfiguration } from 'swr';
 
 const Navbar = dynamic(() => import('../components/Navbar'));
 
@@ -24,13 +23,13 @@ Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const store = useHydrate(pageProps.initialZustandState);
-
-  const swrConfig = {
+  const swrConfig: SWRConfiguration = {
     fetcher,
     dedupingInterval: 10000,
     fallback: pageProps.fallback,
   };
+
+  if (!pageProps.fallback) delete swrConfig.fallback;
 
   return (
     <>
@@ -41,17 +40,15 @@ function MyApp({ Component, pageProps }: AppProps) {
           }
         `}
       </style>
-      <Provider createStore={store}>
-        <SessionProvider session={pageProps.session}>
-          <SWRConfig value={swrConfig}>
-            <ChakraProvider theme={theme}>
-              <GlobalStyle />
-              <ShowNavbar />
-              <Component {...pageProps} />
-            </ChakraProvider>
-          </SWRConfig>
-        </SessionProvider>
-      </Provider>
+      <SessionProvider session={pageProps.session}>
+        <SWRConfig value={swrConfig}>
+          <ChakraProvider theme={theme}>
+            <GlobalStyle />
+            <ShowNavbar />
+            <Component {...pageProps} />
+          </ChakraProvider>
+        </SWRConfig>
+      </SessionProvider>
     </>
   );
 }

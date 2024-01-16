@@ -1,3 +1,4 @@
+import useRevalidate from '@/libs/hooks/useRevalidate';
 import { Button, Divider, Flex, Grid, GridItem, Text } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import { useMemo } from 'react';
@@ -9,19 +10,21 @@ import ReviewsRatings from './ReviewsRatings';
 interface ReviewsFCProps {
   reviews: IReview[];
   numReviews: number;
-  mobileId: string;
+  productId: string;
 }
 
-function Reviews({ mobileId, reviews, numReviews }: ReviewsFCProps) {
-  const { data, status } = useSession();
-  const user = data?.user;
+function Reviews({ productId, reviews, numReviews }: ReviewsFCProps) {
+  const { data: session, status } = useSession();
   const unauthenticated = status === 'unauthenticated';
   const cannotReview = useMemo(
     () =>
       unauthenticated ||
-      reviews.some((review) => review.user.email === user.email),
-    [reviews, user, unauthenticated]
+      reviews.some((review) => review.user.email === session?.user.email),
+    // eslint-disable-next-line exhaustive-deps/react-hooks
+    [reviews, unauthenticated]
   );
+
+  const revalidateProduct = useRevalidate(`/api/products/${productId}`);
 
   return (
     <Grid
@@ -41,14 +44,24 @@ function Reviews({ mobileId, reviews, numReviews }: ReviewsFCProps) {
             <Text>This product has no public reviews</Text>
           </Flex>
         )}
-        {!cannotReview && <ReviewForm mobileId={mobileId} />}
+        {!cannotReview && (
+          <ReviewForm
+            productId={productId}
+            revalidateProduct={revalidateProduct}
+          />
+        )}
         {unauthenticated && (
           <Button colorScheme='teal' size='sm' my='2'>
             Log in to add review
           </Button>
         )}
         {reviews.map((review) => (
-          <ReviewItem key={review.id} review={review} />
+          <ReviewItem
+            key={review._id}
+            review={review}
+            productId={productId}
+            revalidateProduct={revalidateProduct}
+          />
         ))}
       </GridItem>
     </Grid>

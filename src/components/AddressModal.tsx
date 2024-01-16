@@ -22,7 +22,10 @@ const AddressModal: React.FC<{ edit?: boolean; addressToEdit?: Address }> = ({
   addressToEdit,
 }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const { addAddress, editAddress } = useStore();
+  const { addAddress, editAddress } = useStore((state) => ({
+    addAddress: state.addAddress,
+    editAddress: state.editAddress,
+  }));
 
   return (
     <>

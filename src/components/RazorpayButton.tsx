@@ -1,14 +1,15 @@
+import { createOrder, getRazorpayOrderId } from '@/libs/services/orders';
 import { useStore } from '@/store';
 import { addressSelectors } from '@/store/addressStore';
 import { cartSelectors } from '@/store/cartStore';
 import { Address } from '@/types/address';
-import { RazorPayOptions } from '@/types/razorpay';
+import { RazorPayOptions, RazorResponse } from '@/types/razorpay';
 import { Button, ButtonProps, useToast } from '@chakra-ui/react';
-import axios from 'axios';
+import useRazorpay from '@/libs/hooks/useRazorpay';
 import { useSession } from 'next-auth/react';
 import router from 'next/router';
+import { useRef } from 'react';
 import { useSWRConfig } from 'swr';
-import useRazorpay from '../libs/useRazorpay';
 
 function RazorpayButton({ disabled }: ButtonProps) {
   const address = useStore(addressSelectors.getCurrentAddressSelector);
@@ -19,10 +20,10 @@ function RazorpayButton({ disabled }: ButtonProps) {
   const { mutate } = useSWRConfig();
   const { data: session } = useSession();
   const toast = useToast();
+  const orderIdRef = useRef<string>('');
 
   const { openGateway } = useRazorpay({
     onPaymentFail,
-    onPaymentSuccess,
   });
 
   function onPaymentFail() {
@@ -35,16 +36,19 @@ function RazorpayButton({ disabled }: ButtonProps) {
     });
   }
 
-  async function onPaymentSuccess() {
-    const res = await axios.post('/orders/save', {
-      orders: cartItems.map((item) => ({
-        mobile: item.mobile.id,
+  async function onPaymentSuccess(payload: RazorResponse) {
+    const res = await createOrder({
+      orderItems: cartItems.map((item) => ({
+        product: item.product,
         qty: item.qty,
       })),
+      razorpayPaymentId: payload.razorpay_payment_id,
+      razorpaySignature: payload.razorpay_signature,
+      orderId: orderIdRef.current,
       address,
     });
 
-    if (res.data.ok) {
+    if (res.ok) {
       await mutate('/api/orders');
       toast({
         id: 'payment success',
@@ -62,6 +66,7 @@ function RazorpayButton({ disabled }: ButtonProps) {
         isClosable: true,
         duration: 2000,
       });
+      orderIdRef.current = '';
       router.push('/orders');
     }
   }
@@ -76,17 +81,19 @@ function RazorpayButton({ disabled }: ButtonProps) {
       receipt,
       notes: address,
     };
-    const res = await axios.post(
-      `/api/users/${session.user.id}/orders/razorpay`,
-      data
-    );
-    return res.data.id;
+    try {
+      const res = await getRazorpayOrderId(data);
+      orderIdRef.current = res.id;
+      return res.id;
+    } catch (error) {
+      console.log('catched error', error);
+    }
   };
 
   async function handleOrderPayment() {
     if (isCartEmpty || !address) return;
 
-    const order_id = await createRazorpayOrder(
+    const orderId = await createRazorpayOrder(
       totalPrice,
       address,
       session.user.id
@@ -100,11 +107,7 @@ function RazorpayButton({ disabled }: ButtonProps) {
       description: 'Purchase Mobile',
       image:
         'https://i.pinimg.com/originals/20/27/3c/20273cfda041b47e89e057a4c2296928.png',
-      order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      handler: function (response) {
-        console.log(response);
-        onPaymentSuccess();
-      },
+      order_id: orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
       prefill: {
         name: address.fullName,
         email: address.emailAddress,
@@ -118,6 +121,7 @@ function RazorpayButton({ disabled }: ButtonProps) {
       theme: {
         color: '#000',
       },
+      handler: onPaymentSuccess,
     };
 
     openGateway(options);

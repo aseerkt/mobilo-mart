@@ -56,7 +56,7 @@ function CheckoutPage() {
             </Text>
             <Divider mb='5' />
             {cartItems.map((i) => (
-              <CartItem key={i.mobile.id} cartItem={i} />
+              <CartItem key={i.product.id} cartItem={i} />
             ))}
             {cartItems.length === 0 && (
               <Flex
@@ -78,7 +78,7 @@ function CheckoutPage() {
               </Flex>
             )}
           </GridItem>
-          <ShowAddress address={address} showChangeAddress />
+          {address && <ShowAddress address={address} showChangeAddress />}
           <Divider my='5' />
           <RazorpayButton disabled={!address || cartItems.length === 0} />
         </Grid>

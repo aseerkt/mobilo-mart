@@ -8,20 +8,16 @@ export interface RazorpaySuccessPayload {
 
 interface UseRazorPayHookParams {
   onPaymentFail: Function;
-  onPaymentSuccess: (response: RazorpaySuccessPayload) => void;
 }
 
 export default function useMobiloRazorpay({
   onPaymentFail,
-  onPaymentSuccess,
 }: UseRazorPayHookParams) {
   const openGateway = (options: RazorPayOptions) => {
     // @ts-ignore
     const razorpay = new Razorpay(options);
 
     razorpay.on('payment.failed', onPaymentFail);
-
-    razorpay.on('payment.success', onPaymentSuccess);
 
     razorpay.open();
   };

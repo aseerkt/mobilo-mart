@@ -1,3 +1,4 @@
+import { addReview, editReview } from '@/libs/services/reviews';
 import {
   Box,
   Button,
@@ -22,38 +23,38 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import axios from 'axios';
 import { useState } from 'react';
 import { FaEdit, FaPlusCircle, FaStar } from 'react-icons/fa';
-import { useSWRConfig } from 'swr';
 import { IReview } from '../types/mobile';
 
 interface ReviewFormProps {
   edit?: boolean;
   reviewToEdit?: IReview;
-  mobileId: string;
+  productId: string;
+  revalidateProduct: () => Promise<void>;
 }
 
-function ReviewForm({ mobileId, edit = false, reviewToEdit }: ReviewFormProps) {
+function ReviewForm({
+  productId,
+  edit = false,
+  reviewToEdit,
+  revalidateProduct,
+}: ReviewFormProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [formData, setFormData] = useState(
+  const [formValues, setFormData] = useState(
     edit ? reviewToEdit : { title: '', rating: 3, body: '' }
   );
 
-  const { mutate } = useSWRConfig();
   const toast = useToast();
-
-  const revalidateProduct = () =>
-    mobileId ? mutate(`/products/${mobileId}`) : null;
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     try {
       if (edit) {
-        await axios.put('/reviews', { ...formData, mobileId });
+        await editReview(productId, reviewToEdit._id, formValues);
       } else {
-        await axios.post('/reviews', { ...formData, mobileId });
+        await addReview(productId, formValues);
       }
       await revalidateProduct();
       toast({
@@ -98,7 +99,7 @@ function ReviewForm({ mobileId, edit = false, reviewToEdit }: ReviewFormProps) {
               <FormControl mb='3' id='title' isRequired>
                 <FormLabel>Title</FormLabel>
                 <Input
-                  value={formData.title}
+                  value={formValues.title}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, title: e.target.value }))
                   }
@@ -108,7 +109,7 @@ function ReviewForm({ mobileId, edit = false, reviewToEdit }: ReviewFormProps) {
               <FormControl mb='3' id='body'>
                 <FormLabel>Review</FormLabel>
                 <Textarea
-                  value={formData.body}
+                  value={formValues.body}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, body: e.target.value }))
                   }
@@ -119,7 +120,7 @@ function ReviewForm({ mobileId, edit = false, reviewToEdit }: ReviewFormProps) {
                 <FormLabel>Rating</FormLabel>
                 <Slider
                   aria-label='slider-ex-4'
-                  value={formData.rating}
+                  value={formValues.rating}
                   min={0}
                   max={5}
                   step={1}
@@ -135,7 +136,7 @@ function ReviewForm({ mobileId, edit = false, reviewToEdit }: ReviewFormProps) {
                   </SliderThumb>
                 </Slider>
                 <FormHelperText>
-                  Selected rating: {formData.rating}
+                  Selected rating: {formValues.rating}
                 </FormHelperText>
               </FormControl>
             </form>

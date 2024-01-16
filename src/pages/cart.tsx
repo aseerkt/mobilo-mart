@@ -49,7 +49,7 @@ function Cart() {
         <Grid {...TWO_GRID_STYLES}>
           <Box>
             {cartItems.map((i) => (
-              <CartItem key={i.mobile.id} cartItem={i} />
+              <CartItem key={i.product.id} cartItem={i} />
             ))}
             {cartItems.length < 1 && (
               <Flex

@@ -1,6 +1,6 @@
+import { OrderItem } from '@/types/order';
 import { Divider, Flex, Grid, Image, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import { OrderItem } from '../types/order';
 import DeliveryCD from './DeliveryCD';
 
 interface OrderEntryProps {
@@ -25,34 +25,32 @@ function OrderEntry({ orderItem: item }: OrderEntryProps) {
           <Image
             h='full'
             objectFit='contain'
-            src={item.mobile.image}
-            alt={item.mobile.name}
+            src={item.product.image}
+            alt={item.product.name}
           />
         </Flex>
         <Flex px={{ base: '4', sm: 0 }} direction='column' flex='1'>
-          <NextLink href={`/products/${item.mobile.id}`}>
-            <a>
-              <Text
-                noOfLines={2}
-                fontSize='lg'
-                fontWeight='600'
-                cursor='pointer'
-                color='blue.800'
-                _hover={{
-                  color: 'blue.500',
-                }}
-              >
-                {item.mobile.name}
-              </Text>
-            </a>
+          <NextLink href={`/products/${item.product.id}`}>
+            <Text
+              noOfLines={2}
+              fontSize='lg'
+              fontWeight='600'
+              cursor='pointer'
+              color='blue.800'
+              _hover={{
+                color: 'blue.500',
+              }}
+            >
+              {item.product.name}
+            </Text>
           </NextLink>
 
           <Text>FREE Delivery</Text>
           <Text>Quantity: {item.qty}</Text>
           <DeliveryCD
-            mobileId={item.mobile.id}
+            productId={item.product.id}
             purchasedDate={item.createdAt}
-            deliveryDays={item.mobile.deliveryDays}
+            deliveryDays={item.product.deliveryDays}
           />
         </Flex>
       </Grid>

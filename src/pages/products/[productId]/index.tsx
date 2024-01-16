@@ -7,6 +7,7 @@ import fetcher from '@/libs/fetcher';
 import Layout from '@/shared/Layout';
 import { IMobile } from '@/types/mobile';
 import { formatPrice } from '@/utils/formatNumbers';
+import { parseDoc } from '@/utils/objUtils';
 import {
   Divider,
   Flex,
@@ -131,7 +132,7 @@ function SingleProduct() {
         </Grid>
         {data?.reviews && (
           <Reviews
-            mobileId={data?.id}
+            productId={data?.id}
             reviews={data.reviews}
             numReviews={data?.numReviews}
           />
@@ -154,9 +155,7 @@ export const getStaticProps: GetStaticProps = async function ({ params }) {
   return {
     props: {
       fallback: {
-        [`/api/products/${params.productId}`]: JSON.parse(
-          JSON.stringify(mobile)
-        ),
+        [`/api/products/${params.productId}`]: parseDoc(mobile),
       },
     },
     revalidate: 1800,

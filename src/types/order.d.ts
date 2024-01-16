@@ -5,7 +5,7 @@ import { User } from './user';
 export interface OrderItem {
   id: string;
   qty: number;
-  mobile: IMobile;
+  product: IMobile;
   status: string;
   createdAt: Date;
 }

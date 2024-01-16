@@ -1,7 +1,7 @@
 import { User } from './user';
 
 export interface IReview {
-  id: string;
+  _id: string;
   mobile: string;
   user: User;
   rating: number;

@@ -21,4 +21,6 @@ const OrderSchema = new Schema<IOrder>({
   items: [OrderItemSchema],
 });
 
+OrderSchema.index({ 'user._id': 1 });
+
 export default models.Order || model('Order', OrderSchema);

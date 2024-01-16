@@ -22,25 +22,27 @@ const cartSlice: StoreSlice<CartSlice> = (set, get) => ({
   ...cartInitialState,
   itemCount: () => get().cartItems.length || 0,
   addToCart: (mobile, qty) => {
-    const itemIdx = get().cartItems.findIndex((i) => i.mobile.id === mobile.id);
+    const itemIdx = get().cartItems.findIndex(
+      (i) => i.product.id === mobile.id
+    );
     if (itemIdx !== -1) {
       get().changeItemQty(mobile.id, qty);
     } else {
       return set({
-        cartItems: [...get().cartItems, { mobile, qty }],
+        cartItems: [...get().cartItems, { product: mobile, qty }],
       });
     }
   },
   getTotalPrice: () =>
     get().cartItems.reduce(
-      (prev, curr) => prev + curr.qty * curr.mobile.price,
+      (prev, curr) => prev + curr.qty * curr.product.price,
       0
     ),
   getTotalQty: () => get().cartItems.reduce((prev, curr) => prev + curr.qty, 0),
   isCartEmpty: () => get().cartItems.length === 0,
   removeItem: (mobileId) => {
     const { cartItems } = get();
-    const newItems = cartItems.filter((i) => i.mobile.id !== mobileId);
+    const newItems = cartItems.filter((i) => i.product.id !== mobileId);
     return set({ cartItems: newItems });
   },
   changeItemQty: (mobileId, qty) => {
@@ -48,9 +50,9 @@ const cartSlice: StoreSlice<CartSlice> = (set, get) => ({
       get().removeItem(mobileId);
     } else {
       const itemIdx = get().cartItems.findIndex(
-        (i) => i.mobile.id === mobileId
+        (i) => i.product.id === mobileId
       );
-      const newItems = get().cartItems.filter((i) => i.mobile.id !== mobileId);
+      const newItems = get().cartItems.filter((i) => i.product.id !== mobileId);
       newItems.splice(itemIdx, 0, {
         ...get().cartItems[itemIdx],
         qty,
@@ -65,7 +67,7 @@ export const cartSelectors = {
   itemCountSelector: (state: CartSlice) => state.cartItems.length,
   totalPriceSelector: (state: CartSlice) =>
     state.cartItems.reduce(
-      (prev, curr) => prev + curr.qty * curr.mobile.price,
+      (prev, curr) => prev + curr.qty * curr.product.price,
       0
     ),
   totalQtySelector: (state: CartSlice) =>

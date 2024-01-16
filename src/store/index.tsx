@@ -1,56 +1,34 @@
-import { useLayoutEffect } from 'react';
-import create from 'zustand';
-import createContext from 'zustand/context';
+import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import addressSlice, { AddressSlice } from './addressStore';
-import cartSlice, { CartSlice } from './cartStore';
-
-// https://github.com/vercel/next.js/blob/master/examples/with-zustand/lib/store.js
-// https://github.com/pmndrs/zustand/issues/508#issue-951331506
+import addressSlice, {
+  AddressSlice,
+  addressInitialState,
+} from './addressStore';
+import cartSlice, { CartSlice, cartInitialState } from './cartStore';
 
 export type GlobalSlice = CartSlice & AddressSlice;
 
-let store;
+const usePersistedStore = create(
+  persist<GlobalSlice>(
+    (set, get) => ({
+      ...cartSlice(set, get),
+      ...addressSlice(set, get),
+    }),
+    { name: 'mobilo_cart_address_data' }
+  )
+);
 
-const ZusContext = createContext<GlobalSlice>();
-
-export const Provider = ZusContext.Provider;
-export const useStore = ZusContext.useStore;
-
-export const initializeStore = (preloadedState = {}) => {
-  return create<GlobalSlice>(
-    persist(
-      (set, get) => ({
-        ...preloadedState,
-        ...cartSlice(set, get),
-        ...addressSlice(set, get),
-      }),
-      { name: 'mobilo_cart_address_data' }
-    )
-  );
+const initialState = {
+  ...cartInitialState,
+  ...addressInitialState,
 };
 
-export function useHydrate(initialState) {
-  // For SSR & SSG, always use a new store.
-  if (typeof window === 'undefined') {
-    return () => initializeStore(initialState);
-  }
+type Selector<U> = (state: GlobalSlice) => U;
 
-  // For CSR, always re-use same store.
-  store = store ?? initializeStore(initialState);
-  // And if initialState changes, then merge states in the next render cycle.
-  //
-  // eslint complaining "React Hooks must be called in the exact same order in every component render"
-  // is ignorable as this code runs in same order in a given environment
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useLayoutEffect(() => {
-    if (initialState && store) {
-      store.setState({
-        ...store.getState(),
-        ...initialState,
-      });
-    }
-  }, [initialState]);
+export const useStore = <T,>(selector: Selector<T>) => {
+  const selectedState = usePersistedStore(selector);
 
-  return () => store;
-}
+  return typeof window === 'undefined'
+    ? selector(initialState as GlobalSlice)
+    : selectedState;
+};
