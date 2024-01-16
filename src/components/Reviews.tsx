@@ -20,7 +20,7 @@ function Reviews({ productId, reviews, numReviews }: ReviewsFCProps) {
     () =>
       unauthenticated ||
       reviews.some((review) => review.user.email === session?.user.email),
-    // eslint-disable-next-line exhaustive-deps/react-hooks
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [reviews, unauthenticated]
   );
 

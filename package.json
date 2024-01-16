@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "npx tsx src/database/seeds/index.ts"
+    "seed": "npx tsx src/database/seeds/index.ts",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@chakra-ui/next-js": "^2.2.0",
@@ -46,6 +47,7 @@
     "@types/uuid": "^8.3.4",
     "dotenv": "^16.3.1",
     "eslint-config-next": "^14.0.4",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "husky": "^8.0.0"
   }
 }
