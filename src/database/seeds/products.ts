@@ -85,7 +85,7 @@ export default [
     keywords: ['mobile', 'oppo', 'f19'],
   },
   {
-    name: 'Samsung Galaxy M42 5G(Prism Dot Gray, 8GB RAM, 128GB Storage)Samsung Galaxy M42 5G(Prism Dot Gray, 8GB RAM, 128GB Storage)',
+    name: 'Samsung Galaxy M42 5G(Prism Dot Gray, 8GB RAM, 128GB Storage)',
     image:
       'https://images-eu.ssl-images-amazon.com/images/I/41znff7SgPL._SX300_SY300_QL70_FMwebp_.jpg',
     price: 23999,
