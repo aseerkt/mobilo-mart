@@ -23,10 +23,10 @@ const cartSlice: StoreSlice<CartSlice> = (set, get) => ({
   itemCount: () => get().cartItems.length || 0,
   addToCart: (mobile, qty) => {
     const itemIdx = get().cartItems.findIndex(
-      (i) => i.product.id === mobile.id
+      (i) => i.product._id === mobile._id
     );
     if (itemIdx !== -1) {
-      get().changeItemQty(mobile.id, qty);
+      get().changeItemQty(mobile._id, qty);
     } else {
       return set({
         cartItems: [...get().cartItems, { product: mobile, qty }],
@@ -42,7 +42,7 @@ const cartSlice: StoreSlice<CartSlice> = (set, get) => ({
   isCartEmpty: () => get().cartItems.length === 0,
   removeItem: (mobileId) => {
     const { cartItems } = get();
-    const newItems = cartItems.filter((i) => i.product.id !== mobileId);
+    const newItems = cartItems.filter((i) => i.product._id !== mobileId);
     return set({ cartItems: newItems });
   },
   changeItemQty: (mobileId, qty) => {
@@ -50,9 +50,11 @@ const cartSlice: StoreSlice<CartSlice> = (set, get) => ({
       get().removeItem(mobileId);
     } else {
       const itemIdx = get().cartItems.findIndex(
-        (i) => i.product.id === mobileId
+        (i) => i.product._id === mobileId
       );
-      const newItems = get().cartItems.filter((i) => i.product.id !== mobileId);
+      const newItems = get().cartItems.filter(
+        (i) => i.product._id !== mobileId
+      );
       newItems.splice(itemIdx, 0, {
         ...get().cartItems[itemIdx],
         qty,

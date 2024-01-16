@@ -11,7 +11,7 @@ export interface IReview {
 }
 
 export interface IMobile {
-  id: string;
+  _id: string;
   name: string;
   image: string;
   price: number;

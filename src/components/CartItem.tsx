@@ -35,7 +35,7 @@ function CartItem({ cartItem: i }: CartItemProps) {
           minH={{ base: '44', sm: 'unset' }}
           px={{ base: '5', sm: 'unset' }}
         >
-          <NextLink href={`/products/${i.product.id}`}>
+          <NextLink href={`/products/${i.product._id}`}>
             <Text
               noOfLines={2}
               fontSize='lg'
@@ -60,13 +60,13 @@ function CartItem({ cartItem: i }: CartItemProps) {
                 minimalText
                 qty={i.qty}
                 onQtyChange={(e) =>
-                  changeItemQty(i.product.id, parseInt(e.target.value))
+                  changeItemQty(i.product._id, parseInt(e.target.value))
                 }
               />
             </Flex>
             <Divider mx='2' orientation='vertical' />
             <Button
-              onClick={() => removeItem(i.product.id)}
+              onClick={() => removeItem(i.product._id)}
               fontWeight='500'
               variant='link'
             >

@@ -30,7 +30,7 @@ function OrderEntry({ orderItem: item }: OrderEntryProps) {
           />
         </Flex>
         <Flex px={{ base: '4', sm: 0 }} direction='column' flex='1'>
-          <NextLink href={`/products/${item.product.id}`}>
+          <NextLink href={`/products/${item.product._id}`}>
             <Text
               noOfLines={2}
               fontSize='lg'
@@ -48,7 +48,7 @@ function OrderEntry({ orderItem: item }: OrderEntryProps) {
           <Text>FREE Delivery</Text>
           <Text>Quantity: {item.qty}</Text>
           <DeliveryCD
-            productId={item.product.id}
+            productId={item.product._id}
             purchasedDate={item.createdAt}
             deliveryDays={item.product.deliveryDays}
           />

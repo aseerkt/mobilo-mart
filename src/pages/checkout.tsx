@@ -56,7 +56,7 @@ function CheckoutPage() {
             </Text>
             <Divider mb='5' />
             {cartItems.map((i) => (
-              <CartItem key={i.product.id} cartItem={i} />
+              <CartItem key={i.product._id} cartItem={i} />
             ))}
             {cartItems.length === 0 && (
               <Flex

@@ -37,7 +37,7 @@ function ProductCard({ product }: ProductCardProps) {
         textAlign='center'
         align='center'
       >
-        <NextLink href={`products/${product.id}`}>
+        <NextLink href={`products/${product._id}`}>
           <Text
             cursor='pointer'
             noOfLines={3}
@@ -53,7 +53,7 @@ function ProductCard({ product }: ProductCardProps) {
         </NextLink>
         <Flex flexDirection='column' justifyContent='flex-end' align='center'>
           <ProductRating
-            id={product.id}
+            id={product._id}
             stars={product.stars}
             numReviews={product.numReviews}
           />

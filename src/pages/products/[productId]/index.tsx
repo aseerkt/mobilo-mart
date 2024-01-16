@@ -69,7 +69,7 @@ function SingleProduct() {
               {data?.name}
             </Text>
             <ProductRating
-              id={data?.id}
+              id={data?._id}
               stars={data?.stars}
               numReviews={data?.numReviews}
             />
@@ -132,7 +132,7 @@ function SingleProduct() {
         </Grid>
         {data?.reviews && (
           <Reviews
-            productId={data?.id}
+            productId={data?._id}
             reviews={data.reviews}
             numReviews={data?.numReviews}
           />
