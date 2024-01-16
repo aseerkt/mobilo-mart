@@ -1,7 +1,7 @@
 import FormWrapper from '@/components/FormWrapper';
+import { registerUser } from '@/libs/services/users';
 import InputField from '@/shared/InputField';
 import { Button, Divider, Link, Text, useToast } from '@chakra-ui/react';
-import axios from 'axios';
 import { Form, Formik } from 'formik';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -17,12 +17,8 @@ function Register() {
         initialValues={{ name: '', email: '', password: '' }}
         onSubmit={async function (values) {
           try {
-            const res = await axios('/api/users', {
-              method: 'POST',
-              data: values,
-            });
-            const user = res.data?.user;
-            if (user) {
+            const res = await registerUser(values);
+            if (res._id) {
               toast({
                 title: 'Account created.',
                 description: "We've created your account for you.",

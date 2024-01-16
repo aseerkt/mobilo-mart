@@ -3,3 +3,9 @@ export interface User {
   email: string;
   name: string;
 }
+
+export interface UserCreatePayload {
+  name: string;
+  email: string;
+  password: string;
+}
