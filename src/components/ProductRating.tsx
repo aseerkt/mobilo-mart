@@ -1,4 +1,4 @@
-import { numberWithCommas } from '@/utils/formatNumbers';
+import { numberWithCommas } from '@/utils/numericUtils';
 import { Flex, Text } from '@chakra-ui/react';
 import { FaRegStar, FaStar, FaStarHalfAlt } from 'react-icons/fa';
 

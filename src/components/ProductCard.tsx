@@ -1,5 +1,5 @@
 import { IMobile } from '@/types/mobile';
-import { formatPrice } from '@/utils/formatNumbers';
+import { formatPrice } from '@/utils/numericUtils';
 import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import ProductRating from './ProductRating';

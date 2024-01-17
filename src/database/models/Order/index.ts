@@ -9,17 +9,20 @@ interface IOrder {
   items: Types.ArraySubdocument<IOrderItem> | IOrderItem[];
 }
 
-const OrderSchema = new Schema<IOrder>({
-  user: {
-    type: PublicUserSchema,
-    required: true,
+const OrderSchema = new Schema<IOrder>(
+  {
+    user: {
+      type: PublicUserSchema,
+      required: true,
+    },
+    address: {
+      type: AddressSchema,
+      required: true,
+    },
+    items: [OrderItemSchema],
   },
-  address: {
-    type: AddressSchema,
-    required: true,
-  },
-  items: [OrderItemSchema],
-});
+  { timestamps: true }
+);
 
 OrderSchema.index({ 'user._id': 1 });
 
