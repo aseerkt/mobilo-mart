@@ -1,4 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Mobilo Mart
+
+> Mobile only E Commerce Website
+
+## Tech Stacks
+
+| Name            | Description                    |
+| --------------- | ------------------------------ |
+| **Next.js**     | React Framework                |
+| **Chakra UI**   | UI component library.          |
+| **SWR**         | React Hooks for data fetching  |
+| **Axios**       | Promise based HTTP client      |
+| **Formik**      | Form library for React         |
+| **Mongoose**    | MongoDB Client Library         |
+| **NextAuth.js** | Next.js authentication library |
+
+## Roadmap
+
+- [x] User register and authentication
+- [x] List products
+- [x] Add to cart
+- [x] Place Order
+- [x] CRUD delivery address
+- [x] Razorpay gateway (99% discount LOL)
+- [x] CRUD Reviews
+- [x] List Orders
+- [ ] Responsive UI
+
+## Screenshots
+
+![mobilo-carousel](assets/mobilo-carousel.png)
+![mobilo-browse](assets/mobilo-browse.png)
+![mobilo-mobile](assets/mobilo-mobile.png)
+![mobilo-reviews](assets/mobilo-reviews.png)
 
 ## Getting Started
 
