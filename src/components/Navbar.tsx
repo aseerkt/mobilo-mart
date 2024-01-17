@@ -1,11 +1,11 @@
 import { cartSelectors } from '@/store/cartStore';
+import { Link } from '@chakra-ui/next-js';
 import {
   Box,
   Button,
   Divider,
   Flex,
   HStack,
-  Link,
   Menu,
   MenuButton,
   MenuItem,
@@ -13,7 +13,6 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { signOut, useSession } from 'next-auth/react';
-import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { FaCartArrowDown, FaUserAlt } from 'react-icons/fa';
 import { useStore } from '../store';
@@ -49,7 +48,7 @@ function Navbar() {
         paddingX='5'
         marginX='auto'
       >
-        <Link as={NextLink} href='/'>
+        <Link href='/'>
           <Text
             cursor='pointer'
             textAlign='center'
@@ -62,7 +61,7 @@ function Navbar() {
           </Text>
         </Link>
         <HStack fontWeight='bold' spacing={3} ml='auto'>
-          <Link href='/cart' as={NextLink}>
+          <Link href='/cart'>
             <Button leftIcon={<FaCartArrowDown size='1.3em' />}>
               {itemCount}
             </Button>
@@ -77,23 +76,21 @@ function Navbar() {
                 {user?.name}
               </MenuButton>
               <MenuList>
-                <NextLink href='/orders'>
+                <Link href='/orders'>
                   <MenuItem>My Orders</MenuItem>
-                </NextLink>
-                <NextLink href='/cart'>
+                </Link>
+                <Link href='/cart'>
                   <MenuItem>My Cart</MenuItem>
-                </NextLink>
-                <NextLink href='/addresses'>
+                </Link>
+                <Link href='/addresses'>
                   <MenuItem>My Addresses</MenuItem>
-                </NextLink>
+                </Link>
                 <Divider />
                 <MenuItem onClick={logout}>Sign Out</MenuItem>
               </MenuList>
             </Menu>
           ) : (
-            <Link href='/login' as={NextLink}>
-              Login
-            </Link>
+            <Link href='/login'>Login</Link>
           )}
         </HStack>
       </Flex>

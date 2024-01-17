@@ -65,19 +65,27 @@ function Login() {
         initialValues={{ email: '', password: '' }}
         onSubmit={async function (values) {
           try {
-            await signIn('credentials', { ...values, redirect: false });
-          } catch (err) {
-            if (err.response.data) {
+            const res = await signIn('credentials', {
+              ...values,
+              redirect: false,
+            });
+            if (res.error) {
               toast({
                 title: 'Login failed',
-                description: err.response?.data?.errors
-                  .map(({ path, message }) => message)
-                  .join(', '),
+                description: res.error,
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
               });
             }
+          } catch (err) {
+            toast({
+              title: 'Login failed',
+              description: err.message,
+              status: 'error',
+              duration: 3000,
+              isClosable: true,
+            });
           }
         }}
       >
