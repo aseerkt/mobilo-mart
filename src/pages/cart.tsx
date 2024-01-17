@@ -1,7 +1,7 @@
 import Layout from '@/shared/Layout';
 import { addressSelectors } from '@/store/addressStore';
 import { cartSelectors } from '@/store/cartStore';
-import { formatPrice } from '@/utils/formatNumbers';
+import { formatPrice } from '@/utils/numericUtils';
 import {
   Box,
   Button,

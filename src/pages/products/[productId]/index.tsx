@@ -6,7 +6,7 @@ import Mobile from '@/database/models/Mobile';
 import fetcher from '@/libs/fetcher';
 import Layout from '@/shared/Layout';
 import { IMobile } from '@/types/mobile';
-import { formatPrice } from '@/utils/formatNumbers';
+import { formatPrice } from '@/utils/numericUtils';
 import { parseDoc } from '@/utils/objUtils';
 import {
   Divider,

@@ -1,5 +1,5 @@
 import { CartItemType } from '@/store/cartStore';
-import { formatPrice } from '@/utils/formatNumbers';
+import { formatPrice } from '@/utils/numericUtils';
 import { Button, Divider, Flex, Grid, Image, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { useStore } from '../store';
