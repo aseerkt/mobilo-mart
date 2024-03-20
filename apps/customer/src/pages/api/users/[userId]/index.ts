@@ -1,5 +1,5 @@
-import User from '@/database/models/User';
 import { makeDbConnection } from '@/libs/middlewares';
+import User from 'database/models/User';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getToken } from 'next-auth/jwt';
 import { createRouter } from 'next-connect';

@@ -1,10 +1,10 @@
 import Carousel from '@/components/Carousel';
 import ProductCard from '@/components/ProductCard';
-import dbConnect from '@/database';
-import Mobile from '@/database/models/Mobile';
 import fetcher from '@/libs/fetcher';
 import { parseDoc } from '@/utils/objUtils';
 import { Box, Text } from '@chakra-ui/react';
+import dbConnect from 'database';
+import Mobile from 'database/models/Mobile';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import useSWR from 'swr';

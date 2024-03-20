@@ -1,5 +1,5 @@
-import Mobile from '@/database/models/Mobile';
 import { makeDbConnection } from '@/libs/middlewares';
+import Mobile from 'database/models/Mobile';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createRouter } from 'next-connect';
 

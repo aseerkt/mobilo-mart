@@ -1,6 +1,6 @@
-import Order from '@/database/models/Order';
-import { OrderItemStatus } from '@/database/models/Order/OrderItem';
 import { attachTokenToRequest, makeDbConnection } from '@/libs/middlewares';
+import Order from 'database/models/Order';
+import { OrderItemStatus } from 'database/models/Order/OrderItem';
 import { Types } from 'mongoose';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createRouter } from 'next-connect';

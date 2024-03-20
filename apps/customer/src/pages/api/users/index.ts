@@ -1,6 +1,6 @@
-import User from '@/database/models/User';
 import { makeDbConnection } from '@/libs/middlewares';
 import bcrypt from 'bcrypt';
+import User from 'database/models/User';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createRouter } from 'next-connect';
 

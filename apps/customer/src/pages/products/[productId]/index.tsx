@@ -1,8 +1,6 @@
 import AddToCart from '@/components/AddToCart';
 import ProductRating from '@/components/ProductRating';
 import Reviews from '@/components/Reviews';
-import dbConnect from '@/database';
-import Mobile from '@/database/models/Mobile';
 import fetcher from '@/libs/fetcher';
 import Layout from '@/shared/Layout';
 import { IMobile } from '@/types/mobile';
@@ -22,6 +20,8 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import dbConnect from 'database';
+import Mobile from 'database/models/Mobile';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';

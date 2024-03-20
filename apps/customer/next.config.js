@@ -4,6 +4,8 @@ const withPWA = require('@ducanh2912/next-pwa').default({
 });
 
 /** @type {import('next').NextConfig} */
-module.exports = {};
+module.exports = {
+  transpilePackages: ['database'],
+};
 
 module.exports = withPWA(module.exports);

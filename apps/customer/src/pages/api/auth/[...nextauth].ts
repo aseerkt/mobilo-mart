@@ -1,6 +1,6 @@
-import dbConnect from '@/database';
-import User from '@/database/models/User';
 import bcrypt from 'bcrypt';
+import dbConnect from 'database';
+import User from 'database/models/User';
 import { AuthOptions } from 'next-auth';
 import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';

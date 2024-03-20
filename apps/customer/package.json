@@ -1,13 +1,12 @@
 {
-  "name": "client",
+  "name": "customer",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "seed": "npx tsx src/database/seeds/index.ts"
+    "lint": "next lint"
   },
   "dependencies": {
     "@chakra-ui/next-js": "^2.2.0",
@@ -29,11 +28,11 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.12.0",
     "swr": "^2.2.4",
-    "tsx": "^4.7.0",
     "uuid": "^8.3.2",
     "wretch": "^2.8.0",
     "yup": "^0.32.11",
-    "zustand": "^4.4.7"
+    "zustand": "^4.4.7",
+    "database": "workspace:*"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^14.0.4",

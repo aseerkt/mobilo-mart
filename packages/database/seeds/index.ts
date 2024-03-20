@@ -14,6 +14,11 @@ const seed = async () => {
     path: path.resolve(process.cwd(), '.env.local'),
   }).parsed;
 
+  if (!envs) {
+    console.log('No env variables found');
+    process.exit(1);
+  }
+
   await dbConnect(envs.MONGODB_URI);
 
   await Mobile.deleteMany();

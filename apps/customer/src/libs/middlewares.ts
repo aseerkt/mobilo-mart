@@ -1,4 +1,4 @@
-import dbConnect from '@/database';
+import dbConnect from 'database';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getToken } from 'next-auth/jwt';
 import { NextHandler } from 'next-connect';
