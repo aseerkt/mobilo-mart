@@ -1,67 +1,67 @@
 import FormWrapper from '@/components/FormWrapper';
 import { registerUser } from '@/libs/services/users';
-import InputField from '@/shared/InputField';
 import { Button, Divider, Link, Text, useToast } from '@chakra-ui/react';
-import { Form, Formik } from 'formik';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import { InputField } from 'ui/components';
 
 // TODO: yup client side form validation
 
 function Register() {
   const toast = useToast();
   const router = useRouter();
+
+  const form = useForm({
+    defaultValues: { name: '', email: '', password: '' },
+  });
+
+  const onSubmit = form.handleSubmit(async function (values) {
+    try {
+      const res = await registerUser(values);
+      if (res._id) {
+        toast({
+          title: 'Account created.',
+          description: "We've created your account for you.",
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+        router.push('/login');
+      }
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: 'Invalid form data',
+        description: err.response.data.message || err.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  });
+
   return (
     <FormWrapper title='Sign Up'>
-      <Formik
-        initialValues={{ name: '', email: '', password: '' }}
-        onSubmit={async function (values) {
-          try {
-            const res = await registerUser(values);
-            if (res._id) {
-              toast({
-                title: 'Account created.',
-                description: "We've created your account for you.",
-                status: 'success',
-                duration: 3000,
-                isClosable: true,
-              });
-              router.push('/login');
-            }
-          } catch (err) {
-            console.error(err);
-            toast({
-              title: 'Invalid form data',
-              description: err.response.data.message || err.message,
-              status: 'error',
-              duration: 3000,
-              isClosable: true,
-            });
-          }
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <InputField label='Name' isRequired name='name' />
-            <InputField label='Email' isRequired name='email' />
-            <InputField
-              label='Password'
-              isRequired
-              type='password'
-              name='password'
-            />
+      <form onSubmit={onSubmit}>
+        <InputField label='Name' control={form.control} name='name' />
+        <InputField label='Email' control={form.control} name='email' />
+        <InputField
+          label='Password'
+          control={form.control}
+          type='password'
+          name='password'
+        />
 
-            <Button
-              isLoading={isSubmitting}
-              marginY='5'
-              colorScheme='teal'
-              type='submit'
-            >
-              Sign Up
-            </Button>
-          </Form>
-        )}
-      </Formik>
+        <Button
+          isLoading={form.formState.isSubmitting}
+          marginY='5'
+          colorScheme='teal'
+          type='submit'
+        >
+          Sign Up
+        </Button>
+      </form>
 
       <Divider marginBottom='5' />
       <Text fontSize='small'>

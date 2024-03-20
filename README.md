@@ -4,15 +4,15 @@
 
 ## Tech Stacks
 
-| Name            | Description                    |
-| --------------- | ------------------------------ |
-| **Next.js**     | React Framework                |
-| **Chakra UI**   | UI component library.          |
-| **SWR**         | React Hooks for data fetching  |
-| **Axios**       | Promise based HTTP client      |
-| **Formik**      | Form library for React         |
-| **Mongoose**    | MongoDB Client Library         |
-| **NextAuth.js** | Next.js authentication library |
+| Name                | Description                    |
+| ------------------- | ------------------------------ |
+| **Next.js**         | React Framework                |
+| **Chakra UI**       | UI component library.          |
+| **SWR**             | React Hooks for data fetching  |
+| **Axios**           | Promise based HTTP client      |
+| **React Hook Form** | Form library for React         |
+| **Mongoose**        | MongoDB Client Library         |
+| **NextAuth.js**     | Next.js authentication library |
 
 ## Roadmap
 

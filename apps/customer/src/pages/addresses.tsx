@@ -1,32 +1,38 @@
+import { AddressItem } from '@/components/AddressItem';
 import AddressModal from '@/components/AddressModal';
 import Layout from '@/shared/Layout';
+import { Address } from '@/types/address';
 import {
-  Badge,
   Divider,
-  Flex,
   Grid,
   GridItem,
   GridItemProps,
-  IconButton,
   Text,
+  useDisclosure,
 } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import {
-  FaEdit,
-  FaEnvelope,
-  FaPhone,
-  FaPlusSquare,
-  FaTrash,
-} from 'react-icons/fa';
+import { useState } from 'react';
+import { FaPlusSquare } from 'react-icons/fa';
 import { useStore } from '../store';
 
-const addressCardStyles: GridItemProps = {
-  minH: '60',
+const addAddressBoxStyles: GridItemProps = {
+  display: 'flex',
+  flexDir: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  border: '3px dashed lightgray',
+  minH: '40',
   h: 'full',
   p: '5',
   borderRadius: 'md',
+  fontSize: 'sm',
+  lineHeight: '1.6',
+  pos: 'relative',
   cursor: 'pointer',
+  _hover: {
+    borderColor: 'gray',
+  },
 };
 
 function AddressesPage() {
@@ -38,6 +44,29 @@ function AddressesPage() {
       selectAddress: state.selectAddress,
       removeAddress: state.removeAddress,
     }));
+  const { isOpen, onToggle } = useDisclosure();
+  const [addressToEdit, setAddressToEdit] = useState<Address>();
+
+  const openEditAddressModal = (address?: Address) => () => {
+    setAddressToEdit(address);
+    onToggle();
+  };
+
+  const closeAddressModal = () => {
+    setAddressToEdit(undefined);
+    onToggle();
+  };
+
+  const handleDeleteAddress = (addressId: string) => () => {
+    removeAddress(addressId);
+  };
+
+  const handleAddressSelect = (addressId: string) => () => {
+    selectAddress(addressId);
+    if (router.query.buy) {
+      router.push('/checkout');
+    }
+  };
 
   return (
     <div>
@@ -57,89 +86,29 @@ function AddressesPage() {
           }}
           gap='10'
         >
+          <AddressModal
+            key={addressToEdit?.id}
+            isOpen={isOpen}
+            addressToEdit={addressToEdit}
+            onClose={closeAddressModal}
+          />
           {addresses.length < 3 && (
-            <AddressModal>
-              <GridItem
-                display='flex'
-                flexDir='column'
-                justifyContent='center'
-                alignItems='center'
-                border='3px dashed lightgray'
-                {...addressCardStyles}
-              >
-                <FaPlusSquare color='lightgray' size='2em' />
-                <Text color='gray' fontWeight='bold' mt='3' fontSize='2xl'>
-                  Add address
-                </Text>
-              </GridItem>
-            </AddressModal>
+            <GridItem {...addAddressBoxStyles} role='button' onClick={onToggle}>
+              <FaPlusSquare color='lightgray' size='2em' />
+              <Text color='gray' fontWeight='bold' mt='3' fontSize='2xl'>
+                Add address
+              </Text>
+            </GridItem>
           )}
           {addresses.map((address) => (
-            <GridItem
-              onClick={() => {
-                selectAddress(address.id);
-                if (router.query.buy) {
-                  router.push('/checkout');
-                }
-              }}
+            <AddressItem
               key={address.id}
-              border={`3px solid ${
-                address.id === currentAddressId ? 'teal' : 'lightgray'
-              }`}
-              pos='relative'
-              {...addressCardStyles}
-              fontSize='sm'
-              lineHeight='1.6'
-            >
-              <Text fontWeight='semibold'>{address.fullName}</Text>
-              <Text>{address.streetAddress}</Text>
-              <Text>{address.city}</Text>
-              <Text>{address.state}</Text>
-              <Text>India</Text>
-              <Flex align='center'>
-                <FaPhone color='teal' />
-                <Text ml='2'>{address.mobileNumber}</Text>
-              </Flex>
-              <Flex align='center'>
-                <FaEnvelope color='teal' />
-                <Text ml='2'>{address.emailAddress}</Text>
-              </Flex>
-              <Flex mt='3'>
-                <AddressModal edit addressToEdit={address}>
-                  <IconButton
-                    isRound
-                    colorScheme='teal'
-                    aria-label='add address'
-                    icon={<FaEdit />}
-                  />
-                </AddressModal>
-
-                {address.id === currentAddressId ? (
-                  <Badge
-                    fontSize='sm'
-                    colorScheme='green'
-                    pos='absolute'
-                    bottom='0'
-                    left='50%'
-                    transform='translate(-50%, 50%)'
-                  >
-                    Current
-                  </Badge>
-                ) : (
-                  <IconButton
-                    isRound
-                    ml='2'
-                    colorScheme='red'
-                    aria-label='delete address'
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      removeAddress(address.id);
-                    }}
-                    icon={<FaTrash />}
-                  />
-                )}
-              </Flex>
-            </GridItem>
+              address={address}
+              isCurrentAddress={address.id === currentAddressId}
+              onEdit={openEditAddressModal(address)}
+              onDelete={handleDeleteAddress(address.id)}
+              onSelect={handleAddressSelect(address.id)}
+            />
           ))}
         </Grid>
       </Layout>

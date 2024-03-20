@@ -1,4 +1,3 @@
-import InputField from '@/shared/InputField';
 import { Address } from '@/types/address';
 import {
   Button,
@@ -10,127 +9,122 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
+  VStack,
 } from '@chakra-ui/react';
-import { Form, Formik } from 'formik';
+import { useForm } from 'react-hook-form';
 import { FaEdit, FaPlusCircle } from 'react-icons/fa';
+import { InputField } from 'ui/components';
 import { useStore } from '../store';
 
-const AddressModal: React.FC<
-  React.PropsWithChildren<{ edit?: boolean; addressToEdit?: Address }>
-> = ({ children, edit = false, addressToEdit }) => {
-  const { isOpen, onClose, onOpen } = useDisclosure();
+interface AddressModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  addressToEdit?: Address;
+}
+
+const AddressModal: React.FC<AddressModalProps> = ({
+  isOpen,
+  onClose,
+  addressToEdit,
+}) => {
   const { addAddress, editAddress } = useStore((state) => ({
     addAddress: state.addAddress,
     editAddress: state.editAddress,
   }));
 
+  const form = useForm({
+    defaultValues: addressToEdit ?? {
+      fullName: '',
+      emailAddress: '',
+      mobileNumber: '',
+      streetAddress: '',
+      city: '',
+      state: '',
+    },
+  });
+
+  const onSubmit = form.handleSubmit((values) => {
+    const addressValues = {
+      ...values,
+      mobileNumber: values.mobileNumber,
+    };
+    if (addressToEdit) {
+      editAddress({
+        id: addressToEdit.id,
+        ...addressValues,
+      });
+    } else {
+      addAddress(addressValues);
+    }
+    onClose();
+  });
+
   return (
-    <>
-      <div
-        onClick={(e) => {
-          e.stopPropagation();
-          onOpen();
-        }}
-      >
-        {children}
-      </div>
-      <Modal scrollBehavior='inside' isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>{edit ? 'Edit' : 'Add'} address</ModalHeader>
-          <ModalCloseButton />
-          <Divider />
-          <ModalBody mt='5'>
-            <Formik
-              initialValues={
-                !edit
-                  ? {
-                      fullName: '',
-                      emailAddress: '',
-                      mobileNumber: '',
-                      streetAddress: '',
-                      city: '',
-                      state: '',
-                    }
-                  : addressToEdit
-              }
-              onSubmit={(values) => {
-                const addressValues = {
-                  ...values,
-                  mobileNumber: Number(values.mobileNumber),
-                };
-                if (!edit) {
-                  addAddress(addressValues);
-                } else {
-                  editAddress({
-                    id: addressToEdit.id,
-                    ...addressValues,
-                  });
-                }
-                onClose();
-              }}
-            >
-              {() => (
-                <Form id='add-address-form'>
-                  <InputField
-                    label='Full Name'
-                    isRequired
-                    name='fullName'
-                    placeholder='John Doe'
-                  />
-                  <InputField
-                    type='email'
-                    label='Email Address'
-                    isRequired
-                    name='emailAddress'
-                    placeholder='johndoe@gmail.com'
-                  />
-                  <InputField
-                    type='tel'
-                    label='Mobile No.'
-                    isRequired
-                    name='mobileNumber'
-                    placeholder='9487989890'
-                  />
-                  <InputField
-                    label='Street Address'
-                    isRequired
-                    name='streetAddress'
-                    placeholder='Duplex House, West Street 145'
-                  />
-                  <InputField
-                    label='City'
-                    isRequired
-                    name='city'
-                    placeholder='Calicut'
-                  />
-                  <InputField
-                    label='State'
-                    isRequired
-                    name='state'
-                    placeholder='Kerala'
-                  />
-                </Form>
-              )}
-            </Formik>
-          </ModalBody>
-          <ModalFooter>
-            <Button type='button' mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button
-              form='add-address-form'
-              leftIcon={edit ? <FaEdit /> : <FaPlusCircle />}
-              type='submit'
-              colorScheme='blue'
-            >
-              Address
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
+    <Modal scrollBehavior='inside' isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>{addressToEdit ? 'Edit' : 'Add'} address</ModalHeader>
+        <ModalCloseButton />
+        <Divider />
+        <ModalBody mt='5'>
+          <form id='add-address-form' onSubmit={onSubmit}>
+            <VStack spacing={5}>
+              <InputField
+                label='Full Name'
+                control={form.control}
+                name='fullName'
+                placeholder='John Doe'
+              />
+              <InputField
+                type='email'
+                label='Email Address'
+                control={form.control}
+                name='emailAddress'
+                placeholder='johndoe@gmail.com'
+              />
+              <InputField
+                type='tel'
+                label='Mobile No.'
+                control={form.control}
+                name='mobileNumber'
+                placeholder='9487989890'
+              />
+              <InputField
+                label='Street Address'
+                control={form.control}
+                name='streetAddress'
+                placeholder='Duplex House, West Street 145'
+              />
+              <InputField
+                label='City'
+                control={form.control}
+                name='city'
+                placeholder='Calicut'
+              />
+              <InputField
+                label='State'
+                control={form.control}
+                name='state'
+                placeholder='Kerala'
+              />
+            </VStack>
+          </form>
+        </ModalBody>
+        <ModalFooter>
+          <Button type='button' mr={3} onClick={onClose}>
+            Close
+          </Button>
+          <Button
+            form='add-address-form'
+            leftIcon={addressToEdit ? <FaEdit /> : <FaPlusCircle />}
+            type='submit'
+            colorScheme='blue'
+          >
+            Address
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 };
 export default AddressModal;
