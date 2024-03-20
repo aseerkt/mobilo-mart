@@ -16,11 +16,9 @@ import { Form, Formik } from 'formik';
 import { FaEdit, FaPlusCircle } from 'react-icons/fa';
 import { useStore } from '../store';
 
-const AddressModal: React.FC<{ edit?: boolean; addressToEdit?: Address }> = ({
-  children,
-  edit = false,
-  addressToEdit,
-}) => {
+const AddressModal: React.FC<
+  React.PropsWithChildren<{ edit?: boolean; addressToEdit?: Address }>
+> = ({ children, edit = false, addressToEdit }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { addAddress, editAddress } = useStore((state) => ({
     addAddress: state.addAddress,

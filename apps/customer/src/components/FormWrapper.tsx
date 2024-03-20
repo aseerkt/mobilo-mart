@@ -7,7 +7,10 @@ type FormWrapperProps = {
   headTitle?: string;
 };
 
-const FormWrapper: React.FC<FormWrapperProps> = ({ title, children }) => {
+const FormWrapper: React.FC<React.PropsWithChildren<FormWrapperProps>> = ({
+  title,
+  children,
+}) => {
   return (
     <>
       <Link as={NextLink} href='/'>
