@@ -19,7 +19,7 @@
     "framer-motion": "^10.18.0",
     "lodash-es": "^4.17.21",
     "mongoose": "^8.2.2",
-    "next": "14.0.4",
+    "next": "14.1.1",
     "next-auth": "^4.24.7",
     "next-connect": "^1.0.0",
     "nprogress": "^0.2.0",
